@@ -217,7 +217,7 @@ CERTS = [
 
 MARQUEE = ["SQL", "Python", "Tableau", "Power BI", "Excel", "Campaign ROI", "Uplift modelling", "Churn analysis", "A/B testing", "Paid social", "Email and CRM"]
 
-ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050c2a'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E"
+ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a3b9f'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E"
 
 
 # ------------------------------------------------------------------ SHARED PIECES
@@ -268,7 +268,7 @@ def pagehead(crumb, title, sub, meta=""):
     m = f'<div class="pagehead__meta" data-intro-fade>{meta}</div>' if meta else ""
     words = title.split(" ")
     title_html = (E(" ".join(words[:-1])) + " <em>" + E(words[-1]) + "</em>") if len(words) > 1 else (E(words[0]) + "<em>.</em>")
-    return f'''<section class="pagehead dark">
+    return f'''<section class="pagehead blue">
   <div class="gridlines" aria-hidden="true"></div>
   <div data-intro-fade>{c}</div>
   <h1 class="pagehead__title" data-split data-intro>{title_html}</h1>
@@ -282,7 +282,7 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{E(title)}</title>
 <meta name="description" content="{E(desc)}">
-<meta name="theme-color" content="#050c2a">
+<meta name="theme-color" content="#1a3b9f">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:image" content="assets/og.jpg">
@@ -293,7 +293,7 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
     sc = "".join('<script src="%s"></script>' % s for s in
                  ["vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/lenis.min.js", "js/site.js"] + list(scripts))
     body = f'''<a class="skip" href="#main">Skip to content</a>
-<div class="curtain" id="curtain" data-label="{E(label)}"><span class="curtain__label" aria-hidden="true"></span></div>
+<div class="curtain" id="curtain" data-label="{E(label)}"><i></i><i></i><i></i><i></i><i></i><span class="curtain__label" aria-hidden="true"></span></div>
 {loader}
 <div class="progress" aria-hidden="true"><span></span></div>
 {bar(active)}
@@ -332,21 +332,31 @@ def home():
   <span class="loader__name">Varesh Nirbhavne</span>
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
-    main = f'''<section class="hero dark" id="top">
+    main = f'''<section class="hero blue" id="top">
   <canvas class="hero__lines" id="lines" aria-hidden="true"></canvas>
+  <div class="gridlines" aria-hidden="true"></div>
   <div class="hero__micro micro" data-intro-fade>
     <span>Varesh Nirbhavne</span>
     <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
-    <span>{CITY}, UK</span>
+    <span>{CITY}, UK &middot; Portfolio 2026</span>
   </div>
-  <h1 class="hero__title" data-split data-intro><span class="hero__w hero__w--a">Marketing</span><span class="hero__w hero__w--b"><em>&amp;</em> Data</span></h1>
-  <figure class="hero__photo"><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></figure>
+  <h1 class="hero__title" aria-label="Marketing and Data">
+    <span class="hero__ln" data-ln aria-hidden="true">Marketing</span>
+    <span class="hero__ln hero__ln--b" data-ln aria-hidden="true"><span class="amp">&amp;</span> Data</span>
+  </h1>
+  <ul class="hero__facts micro" data-intro-fade>
+    <li><b>£1.9M</b><span>annual spend flagged</span></li>
+    <li><b>£79M</b><span>London upside found</span></li>
+    <li><b>0.48</b><span>churn AUC, reported honestly</span></li>
+    <li><b>5,000</b><span>F1 seasons simulated</span></li>
+  </ul>
   <div class="hero__bottom" data-intro-fade>
     <p class="hero__lede">A marketer who runs the campaigns, then reads the data to see what actually moved.</p>
     <div class="hero__actions">
       <a class="btn btn--light" href="projects.html" data-label="Projects">See my projects</a>
       <a class="btn btn--line" href="contact.html" data-label="Contact">Contact me</a>
     </div>
+    <span class="hero__scroll micro"><i></i>Scroll</span>
   </div>
 </section>
 
@@ -396,7 +406,7 @@ def home():
   <div class="stack__list" id="stackList">{cards}</div>
 </section>
 
-<section class="sec cta dark">
+<section class="sec cta blue">
   <div class="gridlines" aria-hidden="true"></div>
   <div class="wrap">
     <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
@@ -469,7 +479,7 @@ def about_page():
     main = pagehead(None, "About", "A marketer who got curious about the data.") + f'''
 <section class="sec">
   <div class="wrap about">
-    <div class="about__photo" data-reveal><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></div>
+    <div class="about__photo" data-reveal><img src="assets/photo-original.webp" alt="Varesh Nirbhavne" width="520" height="652"></div>
     <div class="about__copy">
       <p class="about__pull" data-split>I'm a marketer who got curious about the data, and a bit obsessed with proving what actually worked.</p>
       <div data-stagger>

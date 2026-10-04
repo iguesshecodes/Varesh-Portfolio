@@ -111,6 +111,7 @@
     var bar = $(".bar"); if (!bar) return;
     var last = 0;
     function onScroll(y) {
+      bar.classList.toggle("is-solid", y > 40);
       var d = y - last;
       if (y < 120) bar.classList.remove("is-hidden");
       else if (d > 6) bar.classList.add("is-hidden");
@@ -232,61 +233,111 @@
     });
   })();
 
-  /* ---------- hero: living line field, words drift apart, portrait lifts ---------- */
+  /* ---------- hero: fitted giant type with a lens, living line field ---------- */
+  var heroIn = null;
   (function () {
-    var cv = $("#lines"); if (!cv) return;
-    var ctx = cv.getContext("2d"); if (!ctx) return;
-    var W = 0, H = 0, dpr = 1, rows = 0, mx = -9999, my = -9999, tx = -9999, ty = -9999, vis = true, t0 = performance.now();
-    function size() {
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      W = cv.clientWidth; H = cv.clientHeight;
-      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      rows = Math.max(22, Math.round(H / 22));
+    var hero = $(".hero"); if (!hero) return;
+    var lines = $$("[data-ln]", hero), chars = [];
+    lines.forEach(function (ln) {
+      var out = document.createDocumentFragment();
+      Array.prototype.slice.call(ln.childNodes).forEach(function (n) {
+        var cls = n.nodeType === 1 ? n.className : "";
+        var txt = n.textContent;
+        txt.split("").forEach(function (ch) {
+          if (ch === " ") { out.appendChild(document.createTextNode(" ")); return; }
+          var sp = document.createElement("span");
+          sp.className = "ch" + (cls === "amp" ? " ch--amp" : "");
+          sp.textContent = ch; out.appendChild(sp); chars.push(sp);
+        });
+      });
+      ln.textContent = ""; ln.appendChild(out);
+    });
+    var title = $(".hero__title", hero);
+    function fit() {
+      if (!title || !lines.length) return;
+      var availW = title.clientWidth, cs = getComputedStyle(title);
+      var availH = title.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      var sizes = lines.map(function (ln) {
+        ln.style.fontSize = "100px"; ln.style.width = "max-content"; ln.style.alignSelf = "flex-start";
+        var w = ln.getBoundingClientRect().width; ln.style.width = ""; ln.style.alignSelf = "";
+        return 100 * availW / w * 0.995;
+      });
+      var size = Math.min.apply(null, sizes);
+      size = Math.min(size, availH / (lines.length * 0.94));
+      lines.forEach(function (ln) { ln.style.fontSize = size.toFixed(1) + "px"; });
     }
-    function draw(now) {
-      var t = (now - t0) * 0.00028;
-      ctx.clearRect(0, 0, W, H);
-      ctx.lineWidth = 1;
-      var step = Math.max(10, W / 90);
-      for (var r = 0; r < rows; r++) {
-        var base = (r + 0.5) * (H / rows);
-        var a = 0.1 + 0.22 * (1 - Math.abs(r / rows - 0.5) * 1.6);
-        ctx.strokeStyle = "rgba(138,168,255," + Math.max(0.05, a).toFixed(3) + ")";
-        ctx.beginPath();
-        for (var x = 0; x <= W + step; x += step) {
-          var n = Math.sin(x * 0.0036 + t * 2.2 + r * 0.22) * 14 + Math.sin(x * 0.0085 - t * 3.1 + r * 0.5) * 6;
-          var dx = x - mx, dy = base - my, d2 = dx * dx + dy * dy;
-          var push = Math.exp(-d2 / 26000) * 46;
-          var y = base + n - push * (dy === 0 ? 0 : dy / Math.abs(dy)) * 0.9;
-          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-      }
-    }
-    function loop(now) {
-      mx += (tx - mx) * 0.08; my += (ty - my) * 0.08;
-      if (vis) draw(now);
-    }
-    size();
-    window.addEventListener("resize", function () { size(); if (reduce) draw(performance.now()); });
-    var hero = $(".hero");
-    hero.addEventListener("pointermove", function (e) { var r = cv.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; });
-    hero.addEventListener("pointerleave", function () { tx = -9999; ty = -9999; });
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { vis = en[0].isIntersecting; }).observe(hero);
-    if (reduce) { draw(performance.now()); return; }
-    gsap.ticker.add(loop);
+    fit();
+    window.addEventListener("resize", fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 
+    /* lens: letters near the pointer turn to outline */
+    var px = -9999, py = -9999, raf = 0, R = 190;
+    function lens() {
+      raf = 0;
+      chars.forEach(function (c) {
+        var r = c.getBoundingClientRect();
+        var dx = px - (r.left + r.width / 2), dy = py - (r.top + r.height / 2);
+        var d = Math.sqrt(dx * dx + dy * dy);
+        c.style.setProperty("--k", Math.max(0, 1 - d / R).toFixed(3));
+      });
+    }
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (fine && !reduce) {
+      hero.addEventListener("pointermove", function (e) { px = e.clientX; py = e.clientY; if (!raf) raf = requestAnimationFrame(lens); });
+      hero.addEventListener("pointerleave", function () { px = -9999; py = -9999; if (!raf) raf = requestAnimationFrame(lens); });
+    }
+
+    /* line field */
+    var cv = $("#lines"), ctx = cv && cv.getContext("2d");
+    if (ctx) {
+      var W = 0, H = 0, dpr = 1, rows = 0, mx = -9999, my = -9999, tx = -9999, ty = -9999, vis = true, t0 = performance.now();
+      var size = function () {
+        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        W = cv.clientWidth; H = cv.clientHeight;
+        cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        rows = Math.max(22, Math.round(H / 20));
+      };
+      var draw = function (now) {
+        var t = (now - t0) * 0.00028;
+        ctx.clearRect(0, 0, W, H); ctx.lineWidth = 1;
+        var step = Math.max(10, W / 90);
+        for (var r = 0; r < rows; r++) {
+          var base = (r + 0.5) * (H / rows);
+          ctx.strokeStyle = "rgba(255,255,255," + (0.07 + 0.12 * (1 - Math.abs(r / rows - 0.5) * 1.6)).toFixed(3) + ")";
+          ctx.beginPath();
+          for (var x = 0; x <= W + step; x += step) {
+            var n = Math.sin(x * 0.0036 + t * 2.2 + r * 0.22) * 14 + Math.sin(x * 0.0085 - t * 3.1 + r * 0.5) * 6;
+            var dx = x - mx, dy = base - my;
+            var push = Math.exp(-(dx * dx + dy * dy) / 30000) * 52;
+            var y = base + n - (dy === 0 ? 0 : (dy > 0 ? 1 : -1)) * push * 0.9;
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        }
+      };
+      size();
+      window.addEventListener("resize", function () { size(); if (reduce) draw(performance.now()); });
+      hero.addEventListener("pointermove", function (e) { var r = cv.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; });
+      hero.addEventListener("pointerleave", function () { tx = -9999; ty = -9999; });
+      if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { vis = en[0].isIntersecting; }).observe(hero);
+      if (reduce) draw(performance.now());
+      else gsap.ticker.add(function (now) { mx += (tx - mx) * 0.08; my += (ty - my) * 0.08; if (vis) draw(performance.now()); });
+    }
+
+    if (reduce) return;
+    gsap.set(chars, { yPercent: 115 });
+    heroIn = function () {
+      gsap.to(chars, { yPercent: 0, duration: 1.25, ease: "expo.out", stagger: 0.035 });
+    };
     var mm = gsap.matchMedia();
     mm.add("(min-width: 900px)", function () {
-      var a = $(".hero__w--a"), b = $(".hero__w--b"), img = $(".hero__photo img");
       var st = { trigger: hero, start: "top top", end: "bottom top", scrub: true };
       var tws = [
-        gsap.to(a, { xPercent: -14, ease: "none", scrollTrigger: st }),
-        gsap.to(b, { xPercent: 14, ease: "none", scrollTrigger: st }),
-        gsap.to(img, { yPercent: 12, ease: "none", scrollTrigger: st })
+        gsap.to(lines[0], { xPercent: -7, ease: "none", scrollTrigger: st }),
+        gsap.to(lines[1], { xPercent: 7, ease: "none", scrollTrigger: st })
       ];
-      return function () { tws.forEach(function (t) { t.kill(); }); gsap.set([a, b, img], { clearProps: "transform" }); };
+      return function () { tws.forEach(function (t) { t.kill(); }); gsap.set(lines, { clearProps: "transform" }); };
     });
   })();
 
@@ -362,26 +413,27 @@
       gsap.set(fades, { opacity: 0, y: 30 });
       tl.to(fades, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "expo.out" }, 0.35);
     }
-    var photo = $(".hero__photo");
-    if (photo) { gsap.set(photo, { y: 120, opacity: 0 }); tl.to(photo, { y: 0, opacity: 1, duration: 1.5, ease: "expo.out" }, 0.2); }
+    if (heroIn) heroIn();
     // Safety: never leave anything hidden if the timeline stalls
-    setTimeout(function () { splits.forEach(function (s) { gsap.set(s.words, { yPercent: 0 }); }); gsap.set(fades, { opacity: 1, y: 0 }); }, 6000);
+    setTimeout(function () { splits.forEach(function (s) { gsap.set(s.words, { yPercent: 0 }); }); gsap.set(fades, { opacity: 1, y: 0 }); gsap.set($$(".hero .ch"), { yPercent: 0 }); }, 6000);
   }
 
   var seen = false;
   try { seen = sessionStorage.getItem("vn-seen") === "1"; } catch (e) { seen = false; }
 
+  var strips = curtain ? $$("i", curtain) : [];
   function liftCurtain() {
     var label = $(".curtain__label", curtain);
     var name = curtain.getAttribute("data-label") || "";
     if (label) label.textContent = name;
     if (reduce) { curtain.style.display = "none"; playIntro(); return; }
+    gsap.set(strips, { yPercent: 0 });
     var tl = gsap.timeline();
     tl.fromTo(label, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 0)
       .to(label, { opacity: 0, y: -30, duration: 0.35, ease: "power2.in" }, 0.55)
-      .to(curtain, { yPercent: -100, duration: 0.95, ease: "expo.inOut" }, 0.6)
-      .add(function () { playIntro(); }, 1.0)
-      .add(function () { curtain.style.display = "none"; }, 1.7);
+      .to(strips, { yPercent: -100, duration: 0.9, ease: "expo.inOut", stagger: 0.07 }, 0.6)
+      .add(function () { playIntro(); }, 1.05)
+      .add(function () { curtain.style.display = "none"; }, 1.95);
   }
 
   function runLoader() {
@@ -408,16 +460,16 @@
   function leave(href, name) {
     if (window.__closeMenu) window.__closeMenu();
     if (reduce || !curtain) { window.location.href = href; return; }
-    curtain.style.display = "grid";
+    curtain.style.display = "flex";
     var label = $(".curtain__label", curtain);
     if (label) { label.textContent = name || ""; gsap.set(label, { opacity: 0, y: 40 }); }
-    gsap.set(curtain, { yPercent: 100 });
+    gsap.set(strips, { yPercent: 100 });
     var go = false;
     var tl = gsap.timeline({ onComplete: function () { if (!go) { go = true; window.location.href = href; } } });
-    tl.to(curtain, { yPercent: 0, duration: 0.75, ease: "expo.inOut" })
-      .to(label, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 0.45)
+    tl.to(strips, { yPercent: 0, duration: 0.7, ease: "expo.inOut", stagger: 0.06 })
+      .to(label, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 0.5)
       .to({}, { duration: 0.2 });
-    setTimeout(function () { if (!go) { go = true; window.location.href = href; } }, 2200);
+    setTimeout(function () { if (!go) { go = true; window.location.href = href; } }, 2400);
   }
   document.addEventListener("click", function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -435,7 +487,7 @@
     leave(href, name);
   });
   window.addEventListener("pageshow", function (e) {
-    if (e.persisted && curtain) { gsap.set(curtain, { yPercent: -100 }); curtain.style.display = "none"; }
+    if (e.persisted && curtain) { gsap.set(strips, { yPercent: -100 }); curtain.style.display = "none"; }
   });
 
   window.addEventListener("load", function () { setTimeout(function () { ScrollTrigger.refresh(); }, 300); });
