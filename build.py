@@ -217,7 +217,7 @@ CERTS = [
 
 MARQUEE = ["SQL", "Python", "Tableau", "Power BI", "Excel", "Campaign ROI", "Uplift modelling", "Churn analysis", "A/B testing", "Paid social", "Email and CRM"]
 
-ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8402d'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E"
+ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050c2a'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E"
 
 
 # ------------------------------------------------------------------ SHARED PIECES
@@ -253,13 +253,14 @@ def footer():
     <p class="footer__big">Let's make something work.</p>
     <nav class="footer__links" aria-label="Footer">{fl}</nav>
   </div>
+  <p class="footer__name" aria-hidden="true">Varesh Nirbhavne</p>
   <div class="footer__base"><span>© 2026 Varesh Nirbhavne, {CITY}</span><span>Independent portfolio. Company names belong to their owners.</span></div>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>'''
 
 
 def nextlink(href, label, title):
-    return f'<a class="next" href="{href}" data-label="{E(label)}" data-cursor="view" data-cursor-text="Go"><small>Next</small><strong>{E(title)}</strong></a>'
+    return f'<a class="next" href="{href}" data-label="{E(label)}" ><small>Next</small><strong>{E(title)}</strong></a>'
 
 
 def pagehead(crumb, title, sub, meta=""):
@@ -267,7 +268,8 @@ def pagehead(crumb, title, sub, meta=""):
     m = f'<div class="pagehead__meta" data-intro-fade>{meta}</div>' if meta else ""
     words = title.split(" ")
     title_html = (E(" ".join(words[:-1])) + " <em>" + E(words[-1]) + "</em>") if len(words) > 1 else (E(words[0]) + "<em>.</em>")
-    return f'''<section class="pagehead">
+    return f'''<section class="pagehead dark">
+  <div class="gridlines" aria-hidden="true"></div>
   <div data-intro-fade>{c}</div>
   <h1 class="pagehead__title" data-split data-intro>{title_html}</h1>
   <p class="pagehead__sub" data-intro-fade>{E(sub)}</p>
@@ -280,7 +282,7 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{E(title)}</title>
 <meta name="description" content="{E(desc)}">
-<meta name="theme-color" content="#ffc72c">
+<meta name="theme-color" content="#050c2a">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:image" content="assets/og.jpg">
@@ -313,29 +315,36 @@ def write_page(fname, title, label, desc, main, active, scripts=(), loader="", t
 
 # ------------------------------------------------------------------ PAGES
 def home():
-    marq = "".join('<span>%s</span><i class="sep"></i>' % E(m) for m in MARQUEE)
+    marq = "".join('<span>%s</span><span class="sep">/</span>' % E(m) for m in MARQUEE)
     cards = "".join(
-        f'''<a class="hcard" href="project-{p["slug"]}.html" data-label="{E(p["title"])}">
-        <span class="hcard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="3840" height="2160" loading="lazy"></span>
-        <span class="hcard__meta"><span class="hcard__title">{E(p["title"])}</span><span class="hcard__tools">{E(p["tools"])}</span></span></a>'''
-        for p in PROJECTS
+        f'''<a class="scard scard--{i % 3}" style="--i:{i}" href="project-{p["slug"]}.html" data-label="{E(p["title"])}">
+      <div class="scard__copy">
+        <span class="scard__no">{i + 1:02d}<small>/ {len(PROJECTS):02d}</small></span>
+        <div><h3 class="scard__title">{E(p["title"])}</h3><p class="scard__short">{E(p["short"])}</p></div>
+        <div class="scard__foot"><span class="scard__tools">{E(p["tools"])}</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
+      </div>
+      <div class="scard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="3840" height="2160" loading="lazy"></div>
+    </a>'''
+        for i, p in enumerate(PROJECTS)
     )
     loader = '''<div class="loader" id="loader" aria-hidden="true">
   <div class="loader__bar"><span></span></div>
   <span class="loader__name">Varesh Nirbhavne</span>
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
-    main = f'''<section class="hero" id="top">
-  <div class="hero__top" data-intro-fade>
-    <span class="hero__kicker">Marketing &times; <span class="rot" data-words="Data|Strategy|Insight|Growth"><span>Data</span></span></span>
+    main = f'''<section class="hero dark" id="top">
+  <canvas class="hero__lines" id="lines" aria-hidden="true"></canvas>
+  <div class="hero__micro micro" data-intro-fade>
+    <span>Varesh Nirbhavne</span>
     <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
+    <span>{CITY}, UK</span>
   </div>
-  <h1 class="hero__title" data-split data-intro><span class="ln">Marketing,</span><span class="ln">and the numbers</span><span class="ln">to <em>prove it.</em></span></h1>
-  <figure class="hero__photo"><span class="hero__disc"></span><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></figure>
+  <h1 class="hero__title" data-split data-intro><span class="hero__w hero__w--a">Marketing</span><span class="hero__w hero__w--b"><em>&amp;</em> Data</span></h1>
+  <figure class="hero__photo"><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></figure>
   <div class="hero__bottom" data-intro-fade>
-    <p class="hero__lede">I'm Varesh, a marketer and data analyst based in {CITY}. I run the campaigns, then read the data to see what actually moved.</p>
+    <p class="hero__lede">A marketer who runs the campaigns, then reads the data to see what actually moved.</p>
     <div class="hero__actions">
-      <a class="btn btn--red" href="projects.html" data-label="Projects">See my projects</a>
+      <a class="btn btn--light" href="projects.html" data-label="Projects">See my projects</a>
       <a class="btn btn--line" href="contact.html" data-label="Contact">Contact me</a>
     </div>
   </div>
@@ -367,7 +376,7 @@ def home():
   </div>
 </section>
 
-<section class="sec sec--blush">
+<section class="sec dark">
   <div class="wrap">
     <ul class="stats" data-stagger>
       <li><b data-count="1.9" data-dec="1" data-pre="£" data-suf="M">£1.9M</b><span>annual spend found in 59 loss-making campaigns</span></li>
@@ -379,23 +388,19 @@ def home():
   </div>
 </section>
 
-<section class="hwork" id="work" aria-label="Selected work">
-  <div class="hwork__pin">
-    <div class="hwork__head wrap">
-      <h2 class="h2">Selected <em>work.</em></h2>
-      <div class="hwork__side">
-        <span class="hwork__count" aria-hidden="true"><b id="hworkPct">0</b><i>%</i></span>
-        <a class="btn btn--line" href="projects.html" data-label="Projects">All projects</a>
-      </div>
-    </div>
-    <div class="hwork__track" id="hworkTrack">{cards}</div>
+<section class="stack" id="work" aria-label="Selected work">
+  <div class="stack__head wrap">
+    <h2 class="h2" data-split>Selected <em>work.</em></h2>
+    <a class="btn btn--line light-line" href="projects.html" data-label="Projects">All projects</a>
   </div>
+  <div class="stack__list" id="stackList">{cards}</div>
 </section>
 
-<section class="sec cta on-red">
+<section class="sec cta dark">
+  <div class="gridlines" aria-hidden="true"></div>
   <div class="wrap">
     <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
-    <a class="btn btn--yellow" href="contact.html" data-label="Contact">Contact me</a>
+    <a class="btn btn--light" href="contact.html" data-label="Contact">Contact me</a>
   </div>
 </section>'''
     return write_page("index.html", "Varesh Nirbhavne | Marketing and data analytics", "Home",
@@ -405,8 +410,9 @@ def home():
 
 def projects_page():
     rows = ""
-    for p in PROJECTS:
-        rows += f'''<a class="prow" href="project-{p["slug"]}.html" data-label="{E(p["title"])}" data-cursor="view" data-cursor-text="Open">
+    for n, p in enumerate(PROJECTS, 1):
+        rows += f'''<a class="prow" href="project-{p["slug"]}.html" data-label="{E(p["title"])}">
+      <span class="prow__no">{n:02d}</span>
       <span class="prow__title">{E(p["title"])}</span>
       <span class="prow__meta"><span>{E(p["tools"])}</span><span class="tag tag--soft">{E(p["status"])}</span></span>
       <span class="prow__arrow" aria-hidden="true">&nearr;</span>
@@ -463,7 +469,7 @@ def about_page():
     main = pagehead(None, "About", "A marketer who got curious about the data.") + f'''
 <section class="sec">
   <div class="wrap about">
-    <div class="about__photo" data-reveal><span class="about__disc"></span><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></div>
+    <div class="about__photo" data-reveal><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></div>
     <div class="about__copy">
       <p class="about__pull" data-split>I'm a marketer who got curious about the data, and a bit obsessed with proving what actually worked.</p>
       <div data-stagger>
@@ -483,7 +489,7 @@ def about_page():
   </div>
 </section>
 
-<section class="sec sec--blush">
+<section class="sec dark">
   <div class="wrap">
     <h2 class="h2" data-split>What I <em>work with.</em></h2>
     <div class="skills" data-stagger>
@@ -524,7 +530,7 @@ def certs_page():
         f'''<article class="cert"><span class="cert__type">{E(c["type"])}</span><h3>{E(c["title"])}</h3><p class="cert__by">{E(c["by"])}</p><p>{E(c["text"])}</p><ul class="chips">{li(c["chips"])}</ul></article>'''
         for c in CERTS)
     main = pagehead(None, "Certifications", "Where I studied, and the courses and job simulations behind the analytics.") + f'''
-<section class="sec">
+<section class="sec dark">
   <div class="wrap">
     <h2 class="h2" data-split>Education<em>.</em></h2>
     <div class="edu" data-reveal style="margin-top:clamp(28px,3vw,48px)">
@@ -533,7 +539,7 @@ def certs_page():
     </div>
   </div>
 </section>
-<section class="sec sec--blush">
+<section class="sec">
   <div class="wrap">
     <h2 class="h2" data-split>Certifications<em>.</em></h2>
     <div class="certs" data-stagger>{certs}</div>
@@ -607,12 +613,12 @@ def contact_page():
 <section class="sec">
   <div class="wrap">
     <div class="clist" data-stagger>
-      <div class="crow crow--copy"><span class="crow__k">Email</span><span class="crow__v">{EMAIL}</span><button class="btn btn--line-red" data-copy="{EMAIL}" data-done="Email copied">Copy</button></div>
-      <div class="crow crow--copy"><span class="crow__k">Phone</span><span class="crow__v">{PHONE}</span><button class="btn btn--line-red" data-copy="{PHONE}" data-done="Number copied">Copy</button></div>
+      <div class="crow crow--copy"><span class="crow__k">Email</span><span class="crow__v">{EMAIL}</span><button class="btn btn--line-navy" data-copy="{EMAIL}" data-done="Email copied">Copy</button></div>
+      <div class="crow crow--copy"><span class="crow__k">Phone</span><span class="crow__v">{PHONE}</span><button class="btn btn--line-navy" data-copy="{PHONE}" data-done="Number copied">Copy</button></div>
       <a class="crow" href="{LINKEDIN}" target="_blank" rel="noopener"><span class="crow__k">LinkedIn</span><span class="crow__v">{LINKEDIN_TXT}</span><span class="crow__go" aria-hidden="true">&nearr;</span></a>
       <a class="crow" href="{GITHUB}" target="_blank" rel="noopener"><span class="crow__k">GitHub</span><span class="crow__v">{GITHUB_TXT}</span><span class="crow__go" aria-hidden="true">&nearr;</span></a>
     </div>
-    <div class="btnrow"><a class="btn btn--red" href="mailto:{EMAIL}">Open in my mail app</a></div>
+    <div class="btnrow"><a class="btn btn--navy" href="mailto:{EMAIL}">Open in my mail app</a></div>
     <p class="sec-note">Based in {CITY}. If the button does nothing on your device, copy the address above instead.</p>
   </div>
 </section>'''
