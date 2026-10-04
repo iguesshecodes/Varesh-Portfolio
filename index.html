@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Varesh Nirbhavne | Marketing and data analytics</title>
 <meta name="description" content="Portfolio of Varesh Nirbhavne, a marketer and data analyst in London. Campaign work, SQL, Python and Tableau projects, and two small tools you can try.">
-<meta name="theme-color" content="#0f0c0a">
+<meta name="theme-color" content="#ffc72c">
 <meta property="og:title" content="Varesh Nirbhavne | Marketing and data analytics">
 <meta property="og:description" content="Portfolio of Varesh Nirbhavne, a marketer and data analyst in London. Campaign work, SQL, Python and Tableau projects, and two small tools you can try.">
 <meta property="og:image" content="assets/og.jpg">
@@ -39,7 +39,6 @@
 </div>
 <main id="main">
 <section class="hero" id="top">
-  <svg class="hero__trend" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="rg" x1="0" x2="1" y1="1" y2="0"><stop offset="0" stop-color="#19c3ff"/><stop offset="0.5" stop-color="#7a4dff"/><stop offset="1" stop-color="#ff4fa3"/></linearGradient></defs><path d="M0,262 C70,255 120,205 200,212 S320,150 400,122 S560,112 640,62 S740,28 800,12"/></svg>
   <div class="hero__top" data-intro-fade>
     <span class="hero__kicker">Marketing &times; <span class="rot" data-words="Data|Strategy|Insight|Growth"><span>Data</span></span></span>
     <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
@@ -49,13 +48,19 @@
   <div class="hero__bottom" data-intro-fade>
     <p class="hero__lede">I'm Varesh, a marketer and data analyst based in London. I run the campaigns, then read the data to see what actually moved.</p>
     <div class="hero__actions">
-      <a class="btn btn--white" href="projects.html" data-label="Projects">See my projects</a>
-      <a class="btn btn--line" href="contact.html" data-label="Contact">Get in touch</a>
+      <a class="btn btn--red" href="projects.html" data-label="Projects">See my projects</a>
+      <a class="btn btn--line" href="contact.html" data-label="Contact">Contact me</a>
     </div>
   </div>
 </section>
 
 <section class="marquee" aria-hidden="true"><div class="marquee__track"><span>SQL</span><i class="sep"></i><span>Python</span><i class="sep"></i><span>Tableau</span><i class="sep"></i><span>Power BI</span><i class="sep"></i><span>Excel</span><i class="sep"></i><span>Campaign ROI</span><i class="sep"></i><span>Uplift modelling</span><i class="sep"></i><span>Churn analysis</span><i class="sep"></i><span>A/B testing</span><i class="sep"></i><span>Paid social</span><i class="sep"></i><span>Email and CRM</span><i class="sep"></i><span>SQL</span><i class="sep"></i><span>Python</span><i class="sep"></i><span>Tableau</span><i class="sep"></i><span>Power BI</span><i class="sep"></i><span>Excel</span><i class="sep"></i><span>Campaign ROI</span><i class="sep"></i><span>Uplift modelling</span><i class="sep"></i><span>Churn analysis</span><i class="sep"></i><span>A/B testing</span><i class="sep"></i><span>Paid social</span><i class="sep"></i><span>Email and CRM</span><i class="sep"></i></div></section>
+
+<section class="sec statement">
+  <div class="wrap">
+    <p class="statement__text" data-scrub>I turn campaign noise into <b>decisions that pay for themselves</b>. Strategy first, then the <b>SQL, Python and Tableau</b> to check I was right.</p>
+  </div>
+</section>
 
 <section class="sec">
   <div class="wrap">
@@ -87,26 +92,35 @@
   </div>
 </section>
 
-<section class="sec">
-  <div class="wrap">
-    <div class="feat__head">
-      <h2 class="h2" data-split>Selected <em>work.</em></h2>
-      <a class="btn btn--line-red" href="projects.html" data-label="Projects">All projects</a>
+<section class="hwork" id="work" aria-label="Selected work">
+  <div class="hwork__pin">
+    <div class="hwork__head wrap">
+      <h2 class="h2">Selected <em>work.</em></h2>
+      <div class="hwork__side">
+        <span class="hwork__count" aria-hidden="true"><b id="hworkPct">0</b><i>%</i></span>
+        <a class="btn btn--line" href="projects.html" data-label="Projects">All projects</a>
+      </div>
     </div>
-    <div class="cards" data-stagger><a class="pcard" href="project-revolut.html" data-label="Revolut London Growth Study" data-cursor="view" data-cursor-text="Open">
-        <div class="pcard__img"><img src="assets/revolut.webp" alt="Findings board for the Revolut London growth study" width="3840" height="2160" loading="lazy"></div>
-        <h3>Revolut London Growth Study</h3><p>How a fintech could win more of London</p></a><a class="pcard" href="project-f1.html" data-label="F1 2026 Championship Forecast" data-cursor="view" data-cursor-text="Open">
-        <div class="pcard__img"><img src="assets/f1.webp" alt="Dashboard comparing two F1 championship forecasts" width="3840" height="2160" loading="lazy"></div>
-        <h3>F1 2026 Championship Forecast</h3><p>Two models, one title race</p></a><a class="pcard" href="project-netflix.html" data-label="Netflix Content Library Analysis" data-cursor="view" data-cursor-text="Open">
-        <div class="pcard__img"><img src="assets/netflix.webp" alt="Netflix content library dashboard" width="3840" height="2160" loading="lazy"></div>
-        <h3>Netflix Content Library Analysis</h3><p>What 8,807 titles say about a catalogue</p></a></div>
+    <div class="hwork__track" id="hworkTrack"><a class="hcard" href="project-revolut.html" data-label="Revolut London Growth Study">
+        <span class="hcard__img"><img src="assets/revolut.webp" alt="Findings board for the Revolut London growth study" width="3840" height="2160" loading="lazy"></span>
+        <span class="hcard__meta"><span class="hcard__title">Revolut London Growth Study</span><span class="hcard__tools">SQL, Python, Tableau</span></span></a><a class="hcard" href="project-f1.html" data-label="F1 2026 Championship Forecast">
+        <span class="hcard__img"><img src="assets/f1.webp" alt="Dashboard comparing two F1 championship forecasts" width="3840" height="2160" loading="lazy"></span>
+        <span class="hcard__meta"><span class="hcard__title">F1 2026 Championship Forecast</span><span class="hcard__tools">Python, SQL, Tableau</span></span></a><a class="hcard" href="project-netflix.html" data-label="Netflix Content Library Analysis">
+        <span class="hcard__img"><img src="assets/netflix.webp" alt="Netflix content library dashboard" width="3840" height="2160" loading="lazy"></span>
+        <span class="hcard__meta"><span class="hcard__title">Netflix Content Library Analysis</span><span class="hcard__tools">Python, Pandas, Seaborn</span></span></a><a class="hcard" href="project-lloyds.html" data-label="Customer churn model">
+        <span class="hcard__img"><img src="assets/lloyds.webp" alt="Illustrative visual: ROC curves above a diagonal baseline" width="3840" height="2160" loading="lazy"></span>
+        <span class="hcard__meta"><span class="hcard__title">Customer churn model</span><span class="hcard__tools">BigQuery SQL, Random Forest, Tableau</span></span></a><a class="hcard" href="project-quantium.html" data-label="Did the trial stores really lift sales?">
+        <span class="hcard__img"><img src="assets/quantium.webp" alt="Illustrative visual: trial store and control store sales lines" width="3840" height="2160" loading="lazy"></span>
+        <span class="hcard__meta"><span class="hcard__title">Did the trial stores really lift sales?</span><span class="hcard__tools">Python, Excel, PowerPoint</span></span></a><a class="hcard" href="project-starbucks.html" data-label="Who did the offer actually persuade?">
+        <span class="hcard__img"><img src="assets/starbucks.webp" alt="Illustrative visual: four uplift quadrants with customer dots" width="3840" height="2160" loading="lazy"></span>
+        <span class="hcard__meta"><span class="hcard__title">Who did the offer actually persuade?</span><span class="hcard__tools">SQL, Python, Excel, Power BI</span></span></a></div>
   </div>
 </section>
 
 <section class="sec cta on-red">
   <div class="wrap">
     <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
-    <a class="btn btn--white" href="contact.html" data-label="Contact">Say hello</a>
+    <a class="btn btn--yellow" href="contact.html" data-label="Contact">Contact me</a>
   </div>
 </section>
 </main>

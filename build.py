@@ -266,7 +266,7 @@ def pagehead(crumb, title, sub, meta=""):
     c = f'<a class="pagehead__crumb" href="{crumb[0]}" data-label="{E(crumb[1])}">&larr; {E(crumb[1])}</a>' if crumb else ""
     m = f'<div class="pagehead__meta" data-intro-fade>{meta}</div>' if meta else ""
     words = title.split(" ")
-    title_html = (E(" ".join(words[:-1])) + " " if len(words) > 1 else "") + "<em>" + E(words[-1]) + "</em>"
+    title_html = (E(" ".join(words[:-1])) + " <em>" + E(words[-1]) + "</em>") if len(words) > 1 else (E(words[0]) + "<em>.</em>")
     return f'''<section class="pagehead">
   <div data-intro-fade>{c}</div>
   <h1 class="pagehead__title" data-split data-intro>{title_html}</h1>
@@ -280,7 +280,7 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{E(title)}</title>
 <meta name="description" content="{E(desc)}">
-<meta name="theme-color" content="#0f0c0a">
+<meta name="theme-color" content="#ffc72c">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:image" content="assets/og.jpg">
@@ -315,10 +315,10 @@ def write_page(fname, title, label, desc, main, active, scripts=(), loader="", t
 def home():
     marq = "".join('<span>%s</span><i class="sep"></i>' % E(m) for m in MARQUEE)
     cards = "".join(
-        f'''<a class="pcard" href="project-{p["slug"]}.html" data-label="{E(p["title"])}" data-cursor="view" data-cursor-text="Open">
-        <div class="pcard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="3840" height="2160" loading="lazy"></div>
-        <h3>{E(p["title"])}</h3><p>{E(p["short"])}</p></a>'''
-        for p in PROJECTS[:3]
+        f'''<a class="hcard" href="project-{p["slug"]}.html" data-label="{E(p["title"])}">
+        <span class="hcard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="3840" height="2160" loading="lazy"></span>
+        <span class="hcard__meta"><span class="hcard__title">{E(p["title"])}</span><span class="hcard__tools">{E(p["tools"])}</span></span></a>'''
+        for p in PROJECTS
     )
     loader = '''<div class="loader" id="loader" aria-hidden="true">
   <div class="loader__bar"><span></span></div>
@@ -326,7 +326,6 @@ def home():
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
     main = f'''<section class="hero" id="top">
-  <svg class="hero__trend" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="rg" x1="0" x2="1" y1="1" y2="0"><stop offset="0" stop-color="#19c3ff"/><stop offset="0.5" stop-color="#7a4dff"/><stop offset="1" stop-color="#ff4fa3"/></linearGradient></defs><path d="M0,262 C70,255 120,205 200,212 S320,150 400,122 S560,112 640,62 S740,28 800,12"/></svg>
   <div class="hero__top" data-intro-fade>
     <span class="hero__kicker">Marketing &times; <span class="rot" data-words="Data|Strategy|Insight|Growth"><span>Data</span></span></span>
     <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
@@ -336,13 +335,19 @@ def home():
   <div class="hero__bottom" data-intro-fade>
     <p class="hero__lede">I'm Varesh, a marketer and data analyst based in {CITY}. I run the campaigns, then read the data to see what actually moved.</p>
     <div class="hero__actions">
-      <a class="btn btn--white" href="projects.html" data-label="Projects">See my projects</a>
-      <a class="btn btn--line" href="contact.html" data-label="Contact">Get in touch</a>
+      <a class="btn btn--red" href="projects.html" data-label="Projects">See my projects</a>
+      <a class="btn btn--line" href="contact.html" data-label="Contact">Contact me</a>
     </div>
   </div>
 </section>
 
 <section class="marquee" aria-hidden="true"><div class="marquee__track">{marq}{marq}</div></section>
+
+<section class="sec statement">
+  <div class="wrap">
+    <p class="statement__text" data-scrub>I turn campaign noise into <b>decisions that pay for themselves</b>. Strategy first, then the <b>SQL, Python and Tableau</b> to check I was right.</p>
+  </div>
+</section>
 
 <section class="sec">
   <div class="wrap">
@@ -374,20 +379,23 @@ def home():
   </div>
 </section>
 
-<section class="sec">
-  <div class="wrap">
-    <div class="feat__head">
-      <h2 class="h2" data-split>Selected <em>work.</em></h2>
-      <a class="btn btn--line-red" href="projects.html" data-label="Projects">All projects</a>
+<section class="hwork" id="work" aria-label="Selected work">
+  <div class="hwork__pin">
+    <div class="hwork__head wrap">
+      <h2 class="h2">Selected <em>work.</em></h2>
+      <div class="hwork__side">
+        <span class="hwork__count" aria-hidden="true"><b id="hworkPct">0</b><i>%</i></span>
+        <a class="btn btn--line" href="projects.html" data-label="Projects">All projects</a>
+      </div>
     </div>
-    <div class="cards" data-stagger>{cards}</div>
+    <div class="hwork__track" id="hworkTrack">{cards}</div>
   </div>
 </section>
 
 <section class="sec cta on-red">
   <div class="wrap">
     <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
-    <a class="btn btn--white" href="contact.html" data-label="Contact">Say hello</a>
+    <a class="btn btn--yellow" href="contact.html" data-label="Contact">Contact me</a>
   </div>
 </section>'''
     return write_page("index.html", "Varesh Nirbhavne | Marketing and data analytics", "Home",

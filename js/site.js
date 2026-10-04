@@ -117,8 +117,7 @@
       else if (d < -6) bar.classList.remove("is-hidden");
       last = y;
     }
-    if (lenis) lenis.on("scroll", function (e) { onScroll(e.scroll); });
-    else window.addEventListener("scroll", function () { onScroll(window.scrollY); }, { passive: true });
+    ScrollTrigger.create({ start: 0, end: "max", onUpdate: function (self) { onScroll(self.scroll()); } });
   })();
 
   /* ---------- progress ---------- */
@@ -176,8 +175,8 @@
   /* ---------- marquee tied to scroll speed ---------- */
   (function () {
     var track = $(".marquee__track"); if (!track || reduce) return;
-    var x = 0, vel = 0, last = window.scrollY;
-    window.addEventListener("scroll", function () { vel = window.scrollY - last; last = window.scrollY; }, { passive: true });
+    var x = 0, vel = 0;
+    ScrollTrigger.create({ start: 0, end: "max", onUpdate: function (self) { vel = self.getVelocity() / 60; } });
     gsap.ticker.add(function (time, dt) {
       var half = track.scrollWidth / 2; if (!half) return;
       var sp = 1.1 + Math.abs(vel) * 0.06;
@@ -185,6 +184,53 @@
       x -= sp * (dt / 16.7);
       if (x <= -half) x += half;
       gsap.set(track, { x: x });
+    });
+  })();
+
+  /* ---------- statement: words light up with scroll (reading emphasis) ---------- */
+  (function () {
+    var el = $("[data-scrub]"); if (!el) return;
+    var words = [];
+    (function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
+            var w = document.createElement("span"); w.className = "sw"; w.textContent = part;
+            frag.appendChild(w); words.push(w);
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    })(el);
+    if (reduce) { words.forEach(function (w) { w.classList.add("is-on"); }); return; }
+    ScrollTrigger.create({
+      trigger: el, start: "top 80%", end: "bottom 45%", scrub: true,
+      onUpdate: function (self) {
+        var n = Math.round(self.progress * words.length);
+        words.forEach(function (w, i) { w.classList.toggle("is-on", i < n); });
+      }
+    });
+  })();
+
+  /* ---------- selected work: pinned horizontal strip (desktop only) ---------- */
+  (function () {
+    var section = $(".hwork"), track = $("#hworkTrack"), pct = $("#hworkPct");
+    if (!section || !track || reduce) return;
+    var mm = gsap.matchMedia();
+    mm.add("(min-width: 900px)", function () {
+      var dist = function () { return Math.max(0, track.scrollWidth - window.innerWidth); };
+      var tween = gsap.to(track, {
+        x: function () { return -dist(); }, ease: "none",
+        scrollTrigger: {
+          trigger: section, start: "top top", end: function () { return "+=" + dist(); },
+          pin: true, scrub: 0.6, invalidateOnRefresh: true,
+          onUpdate: function (self) { if (pct) pct.textContent = Math.round(self.progress * 100); }
+        }
+      });
+      return function () { tween.kill(); gsap.set(track, { clearProps: "transform" }); };
     });
   })();
 
@@ -263,7 +309,7 @@
     var photo = $(".hero__photo");
     if (photo) { gsap.set(photo, { y: 120, opacity: 0 }); tl.to(photo, { y: 0, opacity: 1, duration: 1.5, ease: "expo.out" }, 0.2); }
     var disc = $(".hero__disc");
-    if (disc) { gsap.set(disc, { scale: 0.4 }); tl.to(disc, { scale: 1, duration: 1.6, ease: "expo.out" }, 0.1); }
+    if (disc) { gsap.set(disc, { scale: 0.5 }); tl.to(disc, { scale: 0.86, duration: 1.6, ease: "expo.out" }, 0.1); }
     var trend = $(".hero__trend");
     if (trend) { gsap.set(trend, { clipPath: "inset(0 100% 0 0)" }); tl.to(trend, { clipPath: "inset(0 0% 0 0)", duration: 2, ease: "power2.inOut" }, 0.5); }
     // Safety: never leave anything hidden if the timeline stalls

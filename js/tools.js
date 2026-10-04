@@ -93,7 +93,7 @@
     var X = function (x) { return pad.l + ((x - xMin) / (xMax - xMin)) * (w - pad.l - pad.r); };
     var Y = function (y) { return pad.t + (1 - (y - yLo) / (yHi - yLo)) * (h - pad.t - pad.b); };
 
-    ctx.strokeStyle = "rgba(42,10,14,0.3)"; ctx.setLineDash([5, 5]); ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(27,27,27,0.3)"; ctx.setLineDash([5, 5]); ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(pad.l, Y(0)); ctx.lineTo(w - pad.r, Y(0)); ctx.stroke(); ctx.setLineDash([]);
     ctx.beginPath();
     for (var i = 0; i <= 160; i++) {
@@ -101,20 +101,20 @@
       var y = clamp(f(x), yLo, yHi);
       if (i) ctx.lineTo(X(x), Y(y)); else ctx.moveTo(X(x), Y(y));
     }
-    ctx.strokeStyle = "#d90429"; ctx.lineWidth = 3.5; ctx.lineJoin = "round"; ctx.stroke();
+    ctx.strokeStyle = "#da291c"; ctx.lineWidth = 3.5; ctx.lineJoin = "round"; ctx.stroke();
     if (maxCpc > xMin && maxCpc < xMax) {
-      ctx.strokeStyle = "rgba(42,10,14,0.4)"; ctx.setLineDash([3, 4]); ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(27,27,27,0.4)"; ctx.setLineDash([3, 4]); ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(X(maxCpc), pad.t); ctx.lineTo(X(maxCpc), h - pad.b); ctx.stroke(); ctx.setLineDash([]);
-      ctx.fillStyle = "#2a0a0e"; ctx.font = "600 13px 'Inter Tight', sans-serif";
+      ctx.fillStyle = "#1b1b1b"; ctx.font = "600 13px 'Inter Tight', sans-serif";
       var right = X(maxCpc) > w * 0.6;
       ctx.textAlign = right ? "right" : "left";
       ctx.fillText("Break-even click cost " + gbp(maxCpc, 2), X(maxCpc) + (right ? -8 : 8), pad.t - 8);
     }
     var cy = clamp(net, yLo, yHi);
-    ctx.fillStyle = net >= 0 ? "#0f7b4d" : "#a00320";
+    ctx.fillStyle = net >= 0 ? "#1b1b1b" : "#da291c";
     ctx.beginPath(); ctx.arc(X(cpc), Y(cy), 8, 0, 6.2832); ctx.fill();
     ctx.strokeStyle = "#fff"; ctx.lineWidth = 3; ctx.stroke();
-    ctx.fillStyle = "#7a5559"; ctx.font = "500 12px 'Inter Tight', sans-serif"; ctx.textAlign = "left";
+    ctx.fillStyle = "#666666"; ctx.font = "500 12px 'Inter Tight', sans-serif"; ctx.textAlign = "left";
     ctx.fillText("Cost per click: £0.10", pad.l, h - 8);
     ctx.textAlign = "right"; ctx.fillText("£5.00", w - pad.r, h - 8);
   }
