@@ -438,14 +438,21 @@
 
   function runLoader() {
     var cnt = $(".loader__count b", loader), bar = $(".loader__bar span", loader);
+    var words = $$(".loader__words span", loader);
     curtain.style.display = "none";
+    words.forEach(function (w, i) { gsap.set(w, { yPercent: i ? 105 : 0 }); });
     var o = { v: 0 };
     var tl = gsap.timeline();
-    tl.to(o, { v: 100, duration: 1.9, ease: "power2.inOut", onUpdate: function () { cnt.textContent = Math.round(o.v); } }, 0)
-      .to(bar, { scaleX: 1, duration: 1.9, ease: "power2.inOut" }, 0)
-      .to(loader, { yPercent: -100, duration: 1, ease: "expo.inOut" }, 2.05)
-      .add(function () { playIntro(); }, 2.5)
-      .add(function () { loader.style.display = "none"; }, 3.1);
+    tl.to(o, { v: 100, duration: 2.5, ease: "power2.inOut", onUpdate: function () { cnt.textContent = Math.round(o.v); } }, 0)
+      .to(bar, { scaleX: 1, duration: 2.5, ease: "power2.inOut" }, 0);
+    words.forEach(function (w, i) {
+      var t = i * 0.9;
+      if (i > 0) tl.fromTo(w, { yPercent: 105 }, { yPercent: 0, duration: 0.5, ease: "expo.out" }, t);
+      if (i < words.length - 1) tl.to(w, { yPercent: -105, duration: 0.32, ease: "expo.in" }, t + 0.58);
+    });
+    tl.to(loader, { yPercent: -100, duration: 1, ease: "expo.inOut" }, 2.7)
+      .add(function () { playIntro(); }, 3.15)
+      .add(function () { loader.style.display = "none"; }, 3.8);
     try { sessionStorage.setItem("vn-seen", "1"); } catch (e) {}
   }
 
@@ -455,6 +462,20 @@
     try { sessionStorage.setItem("vn-seen", "1"); } catch (e) {}
     liftCurtain();
   }
+
+  /* ---------- magnetic buttons + how-I-work card scrub (desktop) ---------- */
+  gsap.matchMedia().add("(min-width: 900px) and (hover: hover)", function () {
+    $$(".btn").forEach(function (b) {
+      var xt = gsap.quickTo(b, "x", { duration: 0.5, ease: "power3" }), yt = gsap.quickTo(b, "y", { duration: 0.5, ease: "power3" });
+      b.addEventListener("pointermove", function (e) { var r = b.getBoundingClientRect(); xt((e.clientX - r.left - r.width / 2) * 0.22); yt((e.clientY - r.top - r.height / 2) * 0.3); });
+      b.addEventListener("pointerleave", function () { xt(0); yt(0); });
+    });
+    var cards = $$(".hcard");
+    cards.forEach(function (c, i) {
+      if (i === cards.length - 1) return;
+      gsap.to(c, { scale: 0.93, filter: "brightness(.72)", ease: "none", scrollTrigger: { trigger: cards[i + 1], start: "top 85%", end: "top 20%", scrub: true } });
+    });
+  });
 
   /* ---------- page transitions ---------- */
   function leave(href, name) {

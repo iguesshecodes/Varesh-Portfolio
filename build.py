@@ -345,6 +345,7 @@ def home():
     loader = '''<div class="loader" id="loader" aria-hidden="true">
   <div class="loader__bar"><span></span></div>
   <span class="loader__name">Varesh Nirbhavne</span>
+  <div class="loader__words"><span>Marketing</span><span>Data</span><span>Decisions</span></div>
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
     main = f'''<section class="hero blue" id="top">
@@ -383,33 +384,25 @@ def home():
   </div>
 </section>
 
-<section class="sec">
-  <div class="wrap">
-    <h2 class="h2" data-split>Two practices, <em>one person.</em></h2>
-    <div class="practices">
-      <div class="practice" data-reveal>
-        <h3>Marketing<span>.</span></h3>
-        <p>Content, social and paid campaigns across 20+ clients and a wedding-films studio. I set the strategy, make the work and own the channel end to end.</p>
-        <ul class="chips"><li>Paid social</li><li>Email and CRM</li><li>Content</li><li>Brand</li><li>Copywriting</li></ul>
-      </div>
-      <div class="practice" data-reveal data-delay="0.12">
-        <h3>Data<span>.</span></h3>
-        <p>SQL, Python and Tableau. I got tired of guessing what worked, so I learned to pull the numbers myself and let them settle the argument.</p>
-        <ul class="chips chips--red"><li>SQL</li><li>Python</li><li>Tableau</li><li>A/B testing</li><li>Segmentation</li></ul>
-      </div>
-    </div>
+<section class="how" id="how">
+  <div class="how__head wrap">
+    <p class="micro">How I work</p>
+    <h2 class="h2" data-split>Ask. Measure. <em>Decide.</em></h2>
+  </div>
+  <div class="how__list wrap">
+    <article class="hcard hcard--0" style="--i:0"><span class="hcard__no">01</span><div><h3>Ask the sharper question</h3><p>Content, social and paid campaigns across 20+ clients taught me that a vague brief wastes budget. I start by pinning down the decision the work has to support.</p><ul class="chips chips--w"><li>Strategy</li><li>Paid social</li><li>Email and CRM</li><li>Brand</li></ul></div></article>
+    <article class="hcard hcard--1" style="--i:1"><span class="hcard__no">02</span><div><h3>Measure it properly</h3><p>SQL, Python and Tableau. Matched control groups, holdouts and honest error bars, so a number can survive a hard question in a room.</p><ul class="chips chips--w"><li>SQL</li><li>Python</li><li>Tableau</li><li>A/B testing</li></ul></div></article>
+    <article class="hcard hcard--2" style="--i:2"><span class="hcard__no">03</span><div><h3>Decide, and say how sure</h3><p>Every project ends with a recommendation and a plain statement of what it cannot show. Store 88's weak control and a 0.48 churn model are both on this site on purpose.</p><ul class="chips chips--w"><li>Storytelling</li><li>Uplift</li><li>Segmentation</li></ul></div></article>
   </div>
 </section>
 
-<section class="sec dark">
+<section class="creds" aria-label="Credentials">
   <div class="wrap">
-    <ul class="stats" data-stagger>
-      <li><b data-count="1.9" data-dec="1" data-pre="£" data-suf="M">£1.9M</b><span>annual spend found in 59 loss-making campaigns</span></li>
-      <li><b data-count="79" data-pre="£" data-suf="M">£79M</b><span>geographic upside across London boroughs</span></li>
-      <li><b data-count="20" data-suf="+">20+</b><span>freelance clients analysed and advised</span></li>
-      <li><b data-count="5000">5,000</b><span>season simulations in the F1 forecast</span></li>
+    <p class="micro">Credentials</p>
+    <ul>
+      <li>Google Data Analytics</li><li>Masters Consultancy Challenge 2026 winner</li><li>BCG Strategy Consulting</li><li>Quantium Data Analytics</li><li>Lloyds Data Science</li><li>British Airways Data Science</li><li>Deloitte Data Analytics</li>
     </ul>
-    <p class="sec-note">The Revolut figures come from an independent portfolio study of a dataset, not from company data.</p>
+    <a class="btn btn--line-navy" href="certifications.html" data-label="Certifications">See certificates</a>
   </div>
 </section>
 
@@ -418,6 +411,7 @@ def home():
     <h2 class="h2" data-split>Selected <em>work.</em></h2>
     <a class="btn btn--line light-line" href="projects.html" data-label="Projects">All projects</a>
   </div>
+  <p class="wrap sec-note stack__note">The Revolut figures come from an independent portfolio study of a dataset, not from company data.</p>
   <div class="stack__list" id="stackList">{cards}</div>
 </section>
 
