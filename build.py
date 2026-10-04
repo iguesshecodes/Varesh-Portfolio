@@ -14,11 +14,12 @@ E = html.escape
 SITE = "Varesh Nirbhavne"
 EMAIL = "vareshworks@gmail.com"
 PHONE = "+44 7518 537897"
-LINKEDIN = "https://www.linkedin.com/in/varesh-nirbhavne-1619a02a3/"
-LINKEDIN_TXT = "linkedin.com/in/varesh-nirbhavne-1619a02a3"
+PHONE_IN = "+91 8104060003"
+LINKEDIN = "https://www.linkedin.com/in/vareshnirbhavne"
+LINKEDIN_TXT = "linkedin.com/in/vareshnirbhavne"
 GITHUB = "https://github.com/iguesshecodes"
 GITHUB_TXT = "github.com/iguesshecodes"
-CITY = "London"
+CITY = "London | Mumbai"
 
 NAV = [
     ("projects.html", "Projects"),
@@ -55,7 +56,7 @@ PROJECTS = [
     ),
     dict(
         slug="f1", theme="coral", title="F1 2026 Championship Forecast", short="Two models, one title race",
-        tools="Python, SQL, Tableau", year="2026", status="Live dashboard", done=True,
+        tools="Python, SQL, Tableau", year="2026", status="Completed", done=True,
         img="assets/f1.webp", alt="Dashboard comparing two F1 championship forecasts", tall=False,
         cap="Rebuilt in 4K from the project's CSV outputs. The simulation panels re-run the project's own settings and match its results.",
         orig="assets/orig-f1.webp", orig_size=(1200, 1169), orig_alt="The original Tableau dashboard after the Barcelona GP update", orig_cap="The original Tableau dashboard after the Barcelona GP update.",
@@ -125,8 +126,9 @@ PROJECTS = [
     dict(
         slug="quantium", theme="amber", title="Did the trial stores really lift sales?", short="Control stores and honest uplift",
         tools="Python, Excel, PowerPoint", year="2026", status="Completed", done=True,
-        img="assets/quantium.webp", alt="Illustrative visual: trial store and control store sales lines", tall=False,
-        cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
+        img="assets/quantium.webp", alt="Dashboard 1 of 2: chips category sales by lifestage, brand share and customer concentration", tall=False,
+        cap="Dashboard 1 of 2, from the project: who buys chips, what they buy and where sales concentrate.",
+        orig="assets/orig-quantium.webp", orig_size=(1456, 819), orig_alt="Dashboard 2 of 2: trial stores 77, 86 and 88 against their matched control stores", orig_cap="Dashboard 2 of 2, from the project: each trial store against its matched control.",
         lede="A retailer tries something in a few stores. Did sales move because of it, or would they have moved anyway? Control stores are how you tell the difference.",
         q="For a chips category manager: did the trial in selected stores produce a real uplift in sales?",
         did=[
@@ -136,10 +138,13 @@ PROJECTS = [
             "Presented the story in a client-facing PowerPoint structured with the Pyramid Principle.",
         ],
         found=[
+            "All three trial stores beat their matched controls: +26.2% (store 77), +13.2% (store 86) and +12.1% (store 88) in sales.",
+            "Store 88's control follows it loosely (correlation 0.31), so its uplift is the least certain. A staged rollout with a second read is the safer next step.",
+            "In the category, older singles/couples, retirees and older families deliver 58.0% of sales, and the top 25% of customers drive 52.2% of them.",
             "A fair comparison group has to come before any claim about uplift.",
             "A finding only matters once it is framed as a decision the client can make.",
         ],
-        metrics=[],
+        metrics=[("+26.2%", "sales uplift, store 77 vs control"), ("58.0%", "of sales from the three older lifestages"), ("52.2%", "of sales from the top 25% of customers")],
         note_h="About this project",
         note="Completed through the Quantium Data Science virtual experience on Forage. Not affiliated with or endorsed by Quantium.",
         tags=["Control store matching", "Uplift testing", "Pyramid Principle", "Retail analytics"],
@@ -348,7 +353,7 @@ def home():
   <div class="hero__micro micro" data-intro-fade>
     <span>Varesh Nirbhavne</span>
     <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
-    <span>{CITY}, UK &middot; Portfolio 2026</span>
+    <span>{CITY} &middot; Portfolio 2026</span>
   </div>
   <h1 class="hero__title" aria-label="Marketing and Data">
     <span class="hero__ln" data-ln aria-hidden="true">Marketing</span>
@@ -443,7 +448,7 @@ def projects_page():
 <section class="sec">
   <div class="wrap">
     <div class="plist">{rows}</div>
-    <p class="sec-note">The Revolut, F1, Netflix and Lloyds pages show visuals from the real work. The Quantium and Starbucks pages use illustrative artwork, and each one is labelled as such.</p>
+    <p class="sec-note">The Revolut, F1, Netflix, Lloyds and Quantium pages show visuals from the real work. Only the Starbucks page, still in progress, uses illustrative artwork, and it is labelled as such.</p>
   </div>
 </section>
 {nextlink("about.html", "About", "About me")}'''
@@ -634,7 +639,8 @@ def contact_page():
   <div class="wrap">
     <div class="clist" data-stagger>
       <div class="crow crow--copy"><span class="crow__k">Email</span><span class="crow__v">{EMAIL}</span><button class="btn btn--line-navy" data-copy="{EMAIL}" data-done="Email copied">Copy</button></div>
-      <div class="crow crow--copy"><span class="crow__k">Phone</span><span class="crow__v">{PHONE}</span><button class="btn btn--line-navy" data-copy="{PHONE}" data-done="Number copied">Copy</button></div>
+      <div class="crow crow--copy"><span class="crow__k">Phone UK</span><span class="crow__v">{PHONE}</span><button class="btn btn--line-navy" data-copy="{PHONE}" data-done="Number copied">Copy</button></div>
+      <div class="crow crow--copy"><span class="crow__k">Phone India</span><span class="crow__v">{PHONE_IN}</span><button class="btn btn--line-navy" data-copy="{PHONE_IN}" data-done="Number copied">Copy</button></div>
       <a class="crow" href="{LINKEDIN}" target="_blank" rel="noopener"><span class="crow__k">LinkedIn</span><span class="crow__v">{LINKEDIN_TXT}</span><span class="crow__go" aria-hidden="true">&nearr;</span></a>
       <a class="crow" href="{GITHUB}" target="_blank" rel="noopener"><span class="crow__k">GitHub</span><span class="crow__v">{GITHUB_TXT}</span><span class="crow__go" aria-hidden="true">&nearr;</span></a>
     </div>
