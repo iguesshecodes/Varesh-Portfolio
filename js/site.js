@@ -255,6 +255,7 @@
     var title = $(".hero__title", hero);
     function fit() {
       if (!title || !lines.length) return;
+      lines.forEach(function (ln) { ln.style.fontSize = "20px"; });
       var availW = title.clientWidth, cs = getComputedStyle(title);
       var availH = title.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
       var sizes = lines.map(function (ln) {
@@ -263,7 +264,7 @@
         return 100 * availW / w * 0.995;
       });
       var size = Math.min.apply(null, sizes);
-      size = Math.min(size, availH / (lines.length * 0.94));
+      size = Math.min(size, availH / (lines.length * 1.03));
       lines.forEach(function (ln) { ln.style.fontSize = size.toFixed(1) + "px"; });
     }
     fit();

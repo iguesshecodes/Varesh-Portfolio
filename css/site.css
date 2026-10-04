@@ -1,16 +1,17 @@
 /* ============ Fonts ============ */
-@font-face { font-family: "Bricolage"; src: url("../fonts/bricolage.woff2") format("woff2"); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: "Archivo"; src: url("../fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("../fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: "Inter Tight"; src: url("../fonts/inter-tight.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
-@font-face { font-family: "Instrument"; src: url("../fonts/instrument.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Instrument"; src: url("../fonts/instrument-italic.woff2") format("woff2"); font-weight: 400 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("../fonts/newsreader-italic.woff2") format("woff2"); font-weight: 200 800; font-style: italic; font-display: swap; }
 
 /* ============ Tokens: dark blue, white, black ============ */
 :root {
   --pad: clamp(20px, 4vw, 72px);
   --bar: 68px;
-  --display: "Bricolage", "Helvetica Neue", Arial, sans-serif;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --body: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
-  --italic: "Instrument", "Helvetica Neue", Arial, sans-serif;
+  --italic: "Newsreader", Georgia, "Times New Roman", serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   --blue: #1a3b9f;
@@ -59,7 +60,7 @@ ul, ol { list-style: none; }
 .gridlines { position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px); background-size: calc((100% - var(--pad) * 2) / 6) 100%; background-position: var(--pad) 0; }
 
 /* micro labels */
-.micro { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.micro { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
 
 /* split text */
 .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.03em 0.16em; margin-bottom: -0.16em; }
@@ -83,11 +84,14 @@ ul, ol { list-style: none; }
 .progress span { display: block; height: 100%; background: var(--sky); transform: scaleX(0); transform-origin: left; }
 
 /* ============ Bar and menu ============ */
-.bar { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--bar); display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 var(--pad); background: transparent; color: #fff; border-bottom: 1px solid transparent; transition: transform 0.5s var(--ease), background-color 0.4s, border-color 0.4s; }
+.bar { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--bar); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; padding: 0 var(--pad); background: transparent; color: #fff; border-bottom: 1px solid transparent; transition: transform 0.5s var(--ease), background-color 0.4s, border-color 0.4s; }
 .bar.is-solid { background: rgba(7, 9, 15, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: var(--line-w); }
 .bar.is-hidden { transform: translateY(-101%); }
-.bar__logo { font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: -0.045em; }
-.bar__logo b { color: var(--sky); font-weight: 800; }
+.bar__logo { position: relative; justify-self: start; display: block; overflow: hidden; height: 1.3em; line-height: 1.3; font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: -0.03em; white-space: nowrap; }
+.bar__logo span { display: block; transition: transform 0.6s var(--ease); }
+.bar__logo:hover span, .bar__logo:focus-visible span { transform: translateY(-100%); }
+.bar__logo span + span { font-family: var(--italic); font-style: italic; font-weight: 500; letter-spacing: 0; color: var(--sky); }
+.bar__cta, .bar__menu { grid-column: 3; justify-self: end; }
 .bar__links { display: flex; gap: clamp(16px, 2.2vw, 36px); font-weight: 500; font-size: 15px; }
 .bar__links a { position: relative; padding: 6px 0; opacity: 0.78; transition: opacity 0.3s; }
 .bar__links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #fff; transform: scaleX(0); transform-origin: right; transition: transform 0.5s var(--ease); }
@@ -476,3 +480,17 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 .creds .btn { justify-self: start; }
 .stack__note { color: var(--mute); margin-bottom: 24px; }
 .dark .stack__note, .stack .stack__note { color: rgb(255 255 255 / .6); }
+
+/* hero sticker: one tilted data tag, desktop only */
+.sticker { position: absolute; z-index: 5; left: var(--pad); top: 50%; width: clamp(210px, 19vw, 290px); padding: 16px 18px 14px; border-radius: 14px; background: #fff; color: var(--ink); rotate: -5deg; box-shadow: 0 18px 40px -12px rgb(6 14 52 / .55); transition: rotate .6s var(--ease), translate .6s var(--ease); }
+.sticker:hover { rotate: -1.5deg; translate: 0 -6px; }
+.sticker__k { display: block; color: var(--mute); font-size: 10.5px; }
+.sticker__v { display: block; margin: 6px 0 2px; font-family: var(--display); font-weight: 800; font-size: clamp(40px, 4.2vw, 64px); letter-spacing: -0.05em; line-height: .9; color: var(--blue); font-variant-numeric: tabular-nums; }
+.sticker__d { display: block; font-size: 13px; line-height: 1.3; color: var(--mute); }
+.sticker svg { display: block; width: 100%; height: 38px; margin-top: 10px; overflow: visible; }
+.sticker path { fill: none; stroke: var(--blue); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: spark 1.6s var(--ease) 1.2s forwards; }
+@keyframes spark { to { stroke-dashoffset: 0; } }
+@media (max-width: 1099.98px), (max-height: 700px) { .sticker { display: none; } }
+@media (prefers-reduced-motion: reduce) { .sticker path { animation: none; stroke-dashoffset: 0; } .sticker { transition: none; } }
+/* mixed-case display needs more air than uppercase on Archivo */
+.verdict, .statement__text, .about__pull, .hero__facts b, .pmetrics b, .kpis b { letter-spacing: -0.028em; word-spacing: 0.04em; }
