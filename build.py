@@ -102,8 +102,8 @@ PROJECTS = [
     dict(
         slug="lloyds", theme="green", title="Customer churn model", short="Predicting who leaves a bank, honestly",
         tools="BigQuery SQL, Random Forest, Tableau", year="2026", status="Completed", done=True,
-        img="assets/lloyds.webp", alt="Illustrative visual: ROC curves above a diagonal baseline", tall=False,
-        cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
+        img="assets/lloyds.webp", alt="The two LinkedIn carousel slides from the churn project, one light and one dark", tall=False,
+        cap="The two LinkedIn carousel slides from the project, shown as published.",
         lede="Predicting who will leave a bank is a ranking problem more than a prediction problem. This project treats it that way, and is honest about how much the model can say.",
         q="Which customers are most at risk of churning, and how much can a model genuinely tell us?",
         did=[
@@ -114,9 +114,10 @@ PROJECTS = [
         ],
         found=[
             "ROC-AUC landed between 0.576 and 0.601 across runs.",
+            "Age alone carried 52.6% of feature importance, and age plus income carried about 74% of the signal.",
             "That is only a little better than chance, so the model is useful for ranking risk, not for confident calls on a single customer.",
         ],
-        metrics=[],
+        metrics=[("37%", "churn rate in the 1K customer records"), ("52.6%", "of feature importance sits in age"), ("0.60", "ROC-AUC, honest and modest")],
         note_h="Why I show it anyway",
         note="I would rather show a modest result clearly than dress it up. The sensible next step is better features and a cost-based view of which customers are worth contacting. Completed through the Lloyds Banking Group Data Science virtual experience on Forage. Not affiliated with or endorsed by Lloyds Banking Group.",
         tags=["Random Forest", "BigQuery SQL", "Tableau", "Churn analysis"],
@@ -169,7 +170,7 @@ PROJECTS = [
 JOBS = [
     dict(when="Jun to Jul 2026", place="Birmingham", role="Strategic Consultant, Challenge Winner", org="Turner & Townsend",
          ctx="Part of the winning team in the University of Birmingham Masters Consultancy Challenge, run with Turner & Townsend.",
-         pts=["Built the <b>financial model behind a £50m infrastructure strategy</b>, checking every input and assumption so the logic survived live challenge.",
+         pts=["Built the <b>financial model for a fully costed research facility proposal</b> within a £50m budget constraint, checking every input and assumption so the logic survived live challenge.",
               "Presented findings and recommendations to <b>senior partners</b> and fielded Q&amp;A, translating dense analysis for a mixed audience.",
               "Beat competing university teams to <b>first place</b> on the strength of the numbers, not the slides."],
          chips=["Financial modelling", "Excel", "Scenario analysis", "Stakeholder communication"]),
@@ -219,9 +220,9 @@ CERTS = [
     dict(type="Job simulation", title="Data Analytics", by="Deloitte via Forage, 2026", img="", alt="",
          text="Worked a client-style dataset end to end, building a dashboard to spot the signal and classifying the data behind a business question.",
          chips=["Tableau", "Excel", "Data classification"]),
-    dict(type="Job simulation", title="Data Science", by="British Airways via Forage, 2026", img="", alt="",
-         text="Scraped and analysed customer reviews for sentiment, then built a predictive model to understand what drives a booking.",
-         chips=["Python", "Web scraping", "Sentiment analysis", "Modelling"]),
+    dict(type="Job simulation", title="Data Science", by="British Airways via Forage, 2026", img="assets/cert-ba.webp", alt="British Airways Data Science job simulation certificate of completion, 9 May 2026",
+         text="Modelled lounge eligibility at Heathrow Terminal 3 and predicted customer buying behaviour. Completed 9 May 2026.",
+         chips=["Python", "Modelling", "Customer behaviour"]),
 ]
 
 MARQUEE = ["SQL", "Python", "Tableau", "Power BI", "Excel", "Campaign ROI", "Uplift modelling", "Churn analysis", "A/B testing", "Paid social", "Email and CRM"]
@@ -442,7 +443,7 @@ def projects_page():
 <section class="sec">
   <div class="wrap">
     <div class="plist">{rows}</div>
-    <p class="sec-note">The Revolut, F1 and Netflix pages show visuals from the real work. The Lloyds, Quantium and Starbucks pages use illustrative artwork, and each one is labelled as such.</p>
+    <p class="sec-note">The Revolut, F1, Netflix and Lloyds pages show visuals from the real work. The Quantium and Starbucks pages use illustrative artwork, and each one is labelled as such.</p>
   </div>
 </section>
 {nextlink("about.html", "About", "About me")}'''

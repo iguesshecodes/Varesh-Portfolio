@@ -43,12 +43,12 @@
 </section>
 <section class="sec">
   <div class="wrap">
-    <figure class="shot" data-img-in><img src="assets/lloyds.webp" alt="Illustrative visual: ROC curves above a diagonal baseline" width="3840" height="2160"><figcaption>Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.</figcaption></figure>
-    
+    <figure class="shot" data-img-in><img src="assets/lloyds.webp" alt="The two LinkedIn carousel slides from the churn project, one light and one dark" width="3840" height="2160"><figcaption>The two LinkedIn carousel slides from the project, shown as published.</figcaption></figure>
+    <ul class="pmetrics" data-stagger><li><b>37%</b><span>churn rate in the 1K customer records</span></li><li><b>52.6%</b><span>of feature importance sits in age</span></li><li><b>0.60</b><span>ROC-AUC, honest and modest</span></li></ul>
     <div class="pcols" data-stagger>
       <div><h3>The question</h3><p>Which customers are most at risk of churning, and how much can a model genuinely tell us?</p></div>
       <div><h3>What I did</h3><ul><li>Prepared the customer data with BigQuery SQL.</li><li>Trained a Random Forest classifier to estimate churn risk.</li><li>Built Tableau views to show risk across customer groups.</li><li>Packaged the results as LinkedIn carousel assets.</li></ul></div>
-      <div><h3>What I found</h3><ul><li>ROC-AUC landed between 0.576 and 0.601 across runs.</li><li>That is only a little better than chance, so the model is useful for ranking risk, not for confident calls on a single customer.</li></ul></div>
+      <div><h3>What I found</h3><ul><li>ROC-AUC landed between 0.576 and 0.601 across runs.</li><li>Age alone carried 52.6% of feature importance, and age plus income carried about 74% of the signal.</li><li>That is only a little better than chance, so the model is useful for ranking risk, not for confident calls on a single customer.</li></ul></div>
     </div>
     <div class="pnote" data-reveal><h3>Why I show it anyway</h3><p>I would rather show a modest result clearly than dress it up. The sensible next step is better features and a cost-based view of which customers are worth contacting. Completed through the Lloyds Banking Group Data Science virtual experience on Forage. Not affiliated with or endorsed by Lloyds Banking Group.</p></div>
     <ul class="chips pchips"><li>Random Forest</li><li>BigQuery SQL</li><li>Tableau</li><li>Churn analysis</li></ul>
