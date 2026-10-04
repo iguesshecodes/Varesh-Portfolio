@@ -30,10 +30,11 @@ NAV = [
 
 PROJECTS = [
     dict(
-        slug="revolut", title="Revolut London Growth Study", short="How a fintech could win more of London",
+        slug="revolut", theme="blue", title="Revolut London Growth Study", short="How a fintech could win more of London",
         tools="SQL, Python, Tableau", year="2026", status="Completed", done=True,
-        img="assets/revolut.webp", alt="Infographic from the Revolut London growth study", tall=True,
-        cap="Infographic from the analysis.",
+        img="assets/revolut.webp", alt="Findings board for the Revolut London growth study", tall=False,
+        cap="Findings board built from the figures reported in the study. The underlying customer data is not shown.",
+        orig="assets/orig-revolut.webp", orig_size=(1400, 1400), orig_alt="The original LinkedIn infographic for the Revolut study", orig_cap="The original infographic from the study.",
         lede="Where should a fast-growing fintech spend to win more of London? I read the answer straight out of the data.",
         q="Where could a fintech like Revolut spend to grow across London? The answer was buried in messy customer and campaign data across 33 boroughs, with campaign spend and churn tangled together.",
         did=[
@@ -53,10 +54,11 @@ PROJECTS = [
         tags=["Marketing analytics", "ROI analysis", "Geo analysis", "Churn", "Data storytelling"],
     ),
     dict(
-        slug="f1", title="F1 2026 Championship Forecast", short="Two models, one title race",
+        slug="f1", theme="coral", title="F1 2026 Championship Forecast", short="Two models, one title race",
         tools="Python, SQL, Tableau", year="2026", status="Live dashboard", done=True,
-        img="assets/f1.webp", alt="Tableau dashboard comparing two F1 championship forecasts", tall=False,
-        cap="Dashboard screenshot after the Barcelona GP update.",
+        img="assets/f1.webp", alt="Dashboard comparing two F1 championship forecasts", tall=False,
+        cap="Rebuilt in 4K from the project's CSV outputs. The simulation panels re-run the project's own settings and match its results.",
+        orig="assets/orig-f1.webp", orig_size=(1200, 1169), orig_alt="The original Tableau dashboard after the Barcelona GP update", orig_cap="The original Tableau dashboard after the Barcelona GP update.",
         lede="Forecasting the 2026 title race two ways, and letting the methods argue with each other.",
         q="A championship runs over a noisy season, and a season under new rules is harder still. A single prediction hides the range, and different modelling choices can tell very different stories. How wide is the uncertainty?",
         did=[
@@ -71,33 +73,34 @@ PROJECTS = [
         ],
         metrics=[("5,000", "Monte Carlo season runs"), ("2", "models compared side by side"), ("Live", "Tableau dashboard")],
         note_h="How to read it",
-        note="These are probabilities as of the Barcelona GP update, not predictions of who wins. They move with every race, and I check the inputs against official results. Independent project using public data, not affiliated with or endorsed by Formula 1.",
+        note="These are probabilities as of the Barcelona GP update, not predictions of who wins, and they move with every race. The simulation uses the current standings, an assumed average of points per race, 14 races left and an 18% chance of a DNF, and it covers seven drivers only. Independent project using public data, not affiliated with or endorsed by Formula 1.",
         tags=["Monte Carlo", "BigQuery SQL", "Python", "Tableau", "Forecasting"],
     ),
     dict(
-        slug="netflix", title="Netflix Content Library Analysis", short="What 8,807 titles say about a catalogue",
+        slug="netflix", theme="magenta", title="Netflix Content Library Analysis", short="What 8,807 titles say about a catalogue",
         tools="Python, Pandas, Seaborn", year="2026", status="Completed", done=True,
-        img="assets/netflix.webp", alt="Netflix library analysis dashboard", tall=False,
-        cap="One of the dashboards from the analysis.",
+        img="assets/netflix.webp", alt="Netflix content library dashboard", tall=False,
+        cap="Rebuilt in 4K from the project dataset, with every figure recomputed from the 8,807 rows.",
+        orig="assets/orig-netflix.webp", orig_size=(1600, 1105), orig_alt="The original Netflix executive dashboard", orig_cap="The original executive dashboard from the project.",
         lede="An end to end look at Netflix's full catalogue: what it stocks, where it comes from and how fast it moves.",
-        q="The catalogue runs to nearly 9,000 titles across 127 countries. What is it actually made of, who is it for, and how quickly does content travel from release to the platform?",
+        q="The catalogue runs to nearly 9,000 titles across 126 countries. What is it actually made of, who is it for, and how quickly does content travel from release to the platform?",
         did=[
             "Cleaned the full titles dataset in Python with Pandas, repairing broken ratings and dates.",
             "Split the multi-value genre and country fields so each could be counted properly.",
             "Built six Matplotlib and Seaborn dashboards: a month by year heatmap, genre and rating breakdowns, duration by audience, a country content mix and a release to addition age gap.",
         ],
         found=[
-            "The library skews adult, with TV-MA and TV-14 leading, and international, with International Movies the top genre at 24%.",
+            "The library skews adult, with TV-MA and TV-14 leading, and international: International Movies is the most common genre tag, on 31% of titles.",
             "It leans to film over TV, 6,131 titles against 2,676.",
-            "Content moves fast: the median film lands a year after release, and shows land in the same year. Additions ramped hard from 2015 and peaked around 2019.",
+            "Content moves fast: the median film is added two years after its release year, and shows land in the same year. Additions ramped hard from 2015 and peaked in 2019 at 2,016 titles.",
         ],
-        metrics=[("8,807", "titles across 127 countries"), ("1 yr", "median film, release to Netflix"), ("24%", "of titles are International Movies")],
+        metrics=[("8,807", "titles in the catalogue"), ("2 yrs", "median gap, film release to Netflix"), ("31%", "of titles tagged International Movies")],
         note_h="A note on the data",
         note="Built on a public Netflix titles dataset. Independent portfolio project, not affiliated with or endorsed by Netflix.",
         tags=["Python", "Pandas", "Seaborn", "EDA", "Data cleaning"],
     ),
     dict(
-        slug="lloyds", title="Customer churn model", short="Predicting who leaves a bank, honestly",
+        slug="lloyds", theme="green", title="Customer churn model", short="Predicting who leaves a bank, honestly",
         tools="BigQuery SQL, Random Forest, Tableau", year="2026", status="Completed", done=True,
         img="assets/lloyds.webp", alt="Illustrative visual: ROC curves above a diagonal baseline", tall=False,
         cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
@@ -119,7 +122,7 @@ PROJECTS = [
         tags=["Random Forest", "BigQuery SQL", "Tableau", "Churn analysis"],
     ),
     dict(
-        slug="quantium", title="Did the trial stores really lift sales?", short="Control stores and honest uplift",
+        slug="quantium", theme="amber", title="Did the trial stores really lift sales?", short="Control stores and honest uplift",
         tools="Python, Excel, PowerPoint", year="2026", status="Completed", done=True,
         img="assets/quantium.webp", alt="Illustrative visual: trial store and control store sales lines", tall=False,
         cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
@@ -141,7 +144,7 @@ PROJECTS = [
         tags=["Control store matching", "Uplift testing", "Pyramid Principle", "Retail analytics"],
     ),
     dict(
-        slug="starbucks", title="Who did the offer actually persuade?", short="Uplift modelling, in progress",
+        slug="starbucks", theme="teal", title="Who did the offer actually persuade?", short="Uplift modelling, in progress",
         tools="SQL, Python, Excel, Power BI", year="2026", status="In progress", done=False,
         img="assets/starbucks.webp", alt="Illustrative visual: four uplift quadrants with customer dots", tall=False,
         cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
@@ -214,7 +217,7 @@ CERTS = [
 
 MARQUEE = ["SQL", "Python", "Tableau", "Power BI", "Excel", "Campaign ROI", "Uplift modelling", "Churn analysis", "A/B testing", "Paid social", "Email and CRM"]
 
-ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d90429'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E"
+ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8402d'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E"
 
 
 # ------------------------------------------------------------------ SHARED PIECES
@@ -262,20 +265,22 @@ def nextlink(href, label, title):
 def pagehead(crumb, title, sub, meta=""):
     c = f'<a class="pagehead__crumb" href="{crumb[0]}" data-label="{E(crumb[1])}">&larr; {E(crumb[1])}</a>' if crumb else ""
     m = f'<div class="pagehead__meta" data-intro-fade>{meta}</div>' if meta else ""
+    words = title.split(" ")
+    title_html = (E(" ".join(words[:-1])) + " " if len(words) > 1 else "") + "<em>" + E(words[-1]) + "</em>"
     return f'''<section class="pagehead">
   <div data-intro-fade>{c}</div>
-  <h1 class="pagehead__title" data-split data-intro>{E(title)}</h1>
+  <h1 class="pagehead__title" data-split data-intro>{title_html}</h1>
   <p class="pagehead__sub" data-intro-fade>{E(sub)}</p>
   {m}
 </section>'''
 
 
-def page(fname, title, label, desc, main, active, scripts=(), loader=""):
+def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="coral"):
     head = f'''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{E(title)}</title>
 <meta name="description" content="{E(desc)}">
-<meta name="theme-color" content="#d90429">
+<meta name="theme-color" content="#0f0c0a">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:image" content="assets/og.jpg">
@@ -288,7 +293,6 @@ def page(fname, title, label, desc, main, active, scripts=(), loader=""):
     body = f'''<a class="skip" href="#main">Skip to content</a>
 <div class="curtain" id="curtain" data-label="{E(label)}"><span class="curtain__label" aria-hidden="true"></span></div>
 {loader}
-<div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
 <div class="progress" aria-hidden="true"><span></span></div>
 {bar(active)}
 <main id="main">
@@ -299,9 +303,9 @@ def page(fname, title, label, desc, main, active, scripts=(), loader=""):
     return head, body
 
 
-def write_page(fname, title, label, desc, main, active, scripts=(), loader=""):
-    head, body = page(fname, title, label, desc, main, active, scripts, loader)
-    doc = f"<!doctype html>\n<html lang=\"en-GB\">\n<head>\n{head}\n</head>\n<body>\n{body}\n</body>\n</html>\n"
+def write_page(fname, title, label, desc, main, active, scripts=(), loader="", theme="coral"):
+    head, body = page(fname, title, label, desc, main, active, scripts, loader, theme)
+    doc = f"<!doctype html>\n<html lang=\"en-GB\">\n<head>\n{head}\n</head>\n<body class=\"t-{theme}\">\n{body}\n</body>\n</html>\n"
     with open(os.path.join(ROOT, fname), "w", encoding="utf-8") as f:
         f.write(doc)
     return head, body
@@ -312,7 +316,7 @@ def home():
     marq = "".join('<span>%s</span><i class="sep"></i>' % E(m) for m in MARQUEE)
     cards = "".join(
         f'''<a class="pcard" href="project-{p["slug"]}.html" data-label="{E(p["title"])}" data-cursor="view" data-cursor-text="Open">
-        <div class="pcard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="1200" height="900" loading="lazy"></div>
+        <div class="pcard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="3840" height="2160" loading="lazy"></div>
         <h3>{E(p["title"])}</h3><p>{E(p["short"])}</p></a>'''
         for p in PROJECTS[:3]
     )
@@ -322,13 +326,12 @@ def home():
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
     main = f'''<section class="hero" id="top">
-  <canvas class="hero__canvas" aria-hidden="true"></canvas>
-  <svg class="hero__trend" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0,262 C70,255 120,205 200,212 S320,150 400,122 S560,112 640,62 S740,28 800,12"/></svg>
+  <svg class="hero__trend" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="rg" x1="0" x2="1" y1="1" y2="0"><stop offset="0" stop-color="#19c3ff"/><stop offset="0.5" stop-color="#7a4dff"/><stop offset="1" stop-color="#ff4fa3"/></linearGradient></defs><path d="M0,262 C70,255 120,205 200,212 S320,150 400,122 S560,112 640,62 S740,28 800,12"/></svg>
   <div class="hero__top" data-intro-fade>
     <span class="hero__kicker">Marketing &times; <span class="rot" data-words="Data|Strategy|Insight|Growth"><span>Data</span></span></span>
     <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
   </div>
-  <h1 class="hero__title" data-split data-intro><span class="ln">Marketing,</span><span class="ln">and the numbers</span><span class="ln">to prove it.</span></h1>
+  <h1 class="hero__title" data-split data-intro><span class="ln">Marketing,</span><span class="ln">and the numbers</span><span class="ln">to <em>prove it.</em></span></h1>
   <figure class="hero__photo"><span class="hero__disc"></span><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></figure>
   <div class="hero__bottom" data-intro-fade>
     <p class="hero__lede">I'm Varesh, a marketer and data analyst based in {CITY}. I run the campaigns, then read the data to see what actually moved.</p>
@@ -383,19 +386,19 @@ def home():
 
 <section class="sec cta on-red">
   <div class="wrap">
-    <h2 class="h2" data-split>Got a role in mind?</h2>
+    <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
     <a class="btn btn--white" href="contact.html" data-label="Contact">Say hello</a>
   </div>
 </section>'''
     return write_page("index.html", "Varesh Nirbhavne | Marketing and data analytics", "Home",
                       "Portfolio of Varesh Nirbhavne, a marketer and data analyst in London. Campaign work, SQL, Python and Tableau projects, and two small tools you can try.",
-                      main, "index.html", loader=loader)
+                      main, "index.html", loader=loader, theme="coral")
 
 
 def projects_page():
     rows = ""
     for p in PROJECTS:
-        rows += f'''<a class="prow" href="project-{p["slug"]}.html" data-img="{p["img"]}" data-label="{E(p["title"])}" data-cursor="view" data-cursor-text="Open">
+        rows += f'''<a class="prow" href="project-{p["slug"]}.html" data-label="{E(p["title"])}" data-cursor="view" data-cursor-text="Open">
       <span class="prow__title">{E(p["title"])}</span>
       <span class="prow__meta"><span>{E(p["tools"])}</span><span class="tag tag--soft">{E(p["status"])}</span></span>
       <span class="prow__arrow" aria-hidden="true">&nearr;</span>
@@ -409,10 +412,9 @@ def projects_page():
     <p class="sec-note">The Revolut, F1 and Netflix pages show visuals from the real work. The Lloyds, Quantium and Starbucks pages use illustrative artwork, and each one is labelled as such.</p>
   </div>
 </section>
-{nextlink("about.html", "About", "About me")}
-<div class="peek" id="peek" aria-hidden="true"><img src="" alt=""></div>'''
+{nextlink("about.html", "About", "About me")}'''
     return write_page("projects.html", "Projects | Varesh Nirbhavne", "Projects",
-                      "Marketing analytics, forecasting and customer modelling projects by Varesh Nirbhavne.", main, "projects.html")
+                      "Marketing analytics, forecasting and customer modelling projects by Varesh Nirbhavne.", main, "projects.html", theme="violet")
 
 
 def project_page(i, p):
@@ -422,8 +424,12 @@ def project_page(i, p):
     metrics = ""
     if p["metrics"]:
         metrics = '<ul class="pmetrics" data-stagger>' + "".join('<li><b>%s</b><span>%s</span></li>' % (E(a), E(b)) for a, b in p["metrics"]) + "</ul>"
-    cls = "shot shot--tall" if p["tall"] else "shot"
-    w, h = {"revolut": (1400, 1400), "f1": (1200, 1169), "netflix": (1600, 1105)}.get(p["slug"], (3840, 2160))
+    cls = "shot"
+    w, h = 3840, 2160
+    second = ""
+    if p.get("orig"):
+        ow, oh = p["orig_size"]
+        second = f'<figure class="shot shot--second" data-img-in><img src="{p["orig"]}" alt="{E(p["orig_alt"])}" width="{ow}" height="{oh}" loading="lazy"><figcaption>{E(p["orig_cap"])}</figcaption></figure>'
     chips = '<ul class="chips pchips">' + li(p["tags"]) + "</ul>"
     main = pagehead(("projects.html", "All projects"), p["title"], p["lede"], meta) + f'''
 <section class="sec">
@@ -437,11 +443,12 @@ def project_page(i, p):
     </div>
     <div class="pnote" data-reveal><h3>{E(p["note_h"])}</h3><p>{E(p["note"])}</p></div>
     {chips}
+    {second}
   </div>
 </section>
 {nextlink("project-%s.html" % nxt["slug"], nxt["title"], nxt["title"])}'''
     return write_page("project-%s.html" % p["slug"], p["title"] + " | Varesh Nirbhavne", p["title"].split(" ")[0],
-                      p["lede"], main, "projects.html")
+                      p["lede"], main, "projects.html", theme=p["theme"])
 
 
 def about_page():
@@ -480,7 +487,7 @@ def about_page():
 </section>
 {nextlink("experience.html", "Work experience", "Work experience")}'''
     return write_page("about.html", "About | Varesh Nirbhavne", "About",
-                      "Varesh Nirbhavne is a marketer who got curious about the data. MSc Marketing, University of Birmingham.", main, "about.html")
+                      "Varesh Nirbhavne is a marketer who got curious about the data. MSc Marketing, University of Birmingham.", main, "about.html", theme="coral")
 
 
 def experience_page():
@@ -501,7 +508,7 @@ def experience_page():
 <section class="sec"><div class="wrap"><div class="jobs">{jobs}</div></div></section>
 {nextlink("certifications.html", "Certifications", "Education and certifications")}'''
     return write_page("experience.html", "Work experience | Varesh Nirbhavne", "Experience",
-                      "Work experience of Varesh Nirbhavne: consulting, marketing strategy, freelance analytics and a Shopify store.", main, "experience.html")
+                      "Work experience of Varesh Nirbhavne: consulting, marketing strategy, freelance analytics and a Shopify store.", main, "experience.html", theme="blue")
 
 
 def certs_page():
@@ -526,7 +533,7 @@ def certs_page():
 </section>
 {nextlink("tools.html", "Tools", "Try the tools")}'''
     return write_page("certifications.html", "Certifications | Varesh Nirbhavne", "Certifications",
-                      "Education and certifications of Varesh Nirbhavne: MSc Marketing, Google Data Analytics and four Forage job simulations.", main, "certifications.html")
+                      "Education and certifications of Varesh Nirbhavne: MSc Marketing, Google Data Analytics and four Forage job simulations.", main, "certifications.html", theme="green")
 
 
 def tools_page():
@@ -584,7 +591,7 @@ def tools_page():
   </div>
 </section>''' + "\n" + nextlink("contact.html", "Contact", "Get in touch")
     return write_page("tools.html", "Tools | Varesh Nirbhavne", "Tools",
-                      "Two small tools by Varesh Nirbhavne: a campaign ROI calculator and an A/B test checker.", main, "tools.html", scripts=["js/tools.js"])
+                      "Two small tools by Varesh Nirbhavne: a campaign ROI calculator and an A/B test checker.", main, "tools.html", scripts=["js/tools.js"], theme="magenta")
 
 
 def contact_page():
@@ -602,7 +609,7 @@ def contact_page():
   </div>
 </section>'''
     return write_page("contact.html", "Contact | Varesh Nirbhavne", "Contact",
-                      "Contact Varesh Nirbhavne about marketing and data analyst roles.", main, "contact.html")
+                      "Contact Varesh Nirbhavne about marketing and data analyst roles.", main, "contact.html", theme="coral")
 
 
 def build():

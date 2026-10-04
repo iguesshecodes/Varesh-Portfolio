@@ -5,20 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>F1 2026 Championship Forecast | Varesh Nirbhavne</title>
 <meta name="description" content="Forecasting the 2026 title race two ways, and letting the methods argue with each other.">
-<meta name="theme-color" content="#d90429">
+<meta name="theme-color" content="#0f0c0a">
 <meta property="og:title" content="F1 2026 Championship Forecast | Varesh Nirbhavne">
 <meta property="og:description" content="Forecasting the 2026 title race two ways, and letting the methods argue with each other.">
 <meta property="og:image" content="assets/og.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d90429'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e8402d'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/lenis.css">
 <link rel="stylesheet" href="css/site.css">
 <noscript><style>.curtain,.loader{display:none!important}</style></noscript>
 </head>
-<body>
+<body class="t-coral">
 <a class="skip" href="#main">Skip to content</a>
 <div class="curtain" id="curtain" data-label="F1"><span class="curtain__label" aria-hidden="true"></span></div>
 
-<div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
 <div class="progress" aria-hidden="true"><span></span></div>
 <header class="bar" id="bar">
   <a class="bar__logo" href="index.html" data-label="Home" aria-label="Varesh Nirbhavne, home">Varesh<b>.</b></a>
@@ -37,21 +36,22 @@
 <main id="main">
 <section class="pagehead">
   <div data-intro-fade><a class="pagehead__crumb" href="projects.html" data-label="All projects">&larr; All projects</a></div>
-  <h1 class="pagehead__title" data-split data-intro>F1 2026 Championship Forecast</h1>
+  <h1 class="pagehead__title" data-split data-intro>F1 2026 Championship <em>Forecast</em></h1>
   <p class="pagehead__sub" data-intro-fade>Forecasting the 2026 title race two ways, and letting the methods argue with each other.</p>
   <div class="pagehead__meta" data-intro-fade><span class="tag tag--done">Live dashboard</span><span class="tag">2026</span><span class="tag">Python, SQL, Tableau</span></div>
 </section>
 <section class="sec">
   <div class="wrap">
-    <figure class="shot" data-img-in><img src="assets/f1.webp" alt="Tableau dashboard comparing two F1 championship forecasts" width="1200" height="1169"><figcaption>Dashboard screenshot after the Barcelona GP update.</figcaption></figure>
+    <figure class="shot" data-img-in><img src="assets/f1.webp" alt="Dashboard comparing two F1 championship forecasts" width="3840" height="2160"><figcaption>Rebuilt in 4K from the project&#x27;s CSV outputs. The simulation panels re-run the project&#x27;s own settings and match its results.</figcaption></figure>
     <ul class="pmetrics" data-stagger><li><b>5,000</b><span>Monte Carlo season runs</span></li><li><b>2</b><span>models compared side by side</span></li><li><b>Live</b><span>Tableau dashboard</span></li></ul>
     <div class="pcols" data-stagger>
       <div><h3>The question</h3><p>A championship runs over a noisy season, and a season under new rules is harder still. A single prediction hides the range, and different modelling choices can tell very different stories. How wide is the uncertainty?</p></div>
       <div><h3>What I did</h3><ul><li>Used the Kaggle Ergast archive as the historical base and prepared it with SQL.</li><li>Ran a Monte Carlo simulation in Python: 5,000 possible seasons.</li><li>Built a second, weighted SQL model to compare against it.</li><li>Compared both in a Tableau dashboard after the Barcelona GP update.</li></ul></div>
       <div><h3>What I found</h3><ul><li>The methods disagree, and that is the point. Monte Carlo concentrates the title on one driver at about 76%, while the weighted model spreads it much wider, with the leader in the low 20s.</li><li>Seeing where they diverge is more honest than trusting a single forecast.</li></ul></div>
     </div>
-    <div class="pnote" data-reveal><h3>How to read it</h3><p>These are probabilities as of the Barcelona GP update, not predictions of who wins. They move with every race, and I check the inputs against official results. Independent project using public data, not affiliated with or endorsed by Formula 1.</p></div>
+    <div class="pnote" data-reveal><h3>How to read it</h3><p>These are probabilities as of the Barcelona GP update, not predictions of who wins, and they move with every race. The simulation uses the current standings, an assumed average of points per race, 14 races left and an 18% chance of a DNF, and it covers seven drivers only. Independent project using public data, not affiliated with or endorsed by Formula 1.</p></div>
     <ul class="chips pchips"><li>Monte Carlo</li><li>BigQuery SQL</li><li>Python</li><li>Tableau</li><li>Forecasting</li></ul>
+    <figure class="shot shot--second" data-img-in><img src="assets/orig-f1.webp" alt="The original Tableau dashboard after the Barcelona GP update" width="1200" height="1169" loading="lazy"><figcaption>The original Tableau dashboard after the Barcelona GP update.</figcaption></figure>
   </div>
 </section>
 <a class="next" href="project-netflix.html" data-label="Netflix Content Library Analysis" data-cursor="view" data-cursor-text="Go"><small>Next</small><strong>Netflix Content Library Analysis</strong></a>

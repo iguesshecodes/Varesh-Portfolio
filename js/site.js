@@ -8,7 +8,6 @@
   var curtain = $("#curtain");
   var loader = $("#loader");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var hasGsap = !!(window.gsap && window.ScrollTrigger);
 
   /* If anything essential is missing, show the page plainly and stop. */
@@ -128,35 +127,6 @@
     gsap.to(p, { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.2 } });
   })();
 
-  /* ---------- cursor ---------- */
-  (function () {
-    var c = $(".cursor");
-    if (!c || !fine || reduce) return;
-    body.classList.add("has-cursor");
-    var label = $(".cursor__label", c);
-    var xTo = gsap.quickTo(c, "x", { duration: 0.35, ease: "power3" });
-    var yTo = gsap.quickTo(c, "y", { duration: 0.35, ease: "power3" });
-    window.addEventListener("mousemove", function (e) { xTo(e.clientX - c.offsetWidth / 2); yTo(e.clientY - c.offsetHeight / 2); });
-    document.addEventListener("mouseover", function (e) {
-      var t = e.target.closest ? e.target.closest("[data-cursor], a, button, .btn, input, label") : null;
-      if (!t) { c.removeAttribute("data-state"); if (label) label.textContent = ""; return; }
-      var s = t.getAttribute("data-cursor");
-      if (s === "view") { c.setAttribute("data-state", "view"); if (label) label.textContent = t.getAttribute("data-cursor-text") || "View"; }
-      else { c.setAttribute("data-state", "hover"); if (label) label.textContent = ""; }
-    });
-  })();
-
-  /* ---------- magnetic buttons ---------- */
-  if (fine && !reduce) {
-    $$(".btn").forEach(function (b) {
-      b.addEventListener("mousemove", function (e) {
-        var r = b.getBoundingClientRect();
-        gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * 0.22, y: (e.clientY - r.top - r.height / 2) * 0.3, duration: 0.5, ease: "power3.out" });
-      });
-      b.addEventListener("mouseleave", function () { gsap.to(b, { x: 0, y: 0, duration: 0.9, ease: "elastic.out(1,0.4)" }); });
-    });
-  }
-
   /* ---------- split text ---------- */
   function splitNode(node, out) {
     Array.prototype.slice.call(node.childNodes).forEach(function (n) {
@@ -184,49 +154,6 @@
     splits.push({ el: el, words: out, intro: el.hasAttribute("data-intro") });
   });
   if (!reduce) splits.forEach(function (s) { gsap.set(s.words, { yPercent: 115 }); });
-
-  /* ---------- hero: canvas dots ---------- */
-  function heroCanvas() {
-    var cv = $(".hero__canvas"); if (!cv) return;
-    var ctx = cv.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = 0, h = 0, mx = -999, my = -999, tx = -999, ty = -999, on = true, t0 = performance.now();
-    var gap = 34;
-    function size() {
-      var r = cv.getBoundingClientRect(); w = r.width; h = r.height;
-      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    size(); window.addEventListener("resize", size);
-    var hero = cv.parentNode;
-    hero.addEventListener("mousemove", function (e) { var r = cv.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; });
-    hero.addEventListener("mouseleave", function () { tx = -999; ty = -999; });
-    new IntersectionObserver(function (es) { on = es[0].isIntersecting; }, { threshold: 0 }).observe(hero);
-    function frame(now) {
-      requestAnimationFrame(frame);
-      if (!on) return;
-      mx += (tx - mx) * 0.12; my += (ty - my) * 0.12;
-      var t = (now - t0) / 1000;
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "#fff";
-      var cols = Math.ceil(w / gap) + 1, rows = Math.ceil(h / gap) + 1;
-      for (var i = 0; i < cols; i++) {
-        for (var j = 0; j < rows; j++) {
-          var x = i * gap + gap / 2, y = j * gap + gap / 2;
-          var wave = Math.sin(i * 0.35 + t * 0.9) * Math.cos(j * 0.3 - t * 0.7);
-          var r = 1.4 + wave * 0.7;
-          var a = 0.2 + wave * 0.08;
-          var dx = x - mx, dy = y - my, d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 170) { var k = 1 - d / 170; r += k * 5; a += k * 0.5; x += (dx / (d || 1)) * k * 10; y += (dy / (d || 1)) * k * 10; }
-          ctx.globalAlpha = clamp(a, 0, 1);
-          ctx.beginPath(); ctx.arc(x, y, Math.max(0.4, r), 0, 6.2832); ctx.fill();
-        }
-      }
-      ctx.globalAlpha = 1;
-    }
-    if (reduce) { /* draw one static frame */ on = true; requestAnimationFrame(function (n) { frame(n); }); }
-    else requestAnimationFrame(frame);
-  }
-  heroCanvas();
 
   /* ---------- rotating word ---------- */
   (function () {
@@ -258,19 +185,6 @@
       x -= sp * (dt / 16.7);
       if (x <= -half) x += half;
       gsap.set(track, { x: x });
-    });
-  })();
-
-  /* ---------- project list peek ---------- */
-  (function () {
-    var peek = $("#peek"); if (!peek || !fine || reduce) return;
-    var img = $("img", peek);
-    var xTo = gsap.quickTo(peek, "left", { duration: 0.5, ease: "power3" });
-    var yTo = gsap.quickTo(peek, "top", { duration: 0.5, ease: "power3" });
-    $$(".prow[data-img]").forEach(function (row) {
-      row.addEventListener("mouseenter", function () { img.src = row.getAttribute("data-img"); peek.classList.add("is-on"); });
-      row.addEventListener("mouseleave", function () { peek.classList.remove("is-on"); });
-      row.addEventListener("mousemove", function (e) { xTo(e.clientX + 40); yTo(e.clientY); });
     });
   })();
 
