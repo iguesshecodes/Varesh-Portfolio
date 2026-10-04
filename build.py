@@ -168,7 +168,7 @@ PROJECTS = [
 
 JOBS = [
     dict(when="Jun to Jul 2026", place="Birmingham", role="Strategic Consultant, Challenge Winner", org="Turner & Townsend",
-         ctx="Won a national student consultancy challenge with a model that held up under partner scrutiny.",
+         ctx="Part of the winning team in the University of Birmingham Masters Consultancy Challenge, run with Turner & Townsend.",
          pts=["Built the <b>financial model behind a £50m infrastructure strategy</b>, checking every input and assumption so the logic survived live challenge.",
               "Presented findings and recommendations to <b>senior partners</b> and fielded Q&amp;A, translating dense analysis for a mixed audience.",
               "Beat competing university teams to <b>first place</b> on the strength of the numbers, not the slides."],
@@ -198,21 +198,30 @@ JOBS = [
 ]
 
 CERTS = [
-    dict(type="Professional Certificate", title="Google Data Analytics", by="Google, 8-course programme",
-         text="The full analyst workflow: asking the right question, cleaning and preparing data, analysing it, and sharing findings that hold up.",
-         chips=["SQL", "R", "Spreadsheets", "Tableau", "Data cleaning"]),
-    dict(type="Job simulation", title="Data Analytics", by="Deloitte via Forage, 2026",
+    dict(type="Professional Certificate", title="Google Data Analytics", by="Google via Coursera, 5 Aug 2026", img="assets/cert-google.webp", alt="Google Data Analytics Professional Certificate",
+         text="Nine courses covering the full analyst workflow, from asking the right question to cleaning, analysing and sharing data, with spreadsheets, SQL, Tableau and Python.",
+         chips=["SQL", "Python", "Spreadsheets", "Tableau", "Data cleaning"]),
+    dict(type="Winner, team challenge", title="Masters Consultancy Challenge 2026", by="University of Birmingham with Turner & Townsend, 3 Jul 2026", img="",  alt="",
+         text="Part of Team Dynamite, the winning team in the most competitive year of the programme. The team proposed a fully costed, sustainable, future-ready research facility for the university.",
+         chips=["Teamwork", "Project management", "Costing", "Pitching"]),
+    dict(type="Recognition", title="L'Oreal Brandstorm 2026", by="L'Oreal, certificate of recognition", img="assets/cert-loreal.webp", alt="L'Oreal Brandstorm 2026 certificate of recognition",
+         text="Took part in L'Oreal's global youth innovation competition.",
+         chips=["Innovation", "Brand strategy"]),
+    dict(type="Job simulation", title="Strategy Consulting", by="BCG via Forage, 1 Jun 2026", img="assets/cert-bcg.webp", alt="BCG Strategy Consulting job simulation certificate",
+         text="Market research, consumer survey design, financial modelling and data analysis, then summarising the findings for a client audience.",
+         chips=["Market research", "Survey design", "Financial modelling", "Data analysis"]),
+    dict(type="Job simulation", title="Data Analytics", by="Quantium via Forage, 23 May 2026", img="assets/cert-quantium.webp", alt="Quantium Data Analytics job simulation certificate",
+         text="Data preparation and customer analytics, experimentation and uplift testing, then turning the analysis into a commercial recommendation.",
+         chips=["Customer analytics", "Uplift testing", "Experimentation"]),
+    dict(type="Job simulation", title="Data Science", by="Lloyds Banking Group via Forage, 24 May 2026", img="assets/cert-lloyds.webp", alt="Lloyds Banking Group Data Science job simulation certificate",
+         text="Data gathering and exploratory analysis, then building a machine learning model and framing the result for a business audience.",
+         chips=["Python", "EDA", "Machine learning"]),
+    dict(type="Job simulation", title="Data Analytics", by="Deloitte via Forage, 2026", img="", alt="",
          text="Worked a client-style dataset end to end, building a dashboard to spot the signal and classifying the data behind a business question.",
          chips=["Tableau", "Excel", "Data classification"]),
-    dict(type="Job simulation", title="Retail Data Analytics", by="Quantium via Forage, 2026",
-         text="Analysed a retail category to find what drives purchases, segmented customers, and turned it into a commercial recommendation.",
-         chips=["Python", "Customer analytics", "Segmentation"]),
-    dict(type="Job simulation", title="Data Science", by="British Airways via Forage, 2026",
+    dict(type="Job simulation", title="Data Science", by="British Airways via Forage, 2026", img="", alt="",
          text="Scraped and analysed customer reviews for sentiment, then built a predictive model to understand what drives a booking.",
          chips=["Python", "Web scraping", "Sentiment analysis", "Modelling"]),
-    dict(type="Job simulation", title="Data Science and Analytics", by="Lloyds Banking Group via Forage, 2026",
-         text="Explored a banking dataset, engineered features and built a predictive model, then framed the result for a business audience.",
-         chips=["Python", "EDA", "Feature engineering", "Prediction"]),
 ]
 
 MARQUEE = ["SQL", "Python", "Tableau", "Power BI", "Excel", "Campaign ROI", "Uplift modelling", "Churn analysis", "A/B testing", "Paid social", "Email and CRM"]
@@ -486,7 +495,7 @@ def about_page():
         <p>I'm <b>Varesh Nirbhavne</b>, based in {CITY}, with an MSc in Marketing from the University of Birmingham and three-plus years of hands-on campaign work behind me.</p>
         <p>I started on the creative side, running social, content and paid ads for a wedding-films studio and for 20+ freelance clients. Then I got tired of guessing, so I taught myself <b>SQL, Python and Tableau</b> and started answering my own questions with data.</p>
         <p>Before marketing I studied Animation and Visual Effects, which is why I care how a chart looks as much as what it says.</p>
-        <p>I like owning things end to end. I've led a team of five, built a Shopify store from nothing, and won a national consultancy challenge modelling a £50m strategy. Small teams where I get to touch everything are where I'm happiest.</p>
+        <p>I like owning things end to end. I've led a team of five, built a Shopify store from nothing, and was part of the winning team in the University of Birmingham Masters Consultancy Challenge with Turner & Townsend. Small teams where I get to touch everything are where I'm happiest.</p>
         <p>When I'm not working you'll find me deep in an F1 race weekend or a new dataset I had no reason to download. Absolute rabbit holes, and I love it.</p>
       </div>
       <dl class="facts" data-reveal>
@@ -537,7 +546,7 @@ def experience_page():
 
 def certs_page():
     certs = "".join(
-        f'''<article class="cert"><span class="cert__type">{E(c["type"])}</span><h3>{E(c["title"])}</h3><p class="cert__by">{E(c["by"])}</p><p>{E(c["text"])}</p><ul class="chips">{li(c["chips"])}</ul></article>'''
+        f'''<article class="cert">{('<div class="cert__img"><img src="%s" alt="%s" loading="lazy"></div>' % (c["img"], E(c["alt"]))) if c["img"] else ""}<span class="cert__type">{E(c["type"])}</span><h3>{E(c["title"])}</h3><p class="cert__by">{E(c["by"])}</p><p>{E(c["text"])}</p><ul class="chips">{li(c["chips"])}</ul></article>'''
         for c in CERTS)
     main = pagehead(None, "Certifications", "Where I studied, and the courses and job simulations behind the analytics.") + f'''
 <section class="sec dark">
@@ -557,7 +566,7 @@ def certs_page():
 </section>
 {nextlink("tools.html", "Tools", "Try the tools")}'''
     return write_page("certifications.html", "Certifications | Varesh Nirbhavne", "Certifications",
-                      "Education and certifications of Varesh Nirbhavne: MSc Marketing, Google Data Analytics and four Forage job simulations.", main, "certifications.html", theme="green")
+                      "Education and certifications of Varesh Nirbhavne: MSc Marketing, Google Data Analytics, a Masters Consultancy Challenge win and Forage job simulations.", main, "certifications.html", theme="green")
 
 
 def tools_page():

@@ -440,3 +440,8 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 
 .dark .job__when { color: var(--sky); }
 .dark .job__place { color: rgba(255,255,255,.65); }
+
+.cert__img { border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; margin-bottom: 4px; }
+.cert__img img { width: 100%; height: auto; transition: transform 1s var(--ease); }
+.cert:hover .cert__img img { transform: scale(1.03); }
+.certs { align-items: start; }
