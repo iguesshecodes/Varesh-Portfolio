@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Netflix Content Library Analysis | Varesh Nirbhavne</title>
+<meta name="description" content="An end to end look at Netflix&#x27;s full catalogue: what it stocks, where it comes from and how fast it moves.">
+<meta name="theme-color" content="#d90429">
+<meta property="og:title" content="Netflix Content Library Analysis | Varesh Nirbhavne">
+<meta property="og:description" content="An end to end look at Netflix&#x27;s full catalogue: what it stocks, where it comes from and how fast it moves.">
+<meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d90429'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="vendor/lenis.css">
+<link rel="stylesheet" href="css/site.css">
+<noscript><style>.curtain,.loader{display:none!important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="curtain" id="curtain" data-label="Netflix"><span class="curtain__label" aria-hidden="true"></span></div>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="bar" id="bar">
+  <a class="bar__logo" href="index.html" data-label="Home" aria-label="Varesh Nirbhavne, home">Varesh<b>.</b></a>
+  <nav class="bar__links" aria-label="Main"><a href="projects.html" aria-current="page">Projects</a><a href="about.html">About</a><a href="experience.html">Work experience</a><a href="certifications.html">Certifications</a><a href="tools.html">Tools</a></nav>
+  <a class="bar__cta" href="contact.html">Contact</a>
+  <button class="bar__menu" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="bar__menu-label">Menu</span><span class="bar__burger" aria-hidden="true"><i></i><i></i></span></button>
+</header>
+<div class="menu" id="menu" aria-label="Menu">
+  <nav class="menu__links" aria-label="Mobile">
+    <a href="index.html" data-label="Home"><span>Home</span></a>
+    <a href="projects.html"><span>Projects</span></a><a href="about.html"><span>About</span></a><a href="experience.html"><span>Work experience</span></a><a href="certifications.html"><span>Certifications</span></a><a href="tools.html"><span>Tools</span></a>
+    <a href="contact.html"><span>Contact</span></a>
+  </nav>
+  <p class="menu__foot">vareshworks@gmail.com</p>
+</div>
+<main id="main">
+<section class="pagehead">
+  <div data-intro-fade><a class="pagehead__crumb" href="projects.html" data-label="All projects">&larr; All projects</a></div>
+  <h1 class="pagehead__title" data-split data-intro>Netflix Content Library Analysis</h1>
+  <p class="pagehead__sub" data-intro-fade>An end to end look at Netflix&#x27;s full catalogue: what it stocks, where it comes from and how fast it moves.</p>
+  <div class="pagehead__meta" data-intro-fade><span class="tag tag--done">Completed</span><span class="tag">2026</span><span class="tag">Python, Pandas, Seaborn</span></div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <figure class="shot" data-img-in><img src="assets/netflix.webp" alt="Netflix library analysis dashboard" width="1600" height="1105"><figcaption>One of the dashboards from the analysis.</figcaption></figure>
+    <ul class="pmetrics" data-stagger><li><b>8,807</b><span>titles across 127 countries</span></li><li><b>1 yr</b><span>median film, release to Netflix</span></li><li><b>24%</b><span>of titles are International Movies</span></li></ul>
+    <div class="pcols" data-stagger>
+      <div><h3>The question</h3><p>The catalogue runs to nearly 9,000 titles across 127 countries. What is it actually made of, who is it for, and how quickly does content travel from release to the platform?</p></div>
+      <div><h3>What I did</h3><ul><li>Cleaned the full titles dataset in Python with Pandas, repairing broken ratings and dates.</li><li>Split the multi-value genre and country fields so each could be counted properly.</li><li>Built six Matplotlib and Seaborn dashboards: a month by year heatmap, genre and rating breakdowns, duration by audience, a country content mix and a release to addition age gap.</li></ul></div>
+      <div><h3>What I found</h3><ul><li>The library skews adult, with TV-MA and TV-14 leading, and international, with International Movies the top genre at 24%.</li><li>It leans to film over TV, 6,131 titles against 2,676.</li><li>Content moves fast: the median film lands a year after release, and shows land in the same year. Additions ramped hard from 2015 and peaked around 2019.</li></ul></div>
+    </div>
+    <div class="pnote" data-reveal><h3>A note on the data</h3><p>Built on a public Netflix titles dataset. Independent portfolio project, not affiliated with or endorsed by Netflix.</p></div>
+    <ul class="chips pchips"><li>Python</li><li>Pandas</li><li>Seaborn</li><li>EDA</li><li>Data cleaning</li></ul>
+  </div>
+</section>
+<a class="next" href="project-lloyds.html" data-label="Customer churn model" data-cursor="view" data-cursor-text="Go"><small>Next</small><strong>Customer churn model</strong></a>
+</main>
+<footer class="footer">
+  <div class="footer__top">
+    <p class="footer__big">Let's make something work.</p>
+    <nav class="footer__links" aria-label="Footer"><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="about.html">About</a><a href="experience.html">Work experience</a><a href="certifications.html">Certifications</a><a href="tools.html">Tools</a><a href="contact.html">Contact</a></nav>
+  </div>
+  <div class="footer__base"><span>© 2026 Varesh Nirbhavne, London</span><span>Independent portfolio. Company names belong to their owners.</span></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="vendor/gsap.min.js"></script><script src="vendor/ScrollTrigger.min.js"></script><script src="vendor/lenis.min.js"></script><script src="js/site.js"></script>
+</body>
+</html>

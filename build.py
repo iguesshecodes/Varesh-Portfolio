@@ -1,0 +1,629 @@
+#!/usr/bin/env python3
+"""Generates every page of the portfolio.
+
+Run:  python3 build.py            (writes full HTML pages next to this file)
+      python3 build.py artifact DIR   (also writes a content-only index.html into DIR for claude.ai artifacts)
+Edit the DATA section below to change any text, then run the script again.
+"""
+import html, os, sys
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+E = html.escape
+
+# ------------------------------------------------------------------ DATA
+SITE = "Varesh Nirbhavne"
+EMAIL = "vareshworks@gmail.com"
+PHONE = "+44 7518 537897"
+LINKEDIN = "https://www.linkedin.com/in/varesh-nirbhavne-1619a02a3/"
+LINKEDIN_TXT = "linkedin.com/in/varesh-nirbhavne-1619a02a3"
+GITHUB = "https://github.com/iguesshecodes"
+GITHUB_TXT = "github.com/iguesshecodes"
+CITY = "London"
+
+NAV = [
+    ("projects.html", "Projects"),
+    ("about.html", "About"),
+    ("experience.html", "Work experience"),
+    ("certifications.html", "Certifications"),
+    ("tools.html", "Tools"),
+]
+
+PROJECTS = [
+    dict(
+        slug="revolut", title="Revolut London Growth Study", short="How a fintech could win more of London",
+        tools="SQL, Python, Tableau", year="2026", status="Completed", done=True,
+        img="assets/revolut.webp", alt="Infographic from the Revolut London growth study", tall=True,
+        cap="Infographic from the analysis.",
+        lede="Where should a fast-growing fintech spend to win more of London? I read the answer straight out of the data.",
+        q="Where could a fintech like Revolut spend to grow across London? The answer was buried in messy customer and campaign data across 33 boroughs, with campaign spend and churn tangled together.",
+        did=[
+            "Used SQL to pull, shape and validate data on 10,000+ customers and 500 campaigns.",
+            "Segmented customers by value, behaviour and geography in Python.",
+            "Worked out the return on spend for every campaign. The cost to win a customer ranged from £18.12 on TikTok to £33.61 on out-of-home.",
+            "Tested whether churn could be predicted at all, then turned the findings into carousel visuals for LinkedIn.",
+        ],
+        found=[
+            "About £1.9M of annual spend sat in 59 campaigns with negative ROI that were never paused.",
+            "A £79M geographic upside in under-penetrated boroughs, led by Newham (1.7% penetration), Haringey (3%) and Barnet (3.7%).",
+            "The churn model scored a ROC-AUC of 0.48, which is no better than chance. I read that as useful: demographics do not explain who leaves, so the cause is more likely the product, and exit surveys would tell a team more than another model.",
+        ],
+        metrics=[("£1.9M", "annual spend in 59 loss-making campaigns"), ("£79M", "geographic upside across London"), ("0.48", "churn model ROC-AUC, no demographic signal")],
+        note_h="A note on the data",
+        note="These figures describe the dataset I analysed and are modelled estimates, not any company's real performance. This is an independent portfolio project and is not affiliated with or endorsed by Revolut.",
+        tags=["Marketing analytics", "ROI analysis", "Geo analysis", "Churn", "Data storytelling"],
+    ),
+    dict(
+        slug="f1", title="F1 2026 Championship Forecast", short="Two models, one title race",
+        tools="Python, SQL, Tableau", year="2026", status="Live dashboard", done=True,
+        img="assets/f1.webp", alt="Tableau dashboard comparing two F1 championship forecasts", tall=False,
+        cap="Dashboard screenshot after the Barcelona GP update.",
+        lede="Forecasting the 2026 title race two ways, and letting the methods argue with each other.",
+        q="A championship runs over a noisy season, and a season under new rules is harder still. A single prediction hides the range, and different modelling choices can tell very different stories. How wide is the uncertainty?",
+        did=[
+            "Used the Kaggle Ergast archive as the historical base and prepared it with SQL.",
+            "Ran a Monte Carlo simulation in Python: 5,000 possible seasons.",
+            "Built a second, weighted SQL model to compare against it.",
+            "Compared both in a Tableau dashboard after the Barcelona GP update.",
+        ],
+        found=[
+            "The methods disagree, and that is the point. Monte Carlo concentrates the title on one driver at about 76%, while the weighted model spreads it much wider, with the leader in the low 20s.",
+            "Seeing where they diverge is more honest than trusting a single forecast.",
+        ],
+        metrics=[("5,000", "Monte Carlo season runs"), ("2", "models compared side by side"), ("Live", "Tableau dashboard")],
+        note_h="How to read it",
+        note="These are probabilities as of the Barcelona GP update, not predictions of who wins. They move with every race, and I check the inputs against official results. Independent project using public data, not affiliated with or endorsed by Formula 1.",
+        tags=["Monte Carlo", "BigQuery SQL", "Python", "Tableau", "Forecasting"],
+    ),
+    dict(
+        slug="netflix", title="Netflix Content Library Analysis", short="What 8,807 titles say about a catalogue",
+        tools="Python, Pandas, Seaborn", year="2026", status="Completed", done=True,
+        img="assets/netflix.webp", alt="Netflix library analysis dashboard", tall=False,
+        cap="One of the dashboards from the analysis.",
+        lede="An end to end look at Netflix's full catalogue: what it stocks, where it comes from and how fast it moves.",
+        q="The catalogue runs to nearly 9,000 titles across 127 countries. What is it actually made of, who is it for, and how quickly does content travel from release to the platform?",
+        did=[
+            "Cleaned the full titles dataset in Python with Pandas, repairing broken ratings and dates.",
+            "Split the multi-value genre and country fields so each could be counted properly.",
+            "Built six Matplotlib and Seaborn dashboards: a month by year heatmap, genre and rating breakdowns, duration by audience, a country content mix and a release to addition age gap.",
+        ],
+        found=[
+            "The library skews adult, with TV-MA and TV-14 leading, and international, with International Movies the top genre at 24%.",
+            "It leans to film over TV, 6,131 titles against 2,676.",
+            "Content moves fast: the median film lands a year after release, and shows land in the same year. Additions ramped hard from 2015 and peaked around 2019.",
+        ],
+        metrics=[("8,807", "titles across 127 countries"), ("1 yr", "median film, release to Netflix"), ("24%", "of titles are International Movies")],
+        note_h="A note on the data",
+        note="Built on a public Netflix titles dataset. Independent portfolio project, not affiliated with or endorsed by Netflix.",
+        tags=["Python", "Pandas", "Seaborn", "EDA", "Data cleaning"],
+    ),
+    dict(
+        slug="lloyds", title="Customer churn model", short="Predicting who leaves a bank, honestly",
+        tools="BigQuery SQL, Random Forest, Tableau", year="2026", status="Completed", done=True,
+        img="assets/lloyds.webp", alt="Illustrative visual: ROC curves above a diagonal baseline", tall=False,
+        cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
+        lede="Predicting who will leave a bank is a ranking problem more than a prediction problem. This project treats it that way, and is honest about how much the model can say.",
+        q="Which customers are most at risk of churning, and how much can a model genuinely tell us?",
+        did=[
+            "Prepared the customer data with BigQuery SQL.",
+            "Trained a Random Forest classifier to estimate churn risk.",
+            "Built Tableau views to show risk across customer groups.",
+            "Packaged the results as LinkedIn carousel assets.",
+        ],
+        found=[
+            "ROC-AUC landed between 0.576 and 0.601 across runs.",
+            "That is only a little better than chance, so the model is useful for ranking risk, not for confident calls on a single customer.",
+        ],
+        metrics=[],
+        note_h="Why I show it anyway",
+        note="I would rather show a modest result clearly than dress it up. The sensible next step is better features and a cost-based view of which customers are worth contacting. Completed through the Lloyds Banking Group Data Science virtual experience on Forage. Not affiliated with or endorsed by Lloyds Banking Group.",
+        tags=["Random Forest", "BigQuery SQL", "Tableau", "Churn analysis"],
+    ),
+    dict(
+        slug="quantium", title="Did the trial stores really lift sales?", short="Control stores and honest uplift",
+        tools="Python, Excel, PowerPoint", year="2026", status="Completed", done=True,
+        img="assets/quantium.webp", alt="Illustrative visual: trial store and control store sales lines", tall=False,
+        cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
+        lede="A retailer tries something in a few stores. Did sales move because of it, or would they have moved anyway? Control stores are how you tell the difference.",
+        q="For a chips category manager: did the trial in selected stores produce a real uplift in sales?",
+        did=[
+            "Explored transaction and customer data to understand how people buy chips.",
+            "Matched each trial store to control stores using normalised Euclidean distance.",
+            "Tested uplift with a difference in differences approach.",
+            "Presented the story in a client-facing PowerPoint structured with the Pyramid Principle.",
+        ],
+        found=[
+            "A fair comparison group has to come before any claim about uplift.",
+            "A finding only matters once it is framed as a decision the client can make.",
+        ],
+        metrics=[],
+        note_h="About this project",
+        note="Completed through the Quantium Data Science virtual experience on Forage. Not affiliated with or endorsed by Quantium.",
+        tags=["Control store matching", "Uplift testing", "Pyramid Principle", "Retail analytics"],
+    ),
+    dict(
+        slug="starbucks", title="Who did the offer actually persuade?", short="Uplift modelling, in progress",
+        tools="SQL, Python, Excel, Power BI", year="2026", status="In progress", done=False,
+        img="assets/starbucks.webp", alt="Illustrative visual: four uplift quadrants with customer dots", tall=False,
+        cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
+        lede="Sending an offer to someone who would have bought anyway is a waste. Uplift modelling tries to find the people an offer genuinely changes.",
+        q="Which customers does an offer actually persuade, and which would have bought anyway?",
+        did=[
+            "Starting from the Udacity Starbucks capstone dataset.",
+            "Sorting customers into persuadables, sure things, lost causes and sleeping dogs.",
+            "Comparing a two-model approach: one model for customers who got the offer, one for those who did not.",
+            "Adding an Excel cost calculator that turns uplift into money, then a Power BI or Tableau dashboard.",
+        ],
+        found=[
+            "Still in progress, so there are no headline numbers yet. I will add results here once the model has been properly validated.",
+        ],
+        metrics=[],
+        note_h="Where it stands",
+        note="Uses the public Udacity Starbucks capstone dataset. Independent project, not affiliated with or endorsed by Starbucks.",
+        tags=["Uplift modelling", "SQL", "Python", "Excel", "Power BI"],
+    ),
+]
+
+JOBS = [
+    dict(when="Jun to Jul 2026", place="Birmingham", role="Strategic Consultant, Challenge Winner", org="Turner & Townsend",
+         ctx="Won a national student consultancy challenge with a model that held up under partner scrutiny.",
+         pts=["Built the <b>financial model behind a £50m infrastructure strategy</b>, checking every input and assumption so the logic survived live challenge.",
+              "Presented findings and recommendations to <b>senior partners</b> and fielded Q&amp;A, translating dense analysis for a mixed audience.",
+              "Beat competing university teams to <b>first place</b> on the strength of the numbers, not the slides."],
+         chips=["Financial modelling", "Excel", "Scenario analysis", "Stakeholder communication"]),
+    dict(when="Sep 2024 to Sep 2025", place="Mumbai", role="Marketing Strategist and Creative Lead", org="Pastel Moments",
+         ctx="Ran content strategy for a wedding-films studio, with performance data steering the calls.",
+         pts=["Led a <b>team of 5</b>, using engagement and campaign data to decide what to make next.",
+              "Lifted <b>client inquiries by roughly 25 to 30 percent</b> by shifting spend and content toward what the data showed was working.",
+              "Owned the full loop from brief to publish to reporting, keeping quality steady across a heavy workload."],
+         chips=["Content strategy", "Meta and Instagram analytics", "Campaign reporting", "Team lead"]),
+    dict(when="Jan 2022 to Sep 2025", place="Remote", role="Marketing Analyst and Content Strategist", org="Freelance",
+         ctx="Three years of turning messy client data into decisions, one account at a time.",
+         pts=["Analysed customer and campaign data for <b>20+ clients</b>, turning behaviour and engagement patterns into plain recommendations for non-technical owners.",
+              "Designed and measured <b>A/B tests</b> that lifted <b>conversion by 30 to 40 percent</b> across managed accounts through sharper targeting.",
+              "Held a strict bar on <b>data QA and accuracy</b>, owning delivery end to end from brief to insight to result."],
+         chips=["A/B testing", "Google Analytics", "Excel", "Segmentation", "Reporting"]),
+    dict(when="2022", place="United States market", role="Founder", org="Vera, Shopify apparel store",
+         ctx="Built and ran a real store, so the marketing numbers had my own money behind them.",
+         pts=["Ran a <b>Shopify apparel store end to end</b> for US customers, from sourcing and listings to ads and fulfilment.",
+              "Served <b>100+ orders at a $30 average order value</b>, using order and customer data to guide spend.",
+              "Learned demand, pricing and retention from the inside, not from a case study."],
+         chips=["Shopify", "Paid social", "Order data", "Unit economics"]),
+    dict(when="Independent", place="Clothing brand", role="Brand owner", org="Destyle Apparels",
+         ctx="Ran my own clothing brand. It is where marketing stopped being theory for me.",
+         pts=["Positioning, content, pricing, and customers who either bought or did not."],
+         chips=["Brand", "Content", "Pricing"]),
+]
+
+CERTS = [
+    dict(type="Professional Certificate", title="Google Data Analytics", by="Google, 8-course programme",
+         text="The full analyst workflow: asking the right question, cleaning and preparing data, analysing it, and sharing findings that hold up.",
+         chips=["SQL", "R", "Spreadsheets", "Tableau", "Data cleaning"]),
+    dict(type="Job simulation", title="Data Analytics", by="Deloitte via Forage, 2026",
+         text="Worked a client-style dataset end to end, building a dashboard to spot the signal and classifying the data behind a business question.",
+         chips=["Tableau", "Excel", "Data classification"]),
+    dict(type="Job simulation", title="Retail Data Analytics", by="Quantium via Forage, 2026",
+         text="Analysed a retail category to find what drives purchases, segmented customers, and turned it into a commercial recommendation.",
+         chips=["Python", "Customer analytics", "Segmentation"]),
+    dict(type="Job simulation", title="Data Science", by="British Airways via Forage, 2026",
+         text="Scraped and analysed customer reviews for sentiment, then built a predictive model to understand what drives a booking.",
+         chips=["Python", "Web scraping", "Sentiment analysis", "Modelling"]),
+    dict(type="Job simulation", title="Data Science and Analytics", by="Lloyds Banking Group via Forage, 2026",
+         text="Explored a banking dataset, engineered features and built a predictive model, then framed the result for a business audience.",
+         chips=["Python", "EDA", "Feature engineering", "Prediction"]),
+]
+
+MARQUEE = ["SQL", "Python", "Tableau", "Power BI", "Excel", "Campaign ROI", "Uplift modelling", "Churn analysis", "A/B testing", "Paid social", "Email and CRM"]
+
+ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d90429'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E"
+
+
+# ------------------------------------------------------------------ SHARED PIECES
+def li(items):
+    return "".join("<li>%s</li>" % E(x) for x in items)
+
+
+def bar(active):
+    links = "".join(
+        '<a href="%s"%s>%s</a>' % (h, ' aria-current="page"' if h == active else "", t) for h, t in NAV
+    )
+    cta_cur = ' aria-current="page"' if active == "contact.html" else ""
+    return f'''<header class="bar" id="bar">
+  <a class="bar__logo" href="index.html" data-label="Home" aria-label="Varesh Nirbhavne, home">Varesh<b>.</b></a>
+  <nav class="bar__links" aria-label="Main">{links}</nav>
+  <a class="bar__cta" href="contact.html"{cta_cur}>Contact</a>
+  <button class="bar__menu" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="bar__menu-label">Menu</span><span class="bar__burger" aria-hidden="true"><i></i><i></i></span></button>
+</header>
+<div class="menu" id="menu" aria-label="Menu">
+  <nav class="menu__links" aria-label="Mobile">
+    <a href="index.html" data-label="Home"><span>Home</span></a>
+    {"".join('<a href="%s"><span>%s</span></a>' % (h, t) for h, t in NAV)}
+    <a href="contact.html"><span>Contact</span></a>
+  </nav>
+  <p class="menu__foot">{EMAIL}</p>
+</div>'''
+
+
+def footer():
+    fl = "".join('<a href="%s">%s</a>' % (h, t) for h, t in [("index.html", "Home")] + NAV + [("contact.html", "Contact")])
+    return f'''<footer class="footer">
+  <div class="footer__top">
+    <p class="footer__big">Let's make something work.</p>
+    <nav class="footer__links" aria-label="Footer">{fl}</nav>
+  </div>
+  <div class="footer__base"><span>© 2026 Varesh Nirbhavne, {CITY}</span><span>Independent portfolio. Company names belong to their owners.</span></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>'''
+
+
+def nextlink(href, label, title):
+    return f'<a class="next" href="{href}" data-label="{E(label)}" data-cursor="view" data-cursor-text="Go"><small>Next</small><strong>{E(title)}</strong></a>'
+
+
+def pagehead(crumb, title, sub, meta=""):
+    c = f'<a class="pagehead__crumb" href="{crumb[0]}" data-label="{E(crumb[1])}">&larr; {E(crumb[1])}</a>' if crumb else ""
+    m = f'<div class="pagehead__meta" data-intro-fade>{meta}</div>' if meta else ""
+    return f'''<section class="pagehead">
+  <div data-intro-fade>{c}</div>
+  <h1 class="pagehead__title" data-split data-intro>{E(title)}</h1>
+  <p class="pagehead__sub" data-intro-fade>{E(sub)}</p>
+  {m}
+</section>'''
+
+
+def page(fname, title, label, desc, main, active, scripts=(), loader=""):
+    head = f'''<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{E(title)}</title>
+<meta name="description" content="{E(desc)}">
+<meta name="theme-color" content="#d90429">
+<meta property="og:title" content="{E(title)}">
+<meta property="og:description" content="{E(desc)}">
+<meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="{ICON}">
+<link rel="stylesheet" href="vendor/lenis.css">
+<link rel="stylesheet" href="css/site.css">
+<noscript><style>.curtain,.loader{{display:none!important}}</style></noscript>'''
+    sc = "".join('<script src="%s"></script>' % s for s in
+                 ["vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/lenis.min.js", "js/site.js"] + list(scripts))
+    body = f'''<a class="skip" href="#main">Skip to content</a>
+<div class="curtain" id="curtain" data-label="{E(label)}"><span class="curtain__label" aria-hidden="true"></span></div>
+{loader}
+<div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+<div class="progress" aria-hidden="true"><span></span></div>
+{bar(active)}
+<main id="main">
+{main}
+</main>
+{footer()}
+{sc}'''
+    return head, body
+
+
+def write_page(fname, title, label, desc, main, active, scripts=(), loader=""):
+    head, body = page(fname, title, label, desc, main, active, scripts, loader)
+    doc = f"<!doctype html>\n<html lang=\"en-GB\">\n<head>\n{head}\n</head>\n<body>\n{body}\n</body>\n</html>\n"
+    with open(os.path.join(ROOT, fname), "w", encoding="utf-8") as f:
+        f.write(doc)
+    return head, body
+
+
+# ------------------------------------------------------------------ PAGES
+def home():
+    marq = "".join('<span>%s</span><i class="sep"></i>' % E(m) for m in MARQUEE)
+    cards = "".join(
+        f'''<a class="pcard" href="project-{p["slug"]}.html" data-label="{E(p["title"])}" data-cursor="view" data-cursor-text="Open">
+        <div class="pcard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="1200" height="900" loading="lazy"></div>
+        <h3>{E(p["title"])}</h3><p>{E(p["short"])}</p></a>'''
+        for p in PROJECTS[:3]
+    )
+    loader = '''<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__bar"><span></span></div>
+  <span class="loader__name">Varesh Nirbhavne</span>
+  <span class="loader__count"><b>0</b><i>%</i></span>
+</div>'''
+    main = f'''<section class="hero" id="top">
+  <canvas class="hero__canvas" aria-hidden="true"></canvas>
+  <svg class="hero__trend" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0,262 C70,255 120,205 200,212 S320,150 400,122 S560,112 640,62 S740,28 800,12"/></svg>
+  <div class="hero__top" data-intro-fade>
+    <span class="hero__kicker">Marketing &times; <span class="rot" data-words="Data|Strategy|Insight|Growth"><span>Data</span></span></span>
+    <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
+  </div>
+  <h1 class="hero__title" data-split data-intro><span class="ln">Marketing,</span><span class="ln">and the numbers</span><span class="ln">to prove it.</span></h1>
+  <figure class="hero__photo"><span class="hero__disc"></span><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></figure>
+  <div class="hero__bottom" data-intro-fade>
+    <p class="hero__lede">I'm Varesh, a marketer and data analyst based in {CITY}. I run the campaigns, then read the data to see what actually moved.</p>
+    <div class="hero__actions">
+      <a class="btn btn--white" href="projects.html" data-label="Projects">See my projects</a>
+      <a class="btn btn--line" href="contact.html" data-label="Contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section class="marquee" aria-hidden="true"><div class="marquee__track">{marq}{marq}</div></section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2 class="h2" data-split>Two practices, <em>one person.</em></h2>
+    <div class="practices">
+      <div class="practice" data-reveal>
+        <h3>Marketing<span>.</span></h3>
+        <p>Content, social and paid campaigns across 20+ clients and a wedding-films studio. I set the strategy, make the work and own the channel end to end.</p>
+        <ul class="chips"><li>Paid social</li><li>Email and CRM</li><li>Content</li><li>Brand</li><li>Copywriting</li></ul>
+      </div>
+      <div class="practice" data-reveal data-delay="0.12">
+        <h3>Data<span>.</span></h3>
+        <p>SQL, Python and Tableau. I got tired of guessing what worked, so I learned to pull the numbers myself and let them settle the argument.</p>
+        <ul class="chips chips--red"><li>SQL</li><li>Python</li><li>Tableau</li><li>A/B testing</li><li>Segmentation</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--blush">
+  <div class="wrap">
+    <ul class="stats" data-stagger>
+      <li><b data-count="1.9" data-dec="1" data-pre="£" data-suf="M">£1.9M</b><span>annual spend found in 59 loss-making campaigns</span></li>
+      <li><b data-count="79" data-pre="£" data-suf="M">£79M</b><span>geographic upside across London boroughs</span></li>
+      <li><b data-count="20" data-suf="+">20+</b><span>freelance clients analysed and advised</span></li>
+      <li><b data-count="5000">5,000</b><span>season simulations in the F1 forecast</span></li>
+    </ul>
+    <p class="sec-note">The Revolut figures come from an independent portfolio study of a dataset, not from company data.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="feat__head">
+      <h2 class="h2" data-split>Selected <em>work.</em></h2>
+      <a class="btn btn--line-red" href="projects.html" data-label="Projects">All projects</a>
+    </div>
+    <div class="cards" data-stagger>{cards}</div>
+  </div>
+</section>
+
+<section class="sec cta on-red">
+  <div class="wrap">
+    <h2 class="h2" data-split>Got a role in mind?</h2>
+    <a class="btn btn--white" href="contact.html" data-label="Contact">Say hello</a>
+  </div>
+</section>'''
+    return write_page("index.html", "Varesh Nirbhavne | Marketing and data analytics", "Home",
+                      "Portfolio of Varesh Nirbhavne, a marketer and data analyst in London. Campaign work, SQL, Python and Tableau projects, and two small tools you can try.",
+                      main, "index.html", loader=loader)
+
+
+def projects_page():
+    rows = ""
+    for p in PROJECTS:
+        rows += f'''<a class="prow" href="project-{p["slug"]}.html" data-img="{p["img"]}" data-label="{E(p["title"])}" data-cursor="view" data-cursor-text="Open">
+      <span class="prow__title">{E(p["title"])}</span>
+      <span class="prow__meta"><span>{E(p["tools"])}</span><span class="tag tag--soft">{E(p["status"])}</span></span>
+      <span class="prow__arrow" aria-hidden="true">&nearr;</span>
+      <span class="prow__thumb"><img src="{p["img"]}" alt="" loading="lazy"></span>
+    </a>
+    '''
+    main = pagehead(None, "Projects", "Six projects across marketing analytics, forecasting and customer modelling. Open any one for the full story.") + f'''
+<section class="sec">
+  <div class="wrap">
+    <div class="plist">{rows}</div>
+    <p class="sec-note">The Revolut, F1 and Netflix pages show visuals from the real work. The Lloyds, Quantium and Starbucks pages use illustrative artwork, and each one is labelled as such.</p>
+  </div>
+</section>
+{nextlink("about.html", "About", "About me")}
+<div class="peek" id="peek" aria-hidden="true"><img src="" alt=""></div>'''
+    return write_page("projects.html", "Projects | Varesh Nirbhavne", "Projects",
+                      "Marketing analytics, forecasting and customer modelling projects by Varesh Nirbhavne.", main, "projects.html")
+
+
+def project_page(i, p):
+    nxt = PROJECTS[(i + 1) % len(PROJECTS)]
+    dot = "tag--done" if p["done"] else "tag--wip"
+    meta = f'<span class="tag {dot}">{E(p["status"])}</span><span class="tag">{E(p["year"])}</span><span class="tag">{E(p["tools"])}</span>'
+    metrics = ""
+    if p["metrics"]:
+        metrics = '<ul class="pmetrics" data-stagger>' + "".join('<li><b>%s</b><span>%s</span></li>' % (E(a), E(b)) for a, b in p["metrics"]) + "</ul>"
+    cls = "shot shot--tall" if p["tall"] else "shot"
+    w, h = {"revolut": (1400, 1400), "f1": (1200, 1169), "netflix": (1600, 1105)}.get(p["slug"], (3840, 2160))
+    chips = '<ul class="chips pchips">' + li(p["tags"]) + "</ul>"
+    main = pagehead(("projects.html", "All projects"), p["title"], p["lede"], meta) + f'''
+<section class="sec">
+  <div class="wrap">
+    <figure class="{cls}" data-img-in><img src="{p["img"]}" alt="{E(p["alt"])}" width="{w}" height="{h}"><figcaption>{E(p["cap"])}</figcaption></figure>
+    {metrics}
+    <div class="pcols" data-stagger>
+      <div><h3>The question</h3><p>{E(p["q"])}</p></div>
+      <div><h3>What I did</h3><ul>{li(p["did"])}</ul></div>
+      <div><h3>What I found</h3><ul>{li(p["found"])}</ul></div>
+    </div>
+    <div class="pnote" data-reveal><h3>{E(p["note_h"])}</h3><p>{E(p["note"])}</p></div>
+    {chips}
+  </div>
+</section>
+{nextlink("project-%s.html" % nxt["slug"], nxt["title"], nxt["title"])}'''
+    return write_page("project-%s.html" % p["slug"], p["title"] + " | Varesh Nirbhavne", p["title"].split(" ")[0],
+                      p["lede"], main, "projects.html")
+
+
+def about_page():
+    main = pagehead(None, "About", "A marketer who got curious about the data.") + f'''
+<section class="sec">
+  <div class="wrap about">
+    <div class="about__photo" data-reveal><span class="about__disc"></span><img src="assets/photo.webp" alt="Varesh Nirbhavne" width="520" height="652"></div>
+    <div class="about__copy">
+      <p class="about__pull" data-split>I'm a marketer who got curious about the data, and a bit obsessed with proving what actually worked.</p>
+      <div data-stagger>
+        <p>I'm <b>Varesh Nirbhavne</b>, based in {CITY}, with an MSc in Marketing from the University of Birmingham and three-plus years of hands-on campaign work behind me.</p>
+        <p>I started on the creative side, running social, content and paid ads for a wedding-films studio and for 20+ freelance clients. Then I got tired of guessing, so I taught myself <b>SQL, Python and Tableau</b> and started answering my own questions with data.</p>
+        <p>Before marketing I studied Animation and Visual Effects, which is why I care how a chart looks as much as what it says.</p>
+        <p>I like owning things end to end. I've led a team of five, built a Shopify store from nothing, and won a national consultancy challenge modelling a £50m strategy. Small teams where I get to touch everything are where I'm happiest.</p>
+        <p>When I'm not working you'll find me deep in an F1 race weekend or a new dataset I had no reason to download. Absolute rabbit holes, and I love it.</p>
+      </div>
+      <dl class="facts" data-reveal>
+        <div><dt>Based in</dt><dd>{CITY}</dd></div>
+        <div><dt>Studied</dt><dd>MSc Marketing, University of Birmingham</dd></div>
+        <div><dt>Dissertation</dt><dd>Buy Now Pay Later and impulse buying, 163 respondents, SPSS (p &lt; 0.001)</dd></div>
+        <div><dt>Open to</dt><dd>Marketing and data analyst roles across the UK, in person, hybrid or remote</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--blush">
+  <div class="wrap">
+    <h2 class="h2" data-split>What I <em>work with.</em></h2>
+    <div class="skills" data-stagger>
+      <div><h3>Marketing</h3><ul class="chips"><li>Paid social</li><li>Email and CRM</li><li>Content strategy</li><li>Brand</li><li>Copywriting</li><li>A/B testing</li></ul></div>
+      <div><h3>Data</h3><ul class="chips chips--red"><li>SQL and BigQuery</li><li>Python and Pandas</li><li>scikit-learn</li><li>Tableau</li><li>Power BI</li><li>Excel</li><li>SPSS</li></ul></div>
+      <div><h3>Creative</h3><ul class="chips"><li>Video editing</li><li>3D art</li><li>Visual storytelling</li></ul></div>
+    </div>
+  </div>
+</section>
+{nextlink("experience.html", "Work experience", "Work experience")}'''
+    return write_page("about.html", "About | Varesh Nirbhavne", "About",
+                      "Varesh Nirbhavne is a marketer who got curious about the data. MSc Marketing, University of Birmingham.", main, "about.html")
+
+
+def experience_page():
+    jobs = ""
+    for j in JOBS:
+        jobs += f'''<article class="job" data-reveal>
+      <div><p class="job__when">{E(j["when"])}</p><p class="job__place">{E(j["place"])}</p></div>
+      <div>
+        <h3>{E(j["role"])}</h3>
+        <p class="job__org">{E(j["org"])}</p>
+        <p class="job__ctx">{E(j["ctx"])}</p>
+        <ul class="job__pts">{"".join("<li>%s</li>" % x for x in j["pts"])}</ul>
+        <ul class="chips">{li(j["chips"])}</ul>
+      </div>
+    </article>
+    '''
+    main = pagehead(None, "Work experience", "Campaigns, consulting and a store of my own. Each role taught me to let the data decide.") + f'''
+<section class="sec"><div class="wrap"><div class="jobs">{jobs}</div></div></section>
+{nextlink("certifications.html", "Certifications", "Education and certifications")}'''
+    return write_page("experience.html", "Work experience | Varesh Nirbhavne", "Experience",
+                      "Work experience of Varesh Nirbhavne: consulting, marketing strategy, freelance analytics and a Shopify store.", main, "experience.html")
+
+
+def certs_page():
+    certs = "".join(
+        f'''<article class="cert"><span class="cert__type">{E(c["type"])}</span><h3>{E(c["title"])}</h3><p class="cert__by">{E(c["by"])}</p><p>{E(c["text"])}</p><ul class="chips">{li(c["chips"])}</ul></article>'''
+        for c in CERTS)
+    main = pagehead(None, "Certifications", "Where I studied, and the courses and job simulations behind the analytics.") + f'''
+<section class="sec">
+  <div class="wrap">
+    <h2 class="h2" data-split>Education<em>.</em></h2>
+    <div class="edu" data-reveal style="margin-top:clamp(28px,3vw,48px)">
+      <div class="edu__row"><div><p class="job__when">2025 to 2026</p><p class="job__place">Birmingham</p></div><div><h3>MSc Marketing</h3><p>University of Birmingham. Strategy, analytics and consumer behaviour. Dissertation: a quantitative SPSS study of Buy Now Pay Later and impulse buying, with 163 respondents and a significant result (p &lt; 0.001).</p></div></div>
+      <div class="edu__row"><div><p class="job__when">2021 to 2024</p><p class="job__place">Navi Mumbai</p></div><div><h3>BSc Animation and Visual Effects</h3><p>ITM University, GPA 8.88 / 10. Where the visual and storytelling eye comes from, now pointed at data.</p></div></div>
+    </div>
+  </div>
+</section>
+<section class="sec sec--blush">
+  <div class="wrap">
+    <h2 class="h2" data-split>Certifications<em>.</em></h2>
+    <div class="certs" data-stagger>{certs}</div>
+  </div>
+</section>
+{nextlink("tools.html", "Tools", "Try the tools")}'''
+    return write_page("certifications.html", "Certifications | Varesh Nirbhavne", "Certifications",
+                      "Education and certifications of Varesh Nirbhavne: MSc Marketing, Google Data Analytics and four Forage job simulations.", main, "certifications.html")
+
+
+def tools_page():
+    main = pagehead(None, "Tools", "Two small calculators I built to think with. Move the sliders and see what changes.") + '''
+<section class="sec">
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Tools">
+      <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panelRoi" id="tabRoi">Campaign ROI</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panelAb" id="tabAb" tabindex="-1">A/B test checker</button>
+    </div>
+
+    <div class="tool is-active" id="panelRoi" role="tabpanel" aria-labelledby="tabRoi">
+      <div class="tool__inputs">
+        <label class="field"><span>Ad spend</span><output id="oSpend">£10,000</output><input type="range" id="iSpend" min="500" max="100000" step="500" value="10000"></label>
+        <label class="field"><span>Cost per click</span><output id="oCpc">£0.80</output><input type="range" id="iCpc" min="0.1" max="5" step="0.05" value="0.8"></label>
+        <label class="field"><span>Click to sale rate</span><output id="oCr">2.5%</output><input type="range" id="iCr" min="0.2" max="12" step="0.1" value="2.5"></label>
+        <label class="field"><span>Profit per sale</span><output id="oRpc">£40</output><input type="range" id="iRpc" min="5" max="300" step="1" value="40"></label>
+      </div>
+      <div class="tool__out">
+        <p class="verdict" id="roiVerdict" aria-live="polite">You keep about £25 of profit for every £100 spent.</p>
+        <div class="kpis">
+          <div><span>Sales</span><b id="kSales">313</b></div>
+          <div><span>Cost per sale</span><b id="kCpa">£32.00</b></div>
+          <div><span>Return on spend</span><b id="kRoas">1.25x</b></div>
+          <div><span>Break-even click cost</span><b id="kBe">£1.00</b></div>
+        </div>
+        <canvas id="roiChart" class="chart" role="img" aria-label="Profit as cost per click changes"></canvas>
+        <p class="note">Profit per sale means margin after product costs, so the result is profit after ad spend. The chart assumes the same click to sale rate holds as costs change, which real campaigns rarely do.</p>
+      </div>
+    </div>
+
+    <div class="tool" id="panelAb" role="tabpanel" aria-labelledby="tabAb" hidden>
+      <div class="tool__inputs">
+        <fieldset class="ab"><legend>Version A</legend>
+          <label class="num"><span>Visitors</span><input type="number" id="aN" value="5000" min="1" inputmode="numeric"></label>
+          <label class="num"><span>Conversions</span><input type="number" id="aC" value="200" min="0" inputmode="numeric"></label>
+        </fieldset>
+        <fieldset class="ab"><legend>Version B</legend>
+          <label class="num"><span>Visitors</span><input type="number" id="bN" value="5000" min="1" inputmode="numeric"></label>
+          <label class="num"><span>Conversions</span><input type="number" id="bC" value="245" min="0" inputmode="numeric"></label>
+        </fieldset>
+      </div>
+      <div class="tool__out">
+        <p class="verdict" id="abVerdict" aria-live="polite"></p>
+        <div class="kpis">
+          <div><span>Rate A</span><b id="kA">0</b></div>
+          <div><span>Rate B</span><b id="kB">0</b></div>
+          <div><span>Relative lift</span><b id="kLift">0</b></div>
+          <div><span>p-value</span><b id="kP">0</b></div>
+        </div>
+        <div class="abbars" id="abBars" aria-hidden="true"></div>
+        <p class="note">Two-sided two-proportion z-test. A small p-value says the gap is unlikely to be chance. It does not say the gap is big enough to matter, so read the likely difference as well.</p>
+      </div>
+    </div>
+  </div>
+</section>''' + "\n" + nextlink("contact.html", "Contact", "Get in touch")
+    return write_page("tools.html", "Tools | Varesh Nirbhavne", "Tools",
+                      "Two small tools by Varesh Nirbhavne: a campaign ROI calculator and an A/B test checker.", main, "tools.html", scripts=["js/tools.js"])
+
+
+def contact_page():
+    main = pagehead(None, "Contact", "Open to marketing and data analyst roles. Email is the fastest way to reach me.") + f'''
+<section class="sec">
+  <div class="wrap">
+    <div class="clist" data-stagger>
+      <div class="crow crow--copy"><span class="crow__k">Email</span><span class="crow__v">{EMAIL}</span><button class="btn btn--line-red" data-copy="{EMAIL}" data-done="Email copied">Copy</button></div>
+      <div class="crow crow--copy"><span class="crow__k">Phone</span><span class="crow__v">{PHONE}</span><button class="btn btn--line-red" data-copy="{PHONE}" data-done="Number copied">Copy</button></div>
+      <a class="crow" href="{LINKEDIN}" target="_blank" rel="noopener"><span class="crow__k">LinkedIn</span><span class="crow__v">{LINKEDIN_TXT}</span><span class="crow__go" aria-hidden="true">&nearr;</span></a>
+      <a class="crow" href="{GITHUB}" target="_blank" rel="noopener"><span class="crow__k">GitHub</span><span class="crow__v">{GITHUB_TXT}</span><span class="crow__go" aria-hidden="true">&nearr;</span></a>
+    </div>
+    <div class="btnrow"><a class="btn btn--red" href="mailto:{EMAIL}">Open in my mail app</a></div>
+    <p class="sec-note">Based in {CITY}. If the button does nothing on your device, copy the address above instead.</p>
+  </div>
+</section>'''
+    return write_page("contact.html", "Contact | Varesh Nirbhavne", "Contact",
+                      "Contact Varesh Nirbhavne about marketing and data analyst roles.", main, "contact.html")
+
+
+def build():
+    out = {}
+    out["index"] = home()
+    projects_page()
+    for i, p in enumerate(PROJECTS):
+        project_page(i, p)
+    about_page(); experience_page(); certs_page(); tools_page(); contact_page()
+    return out
+
+
+if __name__ == "__main__":
+    out = build()
+    if len(sys.argv) >= 3 and sys.argv[1] == "artifact":
+        d = sys.argv[2]
+        os.makedirs(d, exist_ok=True)
+        head, body = out["index"]
+        # content-only entry: title, links and body markup (the viewer adds the document skeleton)
+        keep = [l for l in head.split("\n") if l.startswith(("<title", "<link rel=\"stylesheet\"", "<noscript"))]
+        with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+            f.write("\n".join(keep) + "\n" + body + "\n")
+        print("artifact index written to", d)
+    print("built", len(PROJECTS) + 7, "pages")

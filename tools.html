@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tools | Varesh Nirbhavne</title>
+<meta name="description" content="Two small tools by Varesh Nirbhavne: a campaign ROI calculator and an A/B test checker.">
+<meta name="theme-color" content="#d90429">
+<meta property="og:title" content="Tools | Varesh Nirbhavne">
+<meta property="og:description" content="Two small tools by Varesh Nirbhavne: a campaign ROI calculator and an A/B test checker.">
+<meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d90429'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="vendor/lenis.css">
+<link rel="stylesheet" href="css/site.css">
+<noscript><style>.curtain,.loader{display:none!important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="curtain" id="curtain" data-label="Tools"><span class="curtain__label" aria-hidden="true"></span></div>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="bar" id="bar">
+  <a class="bar__logo" href="index.html" data-label="Home" aria-label="Varesh Nirbhavne, home">Varesh<b>.</b></a>
+  <nav class="bar__links" aria-label="Main"><a href="projects.html">Projects</a><a href="about.html">About</a><a href="experience.html">Work experience</a><a href="certifications.html">Certifications</a><a href="tools.html" aria-current="page">Tools</a></nav>
+  <a class="bar__cta" href="contact.html">Contact</a>
+  <button class="bar__menu" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="bar__menu-label">Menu</span><span class="bar__burger" aria-hidden="true"><i></i><i></i></span></button>
+</header>
+<div class="menu" id="menu" aria-label="Menu">
+  <nav class="menu__links" aria-label="Mobile">
+    <a href="index.html" data-label="Home"><span>Home</span></a>
+    <a href="projects.html"><span>Projects</span></a><a href="about.html"><span>About</span></a><a href="experience.html"><span>Work experience</span></a><a href="certifications.html"><span>Certifications</span></a><a href="tools.html"><span>Tools</span></a>
+    <a href="contact.html"><span>Contact</span></a>
+  </nav>
+  <p class="menu__foot">vareshworks@gmail.com</p>
+</div>
+<main id="main">
+<section class="pagehead">
+  <div data-intro-fade></div>
+  <h1 class="pagehead__title" data-split data-intro>Tools</h1>
+  <p class="pagehead__sub" data-intro-fade>Two small calculators I built to think with. Move the sliders and see what changes.</p>
+  
+</section>
+<section class="sec">
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Tools">
+      <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panelRoi" id="tabRoi">Campaign ROI</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panelAb" id="tabAb" tabindex="-1">A/B test checker</button>
+    </div>
+
+    <div class="tool is-active" id="panelRoi" role="tabpanel" aria-labelledby="tabRoi">
+      <div class="tool__inputs">
+        <label class="field"><span>Ad spend</span><output id="oSpend">£10,000</output><input type="range" id="iSpend" min="500" max="100000" step="500" value="10000"></label>
+        <label class="field"><span>Cost per click</span><output id="oCpc">£0.80</output><input type="range" id="iCpc" min="0.1" max="5" step="0.05" value="0.8"></label>
+        <label class="field"><span>Click to sale rate</span><output id="oCr">2.5%</output><input type="range" id="iCr" min="0.2" max="12" step="0.1" value="2.5"></label>
+        <label class="field"><span>Profit per sale</span><output id="oRpc">£40</output><input type="range" id="iRpc" min="5" max="300" step="1" value="40"></label>
+      </div>
+      <div class="tool__out">
+        <p class="verdict" id="roiVerdict" aria-live="polite">You keep about £25 of profit for every £100 spent.</p>
+        <div class="kpis">
+          <div><span>Sales</span><b id="kSales">313</b></div>
+          <div><span>Cost per sale</span><b id="kCpa">£32.00</b></div>
+          <div><span>Return on spend</span><b id="kRoas">1.25x</b></div>
+          <div><span>Break-even click cost</span><b id="kBe">£1.00</b></div>
+        </div>
+        <canvas id="roiChart" class="chart" role="img" aria-label="Profit as cost per click changes"></canvas>
+        <p class="note">Profit per sale means margin after product costs, so the result is profit after ad spend. The chart assumes the same click to sale rate holds as costs change, which real campaigns rarely do.</p>
+      </div>
+    </div>
+
+    <div class="tool" id="panelAb" role="tabpanel" aria-labelledby="tabAb" hidden>
+      <div class="tool__inputs">
+        <fieldset class="ab"><legend>Version A</legend>
+          <label class="num"><span>Visitors</span><input type="number" id="aN" value="5000" min="1" inputmode="numeric"></label>
+          <label class="num"><span>Conversions</span><input type="number" id="aC" value="200" min="0" inputmode="numeric"></label>
+        </fieldset>
+        <fieldset class="ab"><legend>Version B</legend>
+          <label class="num"><span>Visitors</span><input type="number" id="bN" value="5000" min="1" inputmode="numeric"></label>
+          <label class="num"><span>Conversions</span><input type="number" id="bC" value="245" min="0" inputmode="numeric"></label>
+        </fieldset>
+      </div>
+      <div class="tool__out">
+        <p class="verdict" id="abVerdict" aria-live="polite"></p>
+        <div class="kpis">
+          <div><span>Rate A</span><b id="kA">0</b></div>
+          <div><span>Rate B</span><b id="kB">0</b></div>
+          <div><span>Relative lift</span><b id="kLift">0</b></div>
+          <div><span>p-value</span><b id="kP">0</b></div>
+        </div>
+        <div class="abbars" id="abBars" aria-hidden="true"></div>
+        <p class="note">Two-sided two-proportion z-test. A small p-value says the gap is unlikely to be chance. It does not say the gap is big enough to matter, so read the likely difference as well.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<a class="next" href="contact.html" data-label="Contact" data-cursor="view" data-cursor-text="Go"><small>Next</small><strong>Get in touch</strong></a>
+</main>
+<footer class="footer">
+  <div class="footer__top">
+    <p class="footer__big">Let's make something work.</p>
+    <nav class="footer__links" aria-label="Footer"><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="about.html">About</a><a href="experience.html">Work experience</a><a href="certifications.html">Certifications</a><a href="tools.html">Tools</a><a href="contact.html">Contact</a></nav>
+  </div>
+  <div class="footer__base"><span>© 2026 Varesh Nirbhavne, London</span><span>Independent portfolio. Company names belong to their owners.</span></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="vendor/gsap.min.js"></script><script src="vendor/ScrollTrigger.min.js"></script><script src="vendor/lenis.min.js"></script><script src="js/site.js"></script><script src="js/tools.js"></script>
+</body>
+</html>
