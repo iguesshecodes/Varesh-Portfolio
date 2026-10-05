@@ -377,8 +377,15 @@
       tl.to(fades, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "expo.out" }, 0.35);
     }
     if (heroIn) heroIn();
+    if (hero2In) hero2In();
     // Safety: never leave anything hidden if the timeline stalls
-    setTimeout(function () { splits.forEach(function (s) { gsap.set(s.words, { yPercent: 0 }); }); gsap.set(fades, { opacity: 1, y: 0 }); gsap.set($$(".hero .ch"), { yPercent: 0 }); }, 6000);
+    setTimeout(function () {
+      splits.forEach(function (s) { gsap.set(s.words, { yPercent: 0 }); });
+      gsap.set(fades, { opacity: 1, y: 0 });
+      gsap.set($$(".hero .ch"), { yPercent: 0 });
+      gsap.set($$(".hero2__ln"), { yPercent: 0, opacity: 1 });
+      gsap.set($$(".hero2__sub, .hero2__actions, .hero2__scroll, .hero2__photo"), { opacity: 1, y: 0, scale: 1 });
+    }, 6000);
   }
 
   var seen = false;
@@ -425,6 +432,114 @@
     try { sessionStorage.setItem("vn-seen", "1"); } catch (e) {}
     liftCurtain();
   }
+
+  /* ---------- hero2: entry animation ---------- */
+  var hero2In = null;
+  (function () {
+    var hero2 = $(".hero2"); if (!hero2) return;
+    var titleLines = $$(".hero2__ln", hero2);
+    var sub = $(".hero2__sub", hero2);
+    var actions = $(".hero2__actions", hero2);
+    var photo = $(".hero2__photo", hero2);
+    var scroll = $(".hero2__scroll", hero2);
+
+    if (reduce) return;
+    /* hide elements until intro fires */
+    gsap.set(titleLines, { yPercent: 110, opacity: 0 });
+    gsap.set([sub, actions, scroll].filter(Boolean), { opacity: 0, y: 30 });
+    if (photo) gsap.set(photo, { opacity: 0, scale: 0.9 });
+
+    hero2In = function () {
+      var tl = gsap.timeline();
+      tl.to(titleLines, { yPercent: 0, opacity: 1, duration: 1.2, stagger: 0.12, ease: "expo.out" }, 0);
+      if (photo) tl.to(photo, { opacity: 1, scale: 1, duration: 1.4, ease: "expo.out" }, 0.15);
+      if (sub) tl.to(sub, { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.4);
+      if (actions) tl.to(actions, { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.55);
+      if (scroll) tl.to(scroll, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" }, 0.7);
+    };
+  })();
+
+  /* ---------- horizontal scroll: GSAP pin + scrub ---------- */
+  (function () {
+    var pin = $(".hscroll__pin"); if (!pin) return;
+    var track = $("#hscrollTrack"); if (!track) return;
+    var cards = $$(".hsc__card", track);
+    if (cards.length < 2 || reduce) return;
+
+    var mm = gsap.matchMedia();
+    mm.add("(min-width: 900px)", function () {
+      function getScrollDist() {
+        return track.scrollWidth - pin.clientWidth;
+      }
+      var tw = gsap.to(track, {
+        x: function () { return -getScrollDist(); },
+        ease: "none",
+        scrollTrigger: {
+          trigger: pin,
+          pin: true,
+          scrub: 0.8,
+          end: function () { return "+=" + getScrollDist(); },
+          invalidateOnRefresh: true
+        }
+      });
+      /* stagger card entrance */
+      cards.forEach(function (c, i) {
+        gsap.set(c, { opacity: 0.3, scale: 0.92 });
+        gsap.to(c, {
+          opacity: 1, scale: 1, duration: 0.4, ease: "power2.out",
+          scrollTrigger: {
+            trigger: c,
+            containerAnimation: tw,
+            start: "left 85%",
+            end: "left 50%",
+            scrub: true
+          }
+        });
+      });
+      return function () { tw.kill(); gsap.set(track, { clearProps: "transform" }); gsap.set(cards, { clearProps: "opacity,transform" }); };
+    });
+    /* mobile: let it native-scroll horizontally (CSS handles overflow-x) */
+  })();
+
+  /* ---------- sticker parallax ---------- */
+  (function () {
+    var stickers = $$(".stk"); if (!stickers.length || reduce) return;
+    stickers.forEach(function (s) {
+      var speed = 30 + Math.random() * 50;
+      var dir = Math.random() > 0.5 ? 1 : -1;
+      gsap.to(s, {
+        y: dir * speed,
+        rotate: (Math.random() - 0.5) * 12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: s.parentElement,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.6
+        }
+      });
+    });
+  })();
+
+  /* ---------- credentials dock magnification ---------- */
+  (function () {
+    var dock = $(".creds--pop ul"); if (!dock) return;
+    var items = $$("li", dock);
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!fine || reduce) return;
+    dock.addEventListener("pointermove", function (e) {
+      items.forEach(function (li) {
+        var r = li.getBoundingClientRect();
+        var cx = r.left + r.width / 2;
+        var d = Math.abs(e.clientX - cx);
+        var s = Math.max(1, 1.22 - d / 280);
+        li.style.transform = "scale(" + s.toFixed(3) + ")";
+      });
+    });
+    dock.addEventListener("pointerleave", function () {
+      items.forEach(function (li) { li.style.transform = "scale(1)"; });
+    });
+  })();
 
   /* ---------- magnetic buttons + how-I-work card scrub (desktop) ---------- */
   gsap.matchMedia().add("(min-width: 900px) and (hover: hover)", function () {
