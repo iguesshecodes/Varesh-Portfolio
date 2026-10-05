@@ -303,6 +303,9 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:image" content="assets/og.jpg">
 <link rel="icon" href="{ICON}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="vendor/lenis.css">
 <link rel="stylesheet" href="css/site.css">
 <noscript><style>.curtain,.loader{{display:none!important}}</style></noscript>'''

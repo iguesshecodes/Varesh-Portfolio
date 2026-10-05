@@ -1,17 +1,14 @@
 /* ============ Fonts ============ */
-@font-face { font-family: "Archivo"; src: url("../fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
-@font-face { font-family: "Geist Mono"; src: url("../fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
-@font-face { font-family: "Inter Tight"; src: url("../fonts/inter-tight.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
-@font-face { font-family: "Newsreader"; src: url("../fonts/newsreader-italic.woff2") format("woff2"); font-weight: 200 800; font-style: italic; font-display: swap; }
+/* Syne (display), DM Sans (body + italic), JetBrains Mono (mono) loaded via Google Fonts <link> in HTML */
 
 /* ============ Tokens: dark blue, white, black ============ */
 :root {
   --pad: clamp(20px, 4vw, 72px);
   --bar: 68px;
-  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --body: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
-  --italic: "Newsreader", Georgia, "Times New Roman", serif;
+  --display: "Syne", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --italic: "DM Sans", Georgia, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   --blue: #1a3b9f;
