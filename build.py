@@ -455,12 +455,12 @@ def project_page(i, p):
     second = ""
     if p.get("orig"):
         ow, oh = p["orig_size"]
-        second = f'<figure class="shot shot--second" data-img-in><img src="{p["orig"]}" alt="{E(p["orig_alt"])}" width="{ow}" height="{oh}" loading="lazy"><figcaption>{E(p["orig_cap"])}</figcaption></figure>'
+        second = f'<figure class="shot shot--second" data-img-in><div class="win-chrome"><span></span><span></span><span></span></div><img src="{p["orig"]}" alt="{E(p["orig_alt"])}" width="{ow}" height="{oh}" loading="lazy"><figcaption>{E(p["orig_cap"])}</figcaption></figure>'
     chips = '<ul class="chips pchips">' + li(p["tags"]) + "</ul>"
     main = pagehead(("projects.html", "All projects"), p["title"], p["lede"], meta) + f'''
 <section class="sec">
   <div class="wrap">
-    <figure class="{cls}" data-img-in><img src="{p["img"]}" alt="{E(p["alt"])}" width="{w}" height="{h}"><figcaption>{E(p["cap"])}</figcaption></figure>
+    <figure class="{cls}" data-img-in><div class="win-chrome"><span></span><span></span><span></span></div><img src="{p["img"]}" alt="{E(p["alt"])}" width="{w}" height="{h}"><figcaption>{E(p["cap"])}</figcaption></figure>
     {metrics}
     <div class="pcols" data-stagger>
       <div><h3>The question</h3><p>{E(p["q"])}</p></div>
@@ -572,6 +572,7 @@ def tools_page():
     </div>
 
     <div class="tool is-active" id="panelRoi" role="tabpanel" aria-labelledby="tabRoi">
+      <div class="win-chrome win-chrome--tool"><span></span><span></span><span></span></div>
       <div class="tool__inputs">
         <label class="field"><span>Ad spend</span><output id="oSpend">£10,000</output><input type="range" id="iSpend" min="500" max="100000" step="500" value="10000"></label>
         <label class="field"><span>Cost per click</span><output id="oCpc">£0.80</output><input type="range" id="iCpc" min="0.1" max="5" step="0.05" value="0.8"></label>
@@ -592,6 +593,7 @@ def tools_page():
     </div>
 
     <div class="tool" id="panelAb" role="tabpanel" aria-labelledby="tabAb" hidden>
+      <div class="win-chrome win-chrome--tool"><span></span><span></span><span></span></div>
       <div class="tool__inputs">
         <fieldset class="ab"><legend>Version A</legend>
           <label class="num"><span>Visitors</span><input type="number" id="aN" value="5000" min="1" inputmode="numeric"></label>
