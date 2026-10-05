@@ -288,44 +288,6 @@
       hero.addEventListener("pointerleave", function () { px = -9999; py = -9999; if (!raf) raf = requestAnimationFrame(lens); });
     }
 
-    /* line field */
-    var cv = $("#lines"), ctx = cv && cv.getContext("2d");
-    if (ctx) {
-      var W = 0, H = 0, dpr = 1, rows = 0, mx = -9999, my = -9999, tx = -9999, ty = -9999, vis = true, t0 = performance.now();
-      var size = function () {
-        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-        W = cv.clientWidth; H = cv.clientHeight;
-        cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        rows = Math.max(22, Math.round(H / 20));
-      };
-      var draw = function (now) {
-        var t = (now - t0) * 0.00028;
-        ctx.clearRect(0, 0, W, H); ctx.lineWidth = 1;
-        var step = Math.max(10, W / 90);
-        for (var r = 0; r < rows; r++) {
-          var base = (r + 0.5) * (H / rows);
-          ctx.strokeStyle = "rgba(255,255,255," + (0.07 + 0.12 * (1 - Math.abs(r / rows - 0.5) * 1.6)).toFixed(3) + ")";
-          ctx.beginPath();
-          for (var x = 0; x <= W + step; x += step) {
-            var n = Math.sin(x * 0.0036 + t * 2.2 + r * 0.22) * 14 + Math.sin(x * 0.0085 - t * 3.1 + r * 0.5) * 6;
-            var dx = x - mx, dy = base - my;
-            var push = Math.exp(-(dx * dx + dy * dy) / 30000) * 52;
-            var y = base + n - (dy === 0 ? 0 : (dy > 0 ? 1 : -1)) * push * 0.9;
-            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-          }
-          ctx.stroke();
-        }
-      };
-      size();
-      window.addEventListener("resize", function () { size(); if (reduce) draw(performance.now()); });
-      hero.addEventListener("pointermove", function (e) { var r = cv.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; });
-      hero.addEventListener("pointerleave", function () { tx = -9999; ty = -9999; });
-      if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { vis = en[0].isIntersecting; }).observe(hero);
-      if (reduce) draw(performance.now());
-      else gsap.ticker.add(function (now) { mx += (tx - mx) * 0.08; my += (ty - my) * 0.08; if (vis) draw(performance.now()); });
-    }
-
     if (reduce) return;
     gsap.set(chars, { yPercent: 115 });
     heroIn = function () {
@@ -470,11 +432,6 @@
       var xt = gsap.quickTo(b, "x", { duration: 0.5, ease: "power3" }), yt = gsap.quickTo(b, "y", { duration: 0.5, ease: "power3" });
       b.addEventListener("pointermove", function (e) { var r = b.getBoundingClientRect(); xt((e.clientX - r.left - r.width / 2) * 0.22); yt((e.clientY - r.top - r.height / 2) * 0.3); });
       b.addEventListener("pointerleave", function () { xt(0); yt(0); });
-    });
-    var cards = $$(".hcard");
-    cards.forEach(function (c, i) {
-      if (i === cards.length - 1) return;
-      gsap.to(c, { scale: 0.93, filter: "brightness(.72)", ease: "none", scrollTrigger: { trigger: cards[i + 1], start: "top 85%", end: "top 20%", scrub: true } });
     });
   });
 

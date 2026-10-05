@@ -56,7 +56,7 @@ ul, ol { list-style: none; }
 .dark em, .blue em { color: var(--sky); }
 .dark .lead, .dark .sec-note, .blue .lead { color: rgba(255, 255, 255, 0.72); }
 
-/* hairline column grid, the quiet texture behind dark blocks */
+/* hairline column grid (kept for non-home pages) */
 .gridlines { position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px); background-size: calc((100% - var(--pad) * 2) / 6) 100%; background-position: var(--pad) 0; }
 
 /* micro labels */
@@ -135,8 +135,7 @@ ul, ol { list-style: none; }
 
 /* ============ Hero ============ */
 .hero { position: relative; min-height: 100svh; padding: calc(var(--bar) + 10px) var(--pad) clamp(18px, 2.2vw, 34px); display: flex; flex-direction: column; overflow: hidden; background: linear-gradient(180deg, var(--blue) 0%, var(--blue) 55%, var(--blue-deep) 100%); }
-.hero__lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-.hero > *:not(.hero__lines):not(.gridlines) { position: relative; z-index: 2; }
+.hero > * { position: relative; z-index: 2; }
 .hero__micro { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-block: 1px solid var(--line-w); color: rgba(255, 255, 255, 0.9); }
 .hero__status { display: inline-flex; align-items: center; gap: 10px; }
 .pulse { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: pulse 2s infinite; flex: none; }
@@ -146,21 +145,13 @@ ul, ol { list-style: none; }
 .hero__ln--b { align-self: flex-end; }
 .ch { display: inline-block; will-change: transform; color: rgb(255 255 255 / calc(1 - var(--k, 0))); -webkit-text-stroke: 0.014em #fff; paint-order: stroke fill; }
 .ch--amp { font-family: var(--italic); font-style: italic; font-weight: 500; text-transform: none; color: rgb(169 192 255 / calc(1 - var(--k, 0))); -webkit-text-stroke-color: var(--sky); margin-right: 0.12em; }
-.hero__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line-w); }
-.hero__facts li { padding: 12px 16px 12px 0; display: grid; gap: 4px; }
-.hero__facts li + li { border-left: 1px solid var(--line-w); padding-left: 16px; }
-.hero__facts b { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 2vw, 32px); letter-spacing: -0.04em; text-transform: none; }
-.hero__facts span { opacity: 0.75; font-size: 11px; }
 .hero__bottom { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--line-w); }
 .hero__lede { font-family: var(--italic); font-style: italic; font-size: clamp(17px, 1.35vw, 22px); line-height: 1.4; max-width: 34ch; color: #fff; }
 .hero__actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .hero__scroll { margin-left: auto; display: inline-flex; align-items: center; gap: 12px; opacity: 0.85; }
 .hero__scroll i { display: block; width: 56px; height: 1px; background: #fff; transform-origin: left; animation: scrollline 2.4s var(--ease) infinite; }
 @keyframes scrollline { 0% { transform: scaleX(0); } 55% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: 0; } }
-@media (max-height: 760px) { .hero__facts { display: none; } }
 @media (max-width: 899.98px) {
-  .hero__facts { grid-template-columns: 1fr 1fr; }
-  .hero__facts li:nth-child(n+3) { display: none; }
   .hero__bottom { flex-direction: column; align-items: flex-start; }
   .hero__scroll { display: none; }
   .hero__micro span:last-child { display: none; }
@@ -213,7 +204,7 @@ em { font-family: var(--italic); font-style: italic; font-weight: 500; letter-sp
 @media (max-width: 899.98px) { .stats { grid-template-columns: 1fr 1fr; } .stats li:nth-child(3) { border-left: 0; padding-left: 0; } .stats li:nth-child(n+3) { border-top: 1px solid var(--line-w); margin-top: 24px; } }
 
 /* ============ Selected work: cards that stack as you scroll ============ */
-.stack { background: var(--soft); padding-block: clamp(64px, 8vw, 120px) clamp(48px, 6vw, 90px); }
+.stack { background: #fff; padding-block: clamp(64px, 8vw, 120px) clamp(48px, 6vw, 90px); }
 .stack__head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(28px, 3vw, 56px); }
 .stack__list { width: min(100% - var(--pad) * 2, 1440px); margin-inline: auto; display: grid; gap: clamp(14px, 2vw, 28px); }
 .scard { position: sticky; top: calc(var(--bar) + 16px + var(--i, 0) * 14px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 3vw, 56px); align-items: center; min-height: min(76svh, 720px); padding: clamp(22px, 3vw, 48px); border-radius: clamp(18px, 2vw, 32px); transform-origin: center top; overflow: hidden; }
@@ -452,22 +443,16 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 .cert:hover .cert__img img { transform: scale(1.03); }
 .certs { align-items: start; }
 
-/* how I work: sticky stacking cards */
-.how { background: var(--soft); padding-block: clamp(72px, 10vw, 150px) clamp(40px, 6vw, 90px); }
+/* how I work: editorial white cards */
+.how { background: #fff; padding-block: clamp(72px, 10vw, 150px) clamp(40px, 6vw, 90px); }
 .how__head { margin-bottom: clamp(32px, 5vw, 72px); }
 .how__head .micro { color: var(--mute); margin-bottom: 16px; }
 .how__list { display: block; }
-.hcard { position: sticky; top: calc(88px + var(--i) * 22px); display: grid; grid-template-columns: auto 1fr; gap: clamp(20px, 4vw, 72px); padding: clamp(28px, 4vw, 64px); border-radius: 22px; margin-bottom: clamp(24px, 5vw, 64px); min-height: 52vh; align-content: space-between; transform-origin: 50% 0; will-change: transform; }
-.hcard--0 { background: var(--blue); color: #fff; }
-.hcard--1 { background: var(--ink); color: #fff; }
-.hcard--2 { background: #fff; color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
-.hcard__no { font-family: var(--display); font-weight: 800; font-size: clamp(56px, 9vw, 150px); letter-spacing: -0.06em; line-height: 0.85; opacity: 0.9; }
-.hcard h3 { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4.6vw, 76px); letter-spacing: -0.05em; line-height: 0.98; margin-bottom: 18px; max-width: 16ch; }
-.hcard p { max-width: 52ch; margin-bottom: 24px; opacity: 0.85; }
-.hcard--2 .chips li { background: var(--soft); border-color: transparent; }
-.chips--w li { background: transparent; border: 1px solid rgb(255 255 255 / .35); color: #fff; }
-.hcard--2 .chips--w li { border-color: var(--line); color: var(--ink); }
-@media (max-width: 799.98px) { .hcard { grid-template-columns: 1fr; min-height: 0; top: calc(76px + var(--i) * 14px); } }
+.hcard { display: grid; grid-template-columns: 1fr; padding: clamp(32px, 4vw, 64px) clamp(28px, 4vw, 64px); border-top: 1px solid var(--line); background: #fff; color: var(--ink); }
+.hcard h3 { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 4vw, 64px); letter-spacing: -0.045em; line-height: 0.98; margin-bottom: 18px; max-width: 18ch; }
+.hcard p { max-width: 52ch; margin-bottom: 24px; opacity: 0.7; line-height: 1.5; }
+.hcard .chips li { background: var(--soft); border-color: transparent; color: var(--ink); }
+@media (max-width: 799.98px) { .hcard { min-height: 0; top: calc(76px + var(--i) * 14px); } }
 
 /* credentials strip */
 .creds { padding-block: clamp(40px, 6vw, 90px); }
@@ -479,18 +464,6 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 .creds ul li:hover { color: var(--blue); }
 .creds .btn { justify-self: start; }
 .stack__note { color: var(--mute); margin-bottom: 24px; }
-.dark .stack__note, .stack .stack__note { color: rgb(255 255 255 / .6); }
-
-/* hero sticker: one tilted data tag, desktop only */
-.sticker { position: absolute; z-index: 5; left: var(--pad); top: 50%; width: clamp(210px, 19vw, 290px); padding: 16px 18px 14px; border-radius: 14px; background: #fff; color: var(--ink); rotate: -5deg; box-shadow: 0 18px 40px -12px rgb(6 14 52 / .55); transition: rotate .6s var(--ease), translate .6s var(--ease); }
-.sticker:hover { rotate: -1.5deg; translate: 0 -6px; }
-.sticker__k { display: block; color: var(--mute); font-size: 10.5px; }
-.sticker__v { display: block; margin: 6px 0 2px; font-family: var(--display); font-weight: 800; font-size: clamp(40px, 4.2vw, 64px); letter-spacing: -0.05em; line-height: .9; color: var(--blue); font-variant-numeric: tabular-nums; }
-.sticker__d { display: block; font-size: 13px; line-height: 1.3; color: var(--mute); }
-.sticker svg { display: block; width: 100%; height: 38px; margin-top: 10px; overflow: visible; }
-.sticker path { fill: none; stroke: var(--blue); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: spark 1.6s var(--ease) 1.2s forwards; }
-@keyframes spark { to { stroke-dashoffset: 0; } }
-@media (max-width: 1099.98px), (max-height: 700px) { .sticker { display: none; } }
-@media (prefers-reduced-motion: reduce) { .sticker path { animation: none; stroke-dashoffset: 0; } .sticker { transition: none; } }
+.dark .stack__note { color: rgb(255 255 255 / .6); }
 /* mixed-case display needs more air than uppercase on Archivo */
-.verdict, .statement__text, .about__pull, .hero__facts b, .pmetrics b, .kpis b { letter-spacing: -0.028em; word-spacing: 0.04em; }
+.verdict, .statement__text, .about__pull, .pmetrics b, .kpis b { letter-spacing: -0.028em; word-spacing: 0.04em; }
