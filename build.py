@@ -349,16 +349,20 @@ def stk(kind, cls=""):
 def home():
     marq = "".join('<span>%s</span><span class="sep">/</span>' % E(m) for m in MARQUEE)
 
-    # horizontal scroll project cards
-    hscroll_cards = "".join(
-        f'''<a class="hsc__card" href="project-{p["slug"]}.html" target="_blank" rel="noopener" data-label="{E(p["title"])}">
-      <div class="hsc__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="1920" height="1080" loading="lazy"></div>
-      <div class="hsc__copy">
-        <span class="hsc__no">{i + 1:02d}</span>
-        <h3 class="hsc__title">{E(p["title"])}</h3>
-        <p class="hsc__short">{E(p["short"])}</p>
-        <span class="hsc__tools">{E(p["tools"])}</span>
+    # stacking project cards
+    card_styles = ["scard--0", "scard--1", "scard--2"]
+    stack_cards = "".join(
+        f'''<a class="scard {card_styles[i % 3]}" href="project-{p["slug"]}.html" target="_blank" rel="noopener" style="--i:{i}" data-label="{E(p["title"])}">
+      <div class="scard__copy">
+        <span class="scard__no">{i + 1:02d}<small>/{len(PROJECTS):02d}</small></span>
+        <h3 class="scard__title">{E(p["title"])}</h3>
+        <p class="scard__short">{E(p["short"])}</p>
+        <div class="scard__foot">
+          <span class="scard__tools">{E(p["tools"])}</span>
+          <span class="scard__go">View case study <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M12 4H5M12 4v7"/></svg></span>
+        </div>
       </div>
+      <div class="scard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="1920" height="1080" loading="lazy"></div>
     </a>'''
         for i, p in enumerate(PROJECTS)
     )
@@ -397,11 +401,7 @@ def home():
 </div>'''
 
     main = f'''<section class="hero2" id="top">
-  <div class="hero2__bg" aria-hidden="true">
-    <div class="hero2__blob hero2__blob--1"></div>
-    <div class="hero2__blob hero2__blob--2"></div>
-    <div class="hero2__blob hero2__blob--3"></div>
-  </div>
+  <div class="hero2__bg" aria-hidden="true"></div>
   {stk("cloud", "stk--hero-1")}
   {stk("cursor", "stk--hero-2")}
   <div class="hero2__inner wrap">
@@ -412,6 +412,7 @@ def home():
       <h1 class="hero2__title" data-intro>
         <span class="hero2__ln">Varesh</span>
         <span class="hero2__ln">Nirbhavne</span>
+        <span class="hero2__ln hero2__ln--tag">Marketing &amp; Data</span>
       </h1>
       <p class="hero2__sub" data-intro-fade>Marketing strategist and data analyst who runs the campaigns, then reads the numbers to see what actually moved.</p>
       <div class="hero2__actions" data-intro-fade>
@@ -451,21 +452,18 @@ def home():
   </div>
 </section>
 
-<section class="hscroll" id="work" aria-label="Selected work">
+<section class="stack" id="work" aria-label="Selected work">
   {stk("code", "stk--proj-1")}
   {stk("smiley", "stk--proj-2")}
-  <div class="hscroll__head wrap">
-    <p class="micro">Selected work</p>
-    <h2 class="h2" data-split>Projects<em>.</em></h2>
-    <p class="hscroll__note">The Revolut figures come from an independent portfolio study of a dataset, not from company data.</p>
-  </div>
-  <div class="hscroll__pin">
-    <div class="hscroll__track" id="hscrollTrack">
-      {hscroll_cards}
+  <div class="stack__head wrap">
+    <div>
+      <p class="micro">Selected work</p>
+      <h2 class="h2" data-split>Projects<em>.</em></h2>
     </div>
+    <a class="btn btn--navy" href="projects.html" target="_blank" rel="noopener" data-label="All projects">See all projects</a>
   </div>
-  <div class="hscroll__foot wrap">
-    <a class="btn btn--pop" href="projects.html" target="_blank" rel="noopener" data-label="All projects">See all projects</a>
+  <div class="stack__list">
+    {stack_cards}
   </div>
 </section>
 
@@ -501,7 +499,7 @@ def home():
     <p class="micro">Work experience</p>
     <h2 class="h2" data-split>Where I have <em>worked.</em></h2>
     <div class="tl">{home_jobs}</div>
-    <a class="btn btn--ghost-dark" href="experience.html" target="_blank" rel="noopener">Full experience</a>
+    <a class="btn btn--ghost" href="experience.html" target="_blank" rel="noopener">Full experience</a>
   </div>
 </section>
 
