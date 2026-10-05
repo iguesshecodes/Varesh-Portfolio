@@ -330,15 +330,12 @@ def write_page(fname, title, label, desc, main, active, scripts=(), loader="", t
     return head, body
 
 
-# ---- sticker SVGs (scattered playful icons) ----
+# ---- sticker SVGs (illustrated vintage stamps) ----
 def stk(kind, cls=""):
     icons = {
-        "cloud": '<svg viewBox="0 0 80 50"><path d="M65 42H20a14 14 0 0 1-1.5-27.9A18 18 0 0 1 53.1 8 14 14 0 0 1 65 22a10 10 0 0 1 0 20z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-        "cursor": '<svg viewBox="0 0 50 50"><path d="M10 6l5 34 7-12 14-3z" fill="currentColor" opacity=".85"/></svg>',
-        "code": '<svg viewBox="0 0 64 40"><path d="M22 4L6 20l16 16M42 4l16 16-16 16" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-        "star": '<svg viewBox="0 0 50 50"><path d="M25 2l5.5 16.5H48l-14 10.5 5.5 17L25 36 10.5 46l5.5-17L2 18.5h17z" fill="currentColor" opacity=".8"/></svg>',
-        "bolt": '<svg viewBox="0 0 40 60"><path d="M24 2L8 34h12L16 58 34 24H22z" fill="currentColor" opacity=".85"/></svg>',
-        "smiley": '<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="17" cy="20" r="2.5" fill="currentColor"/><circle cx="33" cy="20" r="2.5" fill="currentColor"/><path d="M16 32c2.5 4 6.5 6 9 6s6.5-2 9-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
+        "camera": '<svg viewBox="0 0 80 64"><rect x="10" y="20" width="60" height="36" rx="5" fill="currentColor" opacity=".12" stroke="currentColor" stroke-width="2"/><rect x="28" y="10" width="24" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="38" r="13" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="38" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="38" r="5" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="38" r="2.5" fill="currentColor" opacity=".5"/><circle cx="60" cy="27" r="3" fill="currentColor" opacity=".4" stroke="currentColor" stroke-width="1"/><rect x="14" y="26" width="10" height="4" rx="2" fill="currentColor" opacity=".25"/><line x1="14" y1="50" x2="66" y2="50" stroke="currentColor" stroke-width=".5" opacity=".2"/></svg>',
+        "vinyl": '<svg viewBox="0 0 72 72"><circle cx="36" cy="36" r="33" fill="currentColor" opacity=".06"/><circle cx="36" cy="36" r="33" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="36" cy="36" r="30" fill="none" stroke="currentColor" stroke-width=".4" opacity=".35"/><circle cx="36" cy="36" r="26" fill="none" stroke="currentColor" stroke-width=".4" opacity=".25"/><circle cx="36" cy="36" r="22" fill="none" stroke="currentColor" stroke-width=".4" opacity=".3"/><circle cx="36" cy="36" r="18" fill="none" stroke="currentColor" stroke-width=".4" opacity=".25"/><circle cx="36" cy="36" r="14" fill="currentColor" opacity=".1" stroke="currentColor" stroke-width="1.5"/><text x="36" y="34" text-anchor="middle" font-size="5" fill="currentColor" opacity=".5" font-family="sans-serif" font-weight="700">VARESH</text><text x="36" y="40" text-anchor="middle" font-size="3.5" fill="currentColor" opacity=".35" font-family="sans-serif">SIDE A</text><circle cx="36" cy="36" r="4" fill="currentColor" opacity=".4"/><circle cx="36" cy="36" r="1.8" fill="none" stroke="currentColor" stroke-width="1"/></svg>',
+        "cdstar": '<svg viewBox="0 0 68 68"><rect x="4" y="4" width="60" height="60" rx="3" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="34" r="22" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><circle cx="34" cy="34" r="18" fill="none" stroke="currentColor" stroke-width=".4" opacity=".25"/><circle cx="34" cy="34" r="5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M34 14l4.5 11h12l-9.5 7.5 3.5 12L34 37l-10.5 7.5 3.5-12-9.5-7.5h12z" fill="currentColor" opacity=".2" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><line x1="4" y1="60" x2="64" y2="60" stroke="currentColor" stroke-width=".5" opacity=".15"/><rect x="10" y="8" width="16" height="3" rx="1" fill="currentColor" opacity=".15"/></svg>',
         "chart": '<svg viewBox="0 0 50 50"><rect x="6" y="28" width="8" height="18" rx="2" fill="currentColor" opacity=".7"/><rect x="21" y="16" width="8" height="30" rx="2" fill="currentColor" opacity=".85"/><rect x="36" y="6" width="8" height="40" rx="2" fill="currentColor"/></svg>',
         "squiggle": '<svg viewBox="0 0 80 30"><path d="M4 15c8-12 16 12 24 0s16 12 24 0 16 12 24 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>',
     }
@@ -400,28 +397,30 @@ def home():
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
 
-    main = f'''<section class="hero2" id="top">
+    main = f'''<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<section class="hero2" id="top">
   <div class="hero2__bg" aria-hidden="true"></div>
-  {stk("cloud", "stk--hero-1")}
-  {stk("cursor", "stk--hero-2")}
+  <div class="hero2__glow" id="heroGlow" aria-hidden="true"></div>
+  {stk("camera", "stk--hero-1")}
+  {stk("vinyl", "stk--hero-2")}
+  {stk("cdstar", "stk--hero-3")}
   <div class="hero2__inner wrap">
     <div class="hero2__text">
       <div class="hero__micro micro" data-intro-fade>
         <span class="hero__status"><i class="pulse"></i>Open to work</span>
       </div>
+      <p class="hero2__name" data-intro-fade>Varesh Nirbhavne</p>
       <h1 class="hero2__title" data-intro>
-        <span class="hero2__ln">Varesh</span>
-        <span class="hero2__ln">Nirbhavne</span>
-        <span class="hero2__ln hero2__ln--tag">Marketing &amp; Data</span>
+        <span class="hero2__ln">Marketing</span>
+        <span class="hero2__ln hero2__ln--amp">&amp; Data</span>
       </h1>
       <p class="hero2__sub" data-intro-fade>Marketing strategist and data analyst who runs the campaigns, then reads the numbers to see what actually moved.</p>
       <div class="hero2__actions" data-intro-fade>
         <a class="btn btn--pop" href="#work">See my projects</a>
         <a class="btn btn--ghost" href="contact.html" target="_blank" rel="noopener">Contact me</a>
       </div>
-    </div>
-    <div class="hero2__photo" data-intro-fade>
-      <img src="assets/profile-blue.jpg" alt="Varesh Nirbhavne" width="600" height="600">
     </div>
   </div>
   <div class="hero2__scroll" aria-hidden="true" data-intro-fade>
@@ -433,17 +432,17 @@ def home():
 <section class="marquee marquee--pop" aria-hidden="true"><div class="marquee__track">{marq}{marq}</div></section>
 
 <section class="sec statement statement--pop">
-  {stk("star", "stk--stmt-1")}
+  {stk("camera", "stk--stmt-1")}
   <div class="wrap">
     <p class="statement__text" data-scrub>I turn campaign noise into <b>decisions that pay for themselves</b>. Strategy first, then the <b>SQL, Python and Tableau</b> to check I was right.</p>
   </div>
 </section>
 
 <section class="how how--pop" id="how">
-  {stk("bolt", "stk--how-1")}
+  {stk("vinyl", "stk--how-1")}
   <div class="how__head wrap">
     <p class="micro">How I work</p>
-    <h2 class="h2" data-split>Ask. Measure. <em>Decide.</em></h2>
+    <h2 class="h2" data-split data-scramble>Ask. Measure. <em>Decide.</em></h2>
   </div>
   <div class="how__list wrap">
     <article class="hcard" style="--i:0" data-reveal><span class="hcard__no" aria-hidden="true">01</span><div><h3>Ask the sharper question</h3><p>Content, social and paid campaigns across 20+ clients taught me that a vague brief wastes budget. I start by pinning down the decision the work has to support.</p><ul class="chips"><li>Strategy</li><li>Paid social</li><li>Email and CRM</li><li>Brand</li></ul></div></article>
@@ -453,8 +452,8 @@ def home():
 </section>
 
 <section class="stack" id="work" aria-label="Selected work">
-  {stk("code", "stk--proj-1")}
-  {stk("smiley", "stk--proj-2")}
+  {stk("cdstar", "stk--proj-1")}
+  {stk("camera", "stk--proj-2")}
   <div class="stack__head wrap">
     <div>
       <p class="micro">Selected work</p>
@@ -532,8 +531,8 @@ def home():
 </section>
 
 <section class="sec cta cta--pop">
-  {stk("cloud", "stk--cta-1")}
-  {stk("star", "stk--cta-2")}
+  {stk("vinyl", "stk--cta-1")}
+  {stk("cdstar", "stk--cta-2")}
   <div class="wrap">
     <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
     <p class="cta__sub">I am actively looking for marketing and data analytics roles in London and Mumbai.</p>

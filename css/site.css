@@ -527,33 +527,40 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 
 /* ============ One-page scroll: dark blue / white / black ============ */
 
-/* ---- hero2: warped checkerboard + photo ---- */
+/* ---- custom cursor ---- */
+.cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background: var(--sky); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width .2s, height .2s, background .2s; mix-blend-mode: difference; }
+.cursor-ring { position: fixed; top: 0; left: 0; width: 36px; height: 36px; border: 1.5px solid rgba(169,192,255,.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width .25s, height .25s, border-color .25s; }
+body:has(.btn:hover) .cursor-dot, body:has(a:hover) .cursor-dot { width: 14px; height: 14px; background: #fff; }
+body:has(.btn:hover) .cursor-ring, body:has(a:hover) .cursor-ring { width: 52px; height: 52px; border-color: rgba(169,192,255,.8); }
+@media (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+/* ---- hero2: massive typography, no photo ---- */
 .hero2 { position: relative; min-height: 100svh; padding: calc(var(--bar) + 20px) 0 0; display: flex; flex-direction: column; overflow: hidden; background: var(--night); }
-.hero2__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; opacity: .08;
+.hero2__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; opacity: .025;
   background: repeating-conic-gradient(var(--blue) 0% 25%, var(--white) 0% 50%) 0 0 / 60px 60px;
   transform: perspective(600px) rotateX(55deg) scale(2.2);
   transform-origin: center 40%;
 }
+.hero2__glow { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(26,59,159,.2), transparent 60%); transition: opacity .4s; }
+.hero2:hover .hero2__glow { opacity: 1; }
 
-.hero2__inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: clamp(32px, 5vw, 80px); align-items: center; min-height: calc(100svh - var(--bar) - 20px); padding-block: clamp(40px, 6vh, 100px); }
-.hero2__text { color: #fff; }
-.hero2__title { font-family: var(--display); font-weight: 800; font-size: clamp(48px, 8vw, 130px); letter-spacing: -0.055em; line-height: 0.9; text-transform: uppercase; margin-bottom: clamp(16px, 2vw, 28px); }
+.hero2__inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: calc(100svh - var(--bar) - 20px); padding-block: clamp(40px, 6vh, 100px); }
+.hero2__text { color: #fff; display: flex; flex-direction: column; align-items: center; }
+.hero2__name { font-family: var(--mono); font-size: clamp(12px, 1.2vw, 16px); letter-spacing: .2em; text-transform: uppercase; color: var(--sky); margin-bottom: clamp(12px, 2vw, 24px); opacity: .8; }
+.hero2__title { font-family: var(--display); font-weight: 900; font-size: clamp(64px, 14vw, 220px); letter-spacing: -0.05em; line-height: 0.88; text-transform: uppercase; margin-bottom: clamp(20px, 3vw, 40px); }
 .hero2__ln { display: block; }
-.hero2__ln--tag { font-size: .38em; letter-spacing: .04em; color: var(--sky); margin-top: .15em; }
-.hero2__sub { font-family: var(--italic); font-style: italic; font-size: clamp(17px, 1.4vw, 22px); line-height: 1.45; max-width: 36ch; color: rgba(255,255,255,.85); margin-bottom: clamp(20px, 3vw, 36px); }
-.hero2__actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.hero2__photo { position: relative; justify-self: center; }
-.hero2__photo img { width: clamp(220px, 26vw, 420px); height: auto; border-radius: 24px; object-fit: cover; box-shadow: 0 32px 80px rgba(0,0,0,.35); }
-.hero2 .hero__micro { border-block: 1px solid rgba(255,255,255,.18); padding: 10px 0; color: rgba(255,255,255,.85); margin-bottom: clamp(20px, 3vw, 32px); }
+.hero2__ln--amp { color: var(--sky); font-style: italic; }
+.hero2__sub { font-family: var(--italic); font-style: italic; font-size: clamp(17px, 1.4vw, 22px); line-height: 1.5; max-width: 42ch; color: rgba(255,255,255,.75); margin-bottom: clamp(24px, 3vw, 40px); }
+.hero2__actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.hero2 .hero__micro { border-block: 1px solid rgba(255,255,255,.18); padding: 10px 0; color: rgba(255,255,255,.85); margin-bottom: clamp(16px, 2vw, 24px); }
 .hero2 .pulse { background: var(--sky); animation-name: pulse-sky; }
 @keyframes pulse-sky { 0% { box-shadow: 0 0 0 0 rgba(169,192,255,.5); } 70% { box-shadow: 0 0 0 10px rgba(169,192,255,0); } 100% { box-shadow: 0 0 0 0 rgba(169,192,255,0); } }
 .hero2__scroll { position: absolute; bottom: clamp(18px, 3vh, 40px); left: 50%; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(255,255,255,.6); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-family: var(--mono); }
 .hero2__dot { animation: scrolldot 2s ease-in-out infinite; }
 @keyframes scrolldot { 0%,100% { cy: 8; } 50% { cy: 20; } }
 @media (max-width: 799.98px) {
-  .hero2__inner { grid-template-columns: 1fr; text-align: center; }
-  .hero2__photo { order: -1; }
-  .hero2__photo img { width: clamp(160px, 45vw, 260px); border-radius: 20px; }
+  .hero2__inner { text-align: center; }
+  .hero2__title { font-size: clamp(52px, 16vw, 120px); }
   .hero2__sub { margin-inline: auto; }
   .hero2__actions { justify-content: center; }
   .hero2 .hero__micro { justify-content: center; }
@@ -656,8 +663,9 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 .stk::before { content: ""; position: absolute; inset: -6px; border: 2px dashed var(--sky); border-radius: 4px; opacity: .45; }
 .stk::after { content: ""; position: absolute; inset: -3px; border: 1px solid var(--blue); border-radius: 2px; opacity: .3; }
 /* hero stickers */
-.stk--hero-1 { width: clamp(50px, 7vw, 90px); top: 18%; left: 6%; color: var(--sky); rotate: -15deg; }
-.stk--hero-2 { width: clamp(30px, 4vw, 55px); bottom: 22%; right: 12%; color: var(--sky); rotate: 20deg; }
+.stk--hero-1 { width: clamp(60px, 8vw, 110px); top: 15%; left: 5%; color: var(--sky); rotate: -15deg; }
+.stk--hero-2 { width: clamp(44px, 6vw, 80px); bottom: 22%; right: 10%; color: var(--sky); rotate: 20deg; }
+.stk--hero-3 { width: clamp(38px, 5vw, 65px); top: 60%; left: 10%; color: var(--sky); rotate: -22deg; }
 /* statement sticker */
 .stk--stmt-1 { width: clamp(36px, 5vw, 65px); top: 15%; right: 10%; color: var(--blue); rotate: 12deg; }
 /* how sticker */

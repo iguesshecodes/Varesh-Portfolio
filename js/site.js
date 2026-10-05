@@ -440,23 +440,110 @@
     var titleLines = $$(".hero2__ln", hero2);
     var sub = $(".hero2__sub", hero2);
     var actions = $(".hero2__actions", hero2);
-    var photo = $(".hero2__photo", hero2);
+    var nameLabel = $(".hero2__name", hero2);
     var scroll = $(".hero2__scroll", hero2);
 
     if (reduce) return;
     /* hide elements until intro fires */
     gsap.set(titleLines, { yPercent: 110, opacity: 0 });
-    gsap.set([sub, actions, scroll].filter(Boolean), { opacity: 0, y: 30 });
-    if (photo) gsap.set(photo, { opacity: 0, scale: 0.9 });
+    gsap.set([nameLabel, sub, actions, scroll].filter(Boolean), { opacity: 0, y: 30 });
 
     hero2In = function () {
       var tl = gsap.timeline();
-      tl.to(titleLines, { yPercent: 0, opacity: 1, duration: 1.2, stagger: 0.12, ease: "expo.out" }, 0);
-      if (photo) tl.to(photo, { opacity: 1, scale: 1, duration: 1.4, ease: "expo.out" }, 0.15);
+      if (nameLabel) tl.to(nameLabel, { opacity: 0.8, y: 0, duration: 0.8, ease: "expo.out" }, 0);
+      tl.to(titleLines, { yPercent: 0, opacity: 1, duration: 1.2, stagger: 0.12, ease: "expo.out" }, 0.1);
       if (sub) tl.to(sub, { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.4);
       if (actions) tl.to(actions, { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.55);
       if (scroll) tl.to(scroll, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" }, 0.7);
     };
+  })();
+
+  /* ---------- custom cursor tracking ---------- */
+  (function () {
+    var dot = $(".cursor-dot"), ring = $(".cursor-ring");
+    if (!dot || !ring) return;
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!fine) return;
+    var mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; });
+    (function loop() {
+      dot.style.left = mx + "px";
+      dot.style.top = my + "px";
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      ring.style.left = rx + "px";
+      ring.style.top = ry + "px";
+      requestAnimationFrame(loop);
+    })();
+  })();
+
+  /* ---------- hero glow follows mouse ---------- */
+  (function () {
+    var hero2 = $(".hero2"); if (!hero2) return;
+    var glow = $(".hero2__glow", hero2); if (!glow) return;
+    hero2.addEventListener("mousemove", function (e) {
+      var r = hero2.getBoundingClientRect();
+      var x = ((e.clientX - r.left) / r.width * 100).toFixed(1);
+      var y = ((e.clientY - r.top) / r.height * 100).toFixed(1);
+      glow.style.setProperty("--mx", x + "%");
+      glow.style.setProperty("--my", y + "%");
+    });
+  })();
+
+  /* ---------- hero stickers: mouse parallax ---------- */
+  (function () {
+    var hero2 = $(".hero2"); if (!hero2) return;
+    var heroStickers = $$(".stk", hero2);
+    if (!heroStickers.length || reduce) return;
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!fine) return;
+    hero2.addEventListener("mousemove", function (e) {
+      var r = hero2.getBoundingClientRect();
+      var cx = (e.clientX - r.left) / r.width - 0.5;
+      var cy = (e.clientY - r.top) / r.height - 0.5;
+      heroStickers.forEach(function (s, i) {
+        var depth = 18 + i * 12;
+        gsap.to(s, { x: cx * depth, y: cy * depth, duration: 0.8, ease: "power2.out" });
+      });
+    });
+    hero2.addEventListener("mouseleave", function () {
+      heroStickers.forEach(function (s) {
+        gsap.to(s, { x: 0, y: 0, duration: 1.2, ease: "elastic.out(1, 0.5)" });
+      });
+    });
+  })();
+
+  /* ---------- text scramble on section headings ---------- */
+  (function () {
+    var headings = $$("[data-scramble]");
+    if (!headings.length || reduce) return;
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    headings.forEach(function (h) {
+      var original = h.textContent;
+      var triggered = false;
+      ScrollTrigger.create({
+        trigger: h,
+        start: "top 85%",
+        once: true,
+        onEnter: function () {
+          if (triggered) return;
+          triggered = true;
+          var iterations = 0;
+          var interval = setInterval(function () {
+            h.textContent = original.split("").map(function (c, i) {
+              if (i < iterations) return original[i];
+              if (c === " ") return " ";
+              return chars[Math.floor(Math.random() * chars.length)];
+            }).join("");
+            iterations += 1 / 2;
+            if (iterations >= original.length) {
+              clearInterval(interval);
+              h.textContent = original;
+            }
+          }, 30);
+        }
+      });
+    });
   })();
 
   /* ---------- horizontal scroll: GSAP pin + scrub ---------- */
