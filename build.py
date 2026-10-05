@@ -343,13 +343,15 @@ def home():
     </a>'''
         for i, p in enumerate(PROJECTS)
     )
+    sticker = '<div class="sticker" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><path id="cp" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs><circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width=".5" opacity=".25"/><circle cx="100" cy="100" r="58" fill="none" stroke="currentColor" stroke-width=".5" opacity=".25"/><text font-size="11.5" letter-spacing=".12em" fill="currentColor"><textPath href="#cp">OPEN TO WORK &#183; MARKETING &amp; DATA &#183; PORTFOLIO 2026 &#183; </textPath></text></svg></div>'
     loader = '''<div class="loader" id="loader" aria-hidden="true">
   <div class="loader__bar"><span></span></div>
   <span class="loader__name">Varesh Nirbhavne</span>
   <div class="loader__words"><span>Marketing</span><span>Data</span><span>Decisions</span></div>
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
-    main = f'''<section class="hero blue" id="top">
+    main = f'''<section class="hero hero--dark" id="top">
+  {sticker}
   <div class="hero__micro micro" data-intro-fade>
     <span>Marketing and data analytics</span>
     <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
@@ -368,7 +370,7 @@ def home():
   </div>
 </section>
 
-<section class="marquee" aria-hidden="true"><div class="marquee__track">{marq}{marq}</div></section>
+<section class="marquee marquee--accent" aria-hidden="true"><div class="marquee__track">{marq}{marq}</div></section>
 
 <section class="sec statement">
   <div class="wrap">
@@ -382,9 +384,9 @@ def home():
     <h2 class="h2" data-split>Ask. Measure. <em>Decide.</em></h2>
   </div>
   <div class="how__list wrap">
-    <article class="hcard" style="--i:0"><div><h3>Ask the sharper question</h3><p>Content, social and paid campaigns across 20+ clients taught me that a vague brief wastes budget. I start by pinning down the decision the work has to support.</p><ul class="chips"><li>Strategy</li><li>Paid social</li><li>Email and CRM</li><li>Brand</li></ul></div></article>
-    <article class="hcard" style="--i:1"><div><h3>Measure it properly</h3><p>SQL, Python and Tableau. Matched control groups, holdouts and honest error bars, so a number can survive a hard question in a room.</p><ul class="chips"><li>SQL</li><li>Python</li><li>Tableau</li><li>A/B testing</li></ul></div></article>
-    <article class="hcard" style="--i:2"><div><h3>Decide, and say how sure</h3><p>Every project ends with a recommendation and a plain statement of what it cannot show. Store 88's weak control and a 0.48 churn model are both on this site on purpose.</p><ul class="chips"><li>Storytelling</li><li>Uplift</li><li>Segmentation</li></ul></div></article>
+    <article class="hcard" style="--i:0"><span class="hcard__no" aria-hidden="true">01</span><div><h3>Ask the sharper question</h3><p>Content, social and paid campaigns across 20+ clients taught me that a vague brief wastes budget. I start by pinning down the decision the work has to support.</p><ul class="chips"><li>Strategy</li><li>Paid social</li><li>Email and CRM</li><li>Brand</li></ul></div></article>
+    <article class="hcard" style="--i:1"><span class="hcard__no" aria-hidden="true">02</span><div><h3>Measure it properly</h3><p>SQL, Python and Tableau. Matched control groups, holdouts and honest error bars, so a number can survive a hard question in a room.</p><ul class="chips"><li>SQL</li><li>Python</li><li>Tableau</li><li>A/B testing</li></ul></div></article>
+    <article class="hcard" style="--i:2"><span class="hcard__no" aria-hidden="true">03</span><div><h3>Decide, and say how sure</h3><p>Every project ends with a recommendation and a plain statement of what it cannot show. Store 88's weak control and a 0.48 churn model are both on this site on purpose.</p><ul class="chips"><li>Storytelling</li><li>Uplift</li><li>Segmentation</li></ul></div></article>
   </div>
 </section>
 
@@ -407,7 +409,7 @@ def home():
   <div class="stack__list" id="stackList">{cards}</div>
 </section>
 
-<section class="sec cta blue">
+<section class="sec cta cta--dark">
   <div class="wrap">
     <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
     <a class="btn btn--light" href="contact.html" data-label="Contact">Contact me</a>
