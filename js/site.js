@@ -441,12 +441,10 @@
     var sub = $(".hero2__sub", hero2);
     var actions = $(".hero2__actions", hero2);
     var nameLabel = $(".hero2__name", hero2);
-    var scroll = $(".hero2__scroll", hero2);
-
     if (reduce) return;
     /* hide elements until intro fires */
     gsap.set(titleLines, { yPercent: 110, opacity: 0 });
-    gsap.set([nameLabel, sub, actions, scroll].filter(Boolean), { opacity: 0, y: 30 });
+    gsap.set([nameLabel, sub, actions].filter(Boolean), { opacity: 0, y: 30 });
 
     hero2In = function () {
       var tl = gsap.timeline();
@@ -454,7 +452,6 @@
       tl.to(titleLines, { yPercent: 0, opacity: 1, duration: 1.2, stagger: 0.12, ease: "expo.out" }, 0.1);
       if (sub) tl.to(sub, { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.4);
       if (actions) tl.to(actions, { opacity: 1, y: 0, duration: 1, ease: "expo.out" }, 0.55);
-      if (scroll) tl.to(scroll, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" }, 0.7);
     };
   })();
 
