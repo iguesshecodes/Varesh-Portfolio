@@ -10,9 +10,6 @@
 <meta property="og:description" content="Two small tools by Varesh Nirbhavne: a campaign ROI calculator and an A/B test checker.">
 <meta property="og:image" content="assets/og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a3b9f'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="vendor/lenis.css">
 <link rel="stylesheet" href="css/site.css">
 <noscript><style>.curtain,.loader{display:none!important}</style></noscript>
@@ -52,7 +49,6 @@
     </div>
 
     <div class="tool is-active" id="panelRoi" role="tabpanel" aria-labelledby="tabRoi">
-      <div class="win-chrome win-chrome--tool"><span></span><span></span><span></span></div>
       <div class="tool__inputs">
         <label class="field"><span>Ad spend</span><output id="oSpend">£10,000</output><input type="range" id="iSpend" min="500" max="100000" step="500" value="10000"></label>
         <label class="field"><span>Cost per click</span><output id="oCpc">£0.80</output><input type="range" id="iCpc" min="0.1" max="5" step="0.05" value="0.8"></label>
@@ -73,7 +69,6 @@
     </div>
 
     <div class="tool" id="panelAb" role="tabpanel" aria-labelledby="tabAb" hidden>
-      <div class="win-chrome win-chrome--tool"><span></span><span></span><span></span></div>
       <div class="tool__inputs">
         <fieldset class="ab"><legend>Version A</legend>
           <label class="num"><span>Visitors</span><input type="number" id="aN" value="5000" min="1" inputmode="numeric"></label>

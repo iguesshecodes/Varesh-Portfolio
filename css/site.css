@@ -1,14 +1,17 @@
 /* ============ Fonts ============ */
-/* Syne (display), DM Sans (body + italic), JetBrains Mono (mono) loaded via Google Fonts <link> in HTML */
+@font-face { font-family: "Archivo"; src: url("../fonts/archivo.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("../fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Inter Tight"; src: url("../fonts/inter-tight.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("../fonts/newsreader-italic.woff2") format("woff2"); font-weight: 200 800; font-style: italic; font-display: swap; }
 
 /* ============ Tokens: dark blue, white, black ============ */
 :root {
   --pad: clamp(20px, 4vw, 72px);
   --bar: 68px;
-  --display: "Syne", "Helvetica Neue", Arial, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
-  --italic: "DM Sans", Georgia, sans-serif;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --body: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --italic: "Newsreader", Georgia, "Times New Roman", serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   --blue: #1a3b9f;
@@ -271,14 +274,6 @@ em { font-family: var(--italic); font-style: italic; font-weight: 500; letter-sp
   .prow__thumb { display: block; grid-column: 1 / -1; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: var(--soft); }
   .prow__thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 }
-
-/* ============ macOS window chrome ============ */
-.win-chrome { display: flex; gap: 8px; padding: 14px 18px; background: linear-gradient(to bottom, #f6f6f6, #e8e8e8); border-bottom: 1px solid var(--line); }
-.win-chrome span { width: 12px; height: 12px; border-radius: 50%; }
-.win-chrome span:nth-child(1) { background: #ff5f57; box-shadow: inset 0 -1px 2px rgba(0,0,0,.12); }
-.win-chrome span:nth-child(2) { background: #febc2e; box-shadow: inset 0 -1px 2px rgba(0,0,0,.12); }
-.win-chrome span:nth-child(3) { background: #28c840; box-shadow: inset 0 -1px 2px rgba(0,0,0,.12); }
-.win-chrome--tool { grid-column: 1 / -1; padding: 12px 16px; border-radius: clamp(16px, 2vw, 28px) clamp(16px, 2vw, 28px) 0 0; margin: calc(-1 * clamp(22px, 3.4vw, 56px)); margin-bottom: 0; }
 
 /* ============ Project page ============ */
 .shot { background: #fff; border: 1px solid var(--line); border-radius: clamp(12px, 1.6vw, 24px); overflow: hidden; box-shadow: 0 40px 90px -50px rgba(5, 12, 42, 0.5); }
