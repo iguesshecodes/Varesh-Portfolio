@@ -536,8 +536,10 @@ body:has(.btn:hover) .cursor-ring, body:has(a:hover) .cursor-ring { width: 52px;
 
 /* ---- hero2: massive typography, no photo ---- */
 .hero2 { position: relative; min-height: 100svh; padding: calc(var(--bar) + 20px) 0 0; display: flex; flex-direction: column; overflow: hidden; background: var(--night); }
-.hero2__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden;
-  background: linear-gradient(135deg, var(--night) 0%, rgba(26,59,159,.18) 35%, rgba(169,192,255,.08) 60%, var(--night) 100%);
+.hero2__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; opacity: .025;
+  background: repeating-conic-gradient(var(--blue) 0% 25%, var(--white) 0% 50%) 0 0 / 60px 60px;
+  transform: perspective(600px) rotateX(55deg) scale(2.2);
+  transform-origin: center 40%;
 }
 .hero2__glow { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(26,59,159,.2), transparent 60%); transition: opacity .4s; }
 .hero2:hover .hero2__glow { opacity: 1; }
@@ -545,7 +547,7 @@ body:has(.btn:hover) .cursor-ring, body:has(a:hover) .cursor-ring { width: 52px;
 .hero2__inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: calc(100svh - var(--bar) - 20px); padding-block: clamp(40px, 6vh, 100px); }
 .hero2__text { color: #fff; display: flex; flex-direction: column; align-items: center; }
 .hero2__name { font-family: var(--mono); font-size: clamp(12px, 1.2vw, 16px); letter-spacing: .2em; text-transform: uppercase; color: var(--sky); margin-bottom: clamp(12px, 2vw, 24px); opacity: .8; }
-.hero2__title { font-family: "Space Grotesk", var(--display), sans-serif; font-weight: 700; font-size: clamp(64px, 14vw, 220px); letter-spacing: -0.04em; line-height: 0.88; text-transform: uppercase; margin-bottom: clamp(20px, 3vw, 40px); }
+.hero2__title { font-family: var(--display); font-weight: 900; font-size: clamp(64px, 14vw, 220px); letter-spacing: -0.05em; line-height: 0.88; text-transform: uppercase; margin-bottom: clamp(20px, 3vw, 40px); }
 .hero2__ln { display: block; }
 .hero2__ln--amp { color: var(--sky); font-style: italic; }
 .hero2__sub { font-family: var(--italic); font-style: italic; font-size: clamp(17px, 1.4vw, 22px); line-height: 1.5; max-width: 42ch; color: rgba(255,255,255,.75); margin-bottom: clamp(24px, 3vw, 40px); }
@@ -553,12 +555,16 @@ body:has(.btn:hover) .cursor-ring, body:has(a:hover) .cursor-ring { width: 52px;
 .hero2 .hero__micro { border-block: 1px solid rgba(255,255,255,.18); padding: 10px 0; color: rgba(255,255,255,.85); margin-bottom: clamp(16px, 2vw, 24px); }
 .hero2 .pulse { background: var(--sky); animation-name: pulse-sky; }
 @keyframes pulse-sky { 0% { box-shadow: 0 0 0 0 rgba(169,192,255,.5); } 70% { box-shadow: 0 0 0 10px rgba(169,192,255,0); } 100% { box-shadow: 0 0 0 0 rgba(169,192,255,0); } }
+.hero2__scroll { position: absolute; bottom: clamp(18px, 3vh, 40px); left: 50%; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(255,255,255,.6); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-family: var(--mono); }
+.hero2__dot { animation: scrolldot 2s ease-in-out infinite; }
+@keyframes scrolldot { 0%,100% { cy: 8; } 50% { cy: 20; } }
 @media (max-width: 799.98px) {
   .hero2__inner { text-align: center; }
   .hero2__title { font-size: clamp(52px, 16vw, 120px); }
   .hero2__sub { margin-inline: auto; }
   .hero2__actions { justify-content: center; }
   .hero2 .hero__micro { justify-content: center; }
+  .hero2__scroll { display: none; }
 }
 
 /* pop buttons (blue accent) */
@@ -656,10 +662,22 @@ body:has(.btn:hover) .cursor-ring, body:has(a:hover) .cursor-ring { width: 52px;
 .stk svg { width: 100%; height: 100%; }
 .stk::before { content: ""; position: absolute; inset: -6px; border: 2px dashed var(--sky); border-radius: 4px; opacity: .45; }
 .stk::after { content: ""; position: absolute; inset: -3px; border: 1px solid var(--blue); border-radius: 2px; opacity: .3; }
-/* hero sticker */
+/* hero stickers */
 .stk--hero-1 { width: clamp(60px, 8vw, 110px); top: 15%; left: 5%; color: var(--sky); rotate: -15deg; }
-/* projects sticker */
+.stk--hero-2 { width: clamp(44px, 6vw, 80px); bottom: 22%; right: 10%; color: var(--sky); rotate: 20deg; }
+.stk--hero-3 { width: clamp(38px, 5vw, 65px); top: 60%; left: 10%; color: var(--sky); rotate: -22deg; }
+/* statement sticker */
+.stk--stmt-1 { width: clamp(36px, 5vw, 65px); top: 15%; right: 10%; color: var(--blue); rotate: 12deg; }
+/* how sticker */
+.stk--how-1 { width: clamp(32px, 4.5vw, 55px); top: 10%; right: 6%; color: var(--blue); rotate: -8deg; }
+/* projects stickers */
 .stk--proj-1 { width: clamp(40px, 5vw, 70px); top: 8%; left: 4%; color: var(--sky); rotate: 10deg; }
-/* cta sticker */
+.stk--proj-2 { width: clamp(30px, 4vw, 50px); bottom: 15%; right: 5%; color: var(--blue); rotate: -12deg; }
+/* credentials sticker */
+.stk--creds-1 { width: clamp(36px, 5vw, 60px); top: 20%; right: 8%; color: var(--blue); rotate: 15deg; }
+/* about sticker */
+.stk--about-1 { width: clamp(50px, 6vw, 80px); top: 12%; right: 5%; color: var(--blue); rotate: -10deg; }
+/* cta stickers */
 .stk--cta-1 { width: clamp(45px, 6vw, 75px); top: 15%; left: 5%; color: rgba(255,255,255,.15); rotate: 8deg; }
+.stk--cta-2 { width: clamp(28px, 3.5vw, 45px); bottom: 18%; right: 8%; color: rgba(255,255,255,.12); rotate: -18deg; }
 @media (max-width: 799.98px) { .stk { opacity: .5; } .stk::before, .stk::after { display: none; } }

@@ -305,9 +305,6 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
 <meta property="og:image" content="assets/og.jpg">
 <link rel="icon" href="{ICON}">
 <link rel="stylesheet" href="vendor/lenis.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap">
 <link rel="stylesheet" href="css/site.css">
 <noscript><style>.curtain,.loader{{display:none!important}}</style></noscript>'''
     sc = "".join('<script src="%s"></script>' % s for s in
@@ -407,6 +404,8 @@ def home():
   <div class="hero2__bg" aria-hidden="true"></div>
   <div class="hero2__glow" id="heroGlow" aria-hidden="true"></div>
   {stk("camera", "stk--hero-1")}
+  {stk("vinyl", "stk--hero-2")}
+  {stk("cdstar", "stk--hero-3")}
   <div class="hero2__inner wrap">
     <div class="hero2__text">
       <div class="hero__micro micro" data-intro-fade>
@@ -424,17 +423,23 @@ def home():
       </div>
     </div>
   </div>
+  <div class="hero2__scroll" aria-hidden="true" data-intro-fade>
+    <span>Scroll</span>
+    <svg width="16" height="28" viewBox="0 0 16 28"><rect x="1" y="1" width="14" height="26" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor" class="hero2__dot"/></svg>
+  </div>
 </section>
 
 <section class="marquee marquee--pop" aria-hidden="true"><div class="marquee__track">{marq}{marq}</div></section>
 
 <section class="sec statement statement--pop">
+  {stk("camera", "stk--stmt-1")}
   <div class="wrap">
     <p class="statement__text" data-scrub>I turn campaign noise into <b>decisions that pay for themselves</b>. Strategy first, then the <b>SQL, Python and Tableau</b> to check I was right.</p>
   </div>
 </section>
 
 <section class="how how--pop" id="how">
+  {stk("vinyl", "stk--how-1")}
   <div class="how__head wrap">
     <p class="micro">How I work</p>
     <h2 class="h2" data-split data-scramble>Ask. Measure. <em>Decide.</em></h2>
@@ -448,6 +453,7 @@ def home():
 
 <section class="stack" id="work" aria-label="Selected work">
   {stk("cdstar", "stk--proj-1")}
+  {stk("camera", "stk--proj-2")}
   <div class="stack__head wrap">
     <div>
       <p class="micro">Selected work</p>
@@ -461,6 +467,7 @@ def home():
 </section>
 
 <section class="creds creds--pop" aria-label="Credentials">
+  {stk("chart", "stk--creds-1")}
   <div class="wrap">
     <p class="micro">Credentials</p>
     <ul>
@@ -471,6 +478,7 @@ def home():
 </section>
 
 <section class="sec about-home" id="about" aria-label="About">
+  {stk("squiggle", "stk--about-1")}
   <div class="wrap about-home__grid">
     <div class="about-home__photo" data-reveal>
       <img src="assets/profile-blue.jpg" alt="Varesh" width="600" height="600" loading="lazy">
@@ -524,6 +532,7 @@ def home():
 
 <section class="sec cta cta--pop">
   {stk("vinyl", "stk--cta-1")}
+  {stk("cdstar", "stk--cta-2")}
   <div class="wrap">
     <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
     <p class="cta__sub">I am actively looking for marketing and data analytics roles in London and Mumbai.</p>
