@@ -241,23 +241,22 @@ def li(items):
     return "".join("<li>%s</li>" % E(x) for x in items)
 
 
-def bar(active, newtab=False):
-    tgt = ' target="_blank" rel="noopener"' if newtab else ''
+def bar(active):
     links = "".join(
-        '<a href="%s"%s%s>%s</a>' % (h, ' aria-current="page"' if h == active else "", tgt, t) for h, t in NAV
+        '<a href="%s"%s>%s</a>' % (h, ' aria-current="page"' if h == active else "", t) for h, t in NAV
     )
     cta_cur = ' aria-current="page"' if active == "contact.html" else ""
     return f'''<header class="bar" id="bar">
   <a class="bar__logo" href="index.html" data-label="Home" aria-label="Varesh Nirbhavne, home"><span>Varesh Nirbhavne</span><span aria-hidden="true">Marketing &amp; data</span></a>
   <nav class="bar__links" aria-label="Main">{links}</nav>
-  <a class="bar__cta" href="contact.html"{cta_cur}{tgt}>Contact</a>
+  <a class="bar__cta" href="contact.html"{cta_cur}>Contact</a>
   <button class="bar__menu" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="bar__menu-label">Menu</span><span class="bar__burger" aria-hidden="true"><i></i><i></i></span></button>
 </header>
 <div class="menu" id="menu" aria-label="Menu">
   <nav class="menu__links" aria-label="Mobile">
     <a href="index.html" data-label="Home"><span>Home</span></a>
-    {"".join('<a href="%s"%s><span>%s</span></a>' % (h, tgt, t) for h, t in NAV)}
-    <a href="contact.html"{tgt}><span>Contact</span></a>
+    {"".join('<a href="%s"><span>%s</span></a>' % (h, t) for h, t in NAV)}
+    <a href="contact.html"><span>Contact</span></a>
   </nav>
   <p class="menu__foot">{EMAIL}</p>
 </div>'''
@@ -294,7 +293,7 @@ def pagehead(crumb, title, sub, meta=""):
 </section>'''
 
 
-def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="coral", newtab=False):
+def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="coral"):
     head = f'''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{E(title)}</title>
@@ -313,7 +312,7 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
 <div class="curtain" id="curtain" data-label="{E(label)}"><i></i><i></i><i></i><i></i><i></i><span class="curtain__label" aria-hidden="true"></span></div>
 {loader}
 <div class="progress" aria-hidden="true"><span></span></div>
-{bar(active, newtab=newtab)}
+{bar(active)}
 <main id="main">
 {main}
 </main>
@@ -322,226 +321,103 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
     return head, body
 
 
-def write_page(fname, title, label, desc, main, active, scripts=(), loader="", theme="coral", newtab=False):
-    head, body = page(fname, title, label, desc, main, active, scripts, loader, theme, newtab=newtab)
+def write_page(fname, title, label, desc, main, active, scripts=(), loader="", theme="coral"):
+    head, body = page(fname, title, label, desc, main, active, scripts, loader, theme)
     doc = f"<!doctype html>\n<html lang=\"en-GB\">\n<head>\n{head}\n</head>\n<body class=\"t-{theme}\">\n{body}\n</body>\n</html>\n"
     with open(os.path.join(ROOT, fname), "w", encoding="utf-8") as f:
         f.write(doc)
     return head, body
 
 
-# ---- sticker SVGs (illustrated vintage stamps) ----
-def stk(kind, cls=""):
-    icons = {
-        "camera": '<svg viewBox="0 0 80 64"><rect x="10" y="20" width="60" height="36" rx="5" fill="currentColor" opacity=".12" stroke="currentColor" stroke-width="2"/><rect x="28" y="10" width="24" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="38" r="13" fill="currentColor" opacity=".08" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="38" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="38" r="5" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="38" r="2.5" fill="currentColor" opacity=".5"/><circle cx="60" cy="27" r="3" fill="currentColor" opacity=".4" stroke="currentColor" stroke-width="1"/><rect x="14" y="26" width="10" height="4" rx="2" fill="currentColor" opacity=".25"/><line x1="14" y1="50" x2="66" y2="50" stroke="currentColor" stroke-width=".5" opacity=".2"/></svg>',
-        "vinyl": '<svg viewBox="0 0 72 72"><circle cx="36" cy="36" r="33" fill="currentColor" opacity=".06"/><circle cx="36" cy="36" r="33" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="36" cy="36" r="30" fill="none" stroke="currentColor" stroke-width=".4" opacity=".35"/><circle cx="36" cy="36" r="26" fill="none" stroke="currentColor" stroke-width=".4" opacity=".25"/><circle cx="36" cy="36" r="22" fill="none" stroke="currentColor" stroke-width=".4" opacity=".3"/><circle cx="36" cy="36" r="18" fill="none" stroke="currentColor" stroke-width=".4" opacity=".25"/><circle cx="36" cy="36" r="14" fill="currentColor" opacity=".1" stroke="currentColor" stroke-width="1.5"/><text x="36" y="34" text-anchor="middle" font-size="5" fill="currentColor" opacity=".5" font-family="sans-serif" font-weight="700">VARESH</text><text x="36" y="40" text-anchor="middle" font-size="3.5" fill="currentColor" opacity=".35" font-family="sans-serif">SIDE A</text><circle cx="36" cy="36" r="4" fill="currentColor" opacity=".4"/><circle cx="36" cy="36" r="1.8" fill="none" stroke="currentColor" stroke-width="1"/></svg>',
-        "cdstar": '<svg viewBox="0 0 68 68"><rect x="4" y="4" width="60" height="60" rx="3" fill="currentColor" opacity=".06" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="34" r="22" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/><circle cx="34" cy="34" r="18" fill="none" stroke="currentColor" stroke-width=".4" opacity=".25"/><circle cx="34" cy="34" r="5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M34 14l4.5 11h12l-9.5 7.5 3.5 12L34 37l-10.5 7.5 3.5-12-9.5-7.5h12z" fill="currentColor" opacity=".2" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><line x1="4" y1="60" x2="64" y2="60" stroke="currentColor" stroke-width=".5" opacity=".15"/><rect x="10" y="8" width="16" height="3" rx="1" fill="currentColor" opacity=".15"/></svg>',
-        "chart": '<svg viewBox="0 0 50 50"><rect x="6" y="28" width="8" height="18" rx="2" fill="currentColor" opacity=".7"/><rect x="21" y="16" width="8" height="30" rx="2" fill="currentColor" opacity=".85"/><rect x="36" y="6" width="8" height="40" rx="2" fill="currentColor"/></svg>',
-        "squiggle": '<svg viewBox="0 0 80 30"><path d="M4 15c8-12 16 12 24 0s16 12 24 0 16 12 24 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>',
-    }
-    return f'<div class="stk stk--{kind} {cls}" aria-hidden="true">{icons[kind]}</div>'
-
-
 # ------------------------------------------------------------------ PAGES
 def home():
     marq = "".join('<span>%s</span><span class="sep">/</span>' % E(m) for m in MARQUEE)
-
-    # stacking project cards
-    card_styles = ["scard--0", "scard--1", "scard--2"]
-    stack_cards = "".join(
-        f'''<a class="scard {card_styles[i % 3]}" href="project-{p["slug"]}.html" target="_blank" rel="noopener" style="--i:{i}" data-label="{E(p["title"])}">
+    cards = "".join(
+        f'''<a class="scard scard--{i % 3}" style="--i:{i}" href="project-{p["slug"]}.html" data-label="{E(p["title"])}">
       <div class="scard__copy">
-        <span class="scard__no">{i + 1:02d}<small>/{len(PROJECTS):02d}</small></span>
-        <h3 class="scard__title">{E(p["title"])}</h3>
-        <p class="scard__short">{E(p["short"])}</p>
-        <div class="scard__foot">
-          <span class="scard__tools">{E(p["tools"])}</span>
-          <span class="scard__go">View case study <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M12 4H5M12 4v7"/></svg></span>
-        </div>
+        <span class="scard__no">{i + 1:02d}<small>/ {len(PROJECTS):02d}</small></span>
+        <div><h3 class="scard__title">{E(p["title"])}</h3><p class="scard__short">{E(p["short"])}</p></div>
+        <div class="scard__foot"><span class="scard__tools">{E(p["tools"])}</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
       </div>
-      <div class="scard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="1920" height="1080" loading="lazy"></div>
+      <div class="scard__img"><img src="{p["img"]}" alt="{E(p["alt"])}" width="3840" height="2160" loading="lazy"></div>
     </a>'''
         for i, p in enumerate(PROJECTS)
     )
-
-    # compact jobs for homepage
-    home_jobs = "".join(
-        f'''<article class="tl__item" data-reveal>
-      <div class="tl__when">{E(j["when"])}</div>
-      <div class="tl__body">
-        <h3>{E(j["role"])}</h3>
-        <p class="tl__org">{E(j["org"])}</p>
-        <p class="tl__ctx">{E(j["ctx"])}</p>
-      </div>
-    </article>'''
-        for j in JOBS
-    )
-
-    # compact certs for homepage
-    home_certs = "".join(
-        f'''<article class="mcert" data-reveal>
-      {('<div class="mcert__img"><img src="%s" alt="%s" loading="lazy"></div>' % (c["img"], E(c["alt"]))) if c["img"] else ""}
-      <div class="mcert__body">
-        <span class="mcert__type">{E(c["type"])}</span>
-        <h3>{E(c["title"])}</h3>
-        <p class="mcert__by">{E(c["by"])}</p>
-      </div>
-    </article>'''
-        for c in CERTS
-    )
-
+    sticker = '<div class="sticker" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><path id="cp" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs><circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width=".5" opacity=".25"/><circle cx="100" cy="100" r="58" fill="none" stroke="currentColor" stroke-width=".5" opacity=".25"/><text font-size="11.5" letter-spacing=".12em" fill="currentColor"><textPath href="#cp">OPEN TO WORK &#183; MARKETING &amp; DATA &#183; PORTFOLIO 2026 &#183; </textPath></text></svg></div>'
     loader = '''<div class="loader" id="loader" aria-hidden="true">
   <div class="loader__bar"><span></span></div>
   <span class="loader__name">Varesh Nirbhavne</span>
   <div class="loader__words"><span>Marketing</span><span>Data</span><span>Decisions</span></div>
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
-
-    main = f'''<div class="cursor-dot" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"></div>
-
-<section class="hero2" id="top">
-  <div class="hero2__bg" aria-hidden="true"></div>
-  <div class="hero2__glow" id="heroGlow" aria-hidden="true"></div>
-  {stk("camera", "stk--hero-1")}
-  {stk("vinyl", "stk--hero-2")}
-  {stk("cdstar", "stk--hero-3")}
-  <div class="hero2__inner wrap">
-    <div class="hero2__text">
-      <div class="hero__micro micro" data-intro-fade>
-        <span class="hero__status"><i class="pulse"></i>Open to work</span>
-      </div>
-      <p class="hero2__name" data-intro-fade>Varesh Nirbhavne</p>
-      <h1 class="hero2__title" data-intro>
-        <span class="hero2__ln">Marketing</span>
-        <span class="hero2__ln hero2__ln--amp">&amp; Data</span>
-      </h1>
-      <p class="hero2__sub" data-intro-fade>Marketing strategist and data analyst who runs the campaigns, then reads the numbers to see what actually moved.</p>
-      <div class="hero2__actions" data-intro-fade>
-        <a class="btn btn--pop" href="#work">See my projects</a>
-        <a class="btn btn--ghost" href="contact.html" target="_blank" rel="noopener">Contact me</a>
-      </div>
-    </div>
+    main = f'''<section class="hero hero--dark" id="top">
+  {sticker}
+  <div class="hero__micro micro" data-intro-fade>
+    <span>Marketing and data analytics</span>
+    <span class="hero__status"><i class="pulse"></i>Open to marketing and data roles</span>
+    <span>{CITY} &middot; Portfolio 2026</span>
   </div>
-  <div class="hero2__scroll" aria-hidden="true" data-intro-fade>
-    <span>Scroll</span>
-    <svg width="16" height="28" viewBox="0 0 16 28"><rect x="1" y="1" width="14" height="26" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor" class="hero2__dot"/></svg>
+  <h1 class="hero__title" aria-label="Marketing and Data">
+    <span class="hero__ln" data-ln aria-hidden="true">Marketing</span>
+    <span class="hero__ln hero__ln--b" data-ln aria-hidden="true"><span class="amp">&amp;</span> Data</span>
+  </h1>
+  <div class="hero__bottom" data-intro-fade>
+    <p class="hero__lede">A marketer who runs the campaigns, then reads the data to see what actually moved.</p>
+    <div class="hero__actions">
+      <a class="btn btn--light" href="projects.html" data-label="Projects">See my projects</a>
+      <a class="btn btn--line" href="contact.html" data-label="Contact">Contact me</a>
+    </div>
   </div>
 </section>
 
-<section class="marquee marquee--pop" aria-hidden="true"><div class="marquee__track">{marq}{marq}</div></section>
+<section class="marquee marquee--accent" aria-hidden="true"><div class="marquee__track">{marq}{marq}</div></section>
 
-<section class="sec statement statement--pop">
-  {stk("camera", "stk--stmt-1")}
+<section class="sec statement">
   <div class="wrap">
     <p class="statement__text" data-scrub>I turn campaign noise into <b>decisions that pay for themselves</b>. Strategy first, then the <b>SQL, Python and Tableau</b> to check I was right.</p>
   </div>
 </section>
 
-<section class="how how--pop" id="how">
-  {stk("vinyl", "stk--how-1")}
+<section class="how" id="how">
   <div class="how__head wrap">
     <p class="micro">How I work</p>
-    <h2 class="h2" data-split data-scramble>Ask. Measure. <em>Decide.</em></h2>
+    <h2 class="h2" data-split>Ask. Measure. <em>Decide.</em></h2>
   </div>
   <div class="how__list wrap">
-    <article class="hcard" style="--i:0" data-reveal><span class="hcard__no" aria-hidden="true">01</span><div><h3>Ask the sharper question</h3><p>Content, social and paid campaigns across 20+ clients taught me that a vague brief wastes budget. I start by pinning down the decision the work has to support.</p><ul class="chips"><li>Strategy</li><li>Paid social</li><li>Email and CRM</li><li>Brand</li></ul></div></article>
-    <article class="hcard" style="--i:1" data-reveal><span class="hcard__no" aria-hidden="true">02</span><div><h3>Measure it properly</h3><p>SQL, Python and Tableau. Matched control groups, holdouts and honest error bars, so a number can survive a hard question in a room.</p><ul class="chips"><li>SQL</li><li>Python</li><li>Tableau</li><li>A/B testing</li></ul></div></article>
-    <article class="hcard" style="--i:2" data-reveal><span class="hcard__no" aria-hidden="true">03</span><div><h3>Decide, and say how sure</h3><p>Every project ends with a recommendation and a plain statement of what it cannot show. Store 88's weak control and a 0.48 churn model are both on this site on purpose.</p><ul class="chips"><li>Storytelling</li><li>Uplift</li><li>Segmentation</li></ul></div></article>
+    <article class="hcard" style="--i:0"><span class="hcard__no" aria-hidden="true">01</span><div><h3>Ask the sharper question</h3><p>Content, social and paid campaigns across 20+ clients taught me that a vague brief wastes budget. I start by pinning down the decision the work has to support.</p><ul class="chips"><li>Strategy</li><li>Paid social</li><li>Email and CRM</li><li>Brand</li></ul></div></article>
+    <article class="hcard" style="--i:1"><span class="hcard__no" aria-hidden="true">02</span><div><h3>Measure it properly</h3><p>SQL, Python and Tableau. Matched control groups, holdouts and honest error bars, so a number can survive a hard question in a room.</p><ul class="chips"><li>SQL</li><li>Python</li><li>Tableau</li><li>A/B testing</li></ul></div></article>
+    <article class="hcard" style="--i:2"><span class="hcard__no" aria-hidden="true">03</span><div><h3>Decide, and say how sure</h3><p>Every project ends with a recommendation and a plain statement of what it cannot show. Store 88's weak control and a 0.48 churn model are both on this site on purpose.</p><ul class="chips"><li>Storytelling</li><li>Uplift</li><li>Segmentation</li></ul></div></article>
   </div>
 </section>
 
-<section class="stack" id="work" aria-label="Selected work">
-  {stk("cdstar", "stk--proj-1")}
-  {stk("camera", "stk--proj-2")}
-  <div class="stack__head wrap">
-    <div>
-      <p class="micro">Selected work</p>
-      <h2 class="h2" data-split>Projects<em>.</em></h2>
-    </div>
-    <a class="btn btn--navy" href="projects.html" target="_blank" rel="noopener" data-label="All projects">See all projects</a>
-  </div>
-  <div class="stack__list">
-    {stack_cards}
-  </div>
-</section>
-
-<section class="creds creds--pop" aria-label="Credentials">
-  {stk("chart", "stk--creds-1")}
+<section class="creds" aria-label="Credentials">
   <div class="wrap">
     <p class="micro">Credentials</p>
     <ul>
       <li>Google Data Analytics</li><li>Masters Consultancy Challenge 2026 winner</li><li>BCG Strategy Consulting</li><li>Quantium Data Analytics</li><li>Lloyds Data Science</li><li>British Airways Data Science</li><li>Deloitte Data Analytics</li>
     </ul>
-    <a class="btn btn--ghost-dark" href="certifications.html" target="_blank" rel="noopener" data-label="Certifications">See certificates</a>
+    <a class="btn btn--line-navy" href="certifications.html" data-label="Certifications">See certificates</a>
   </div>
 </section>
 
-<section class="sec about-home" id="about" aria-label="About">
-  {stk("squiggle", "stk--about-1")}
-  <div class="wrap about-home__grid">
-    <div class="about-home__photo" data-reveal>
-      <img src="assets/profile-blue.jpg" alt="Varesh" width="600" height="600" loading="lazy">
-    </div>
-    <div class="about-home__text" data-reveal>
-      <p class="micro">About me</p>
-      <h2 class="h2" data-split>Varesh <em>Nirbhavne</em></h2>
-      <p>MSc Marketing from the University of Birmingham. I spent three years freelancing for 20+ clients, ran my own Shopify store, led marketing at a wedding-films studio, and won the 2026 Masters Consultancy Challenge with Turner &amp; Townsend.</p>
-      <p>I sit at the overlap of creative strategy and data: I can plan the campaign and then write the SQL to prove it worked.</p>
-      <a class="btn btn--pop" href="about.html" target="_blank" rel="noopener">Full about page</a>
-    </div>
+<section class="stack" id="work" aria-label="Selected work">
+  <div class="stack__head wrap">
+    <h2 class="h2" data-split>Selected <em>work.</em></h2>
+    <a class="btn btn--line light-line" href="projects.html" data-label="Projects">All projects</a>
   </div>
+  <p class="wrap sec-note stack__note">The Revolut figures come from an independent portfolio study of a dataset, not from company data.</p>
+  <div class="stack__list" id="stackList">{cards}</div>
 </section>
 
-<section class="sec exp-home" id="experience" aria-label="Work experience">
-  <div class="wrap">
-    <p class="micro">Work experience</p>
-    <h2 class="h2" data-split>Where I have <em>worked.</em></h2>
-    <div class="tl">{home_jobs}</div>
-    <a class="btn btn--ghost" href="experience.html" target="_blank" rel="noopener">Full experience</a>
-  </div>
-</section>
-
-<section class="sec edu-home" id="education" aria-label="Education">
-  <div class="wrap">
-    <p class="micro">Education</p>
-    <h2 class="h2" data-split>Where I <em>studied.</em></h2>
-    <div class="edu-cards">
-      <article class="edu-card" data-reveal>
-        <span class="edu-card__year">2025 to 2026</span>
-        <h3>MSc Marketing</h3>
-        <p>University of Birmingham. Strategy, analytics and consumer behaviour. Dissertation on Buy Now Pay Later and impulse buying (p &lt; 0.001).</p>
-      </article>
-      <article class="edu-card" data-reveal>
-        <span class="edu-card__year">2021 to 2024</span>
-        <h3>BSc Animation and Visual Effects</h3>
-        <p>ITM University, GPA 8.88 / 10. Where the visual and storytelling eye comes from, now pointed at data.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="sec cert-home" id="certifications" aria-label="Certifications">
-  <div class="wrap">
-    <p class="micro">Certifications</p>
-    <h2 class="h2" data-split>Certified <em>skills.</em></h2>
-    <div class="mcerts" data-stagger>{home_certs}</div>
-    <a class="btn btn--pop" href="certifications.html" target="_blank" rel="noopener">See all certificates</a>
-  </div>
-</section>
-
-<section class="sec cta cta--pop">
-  {stk("vinyl", "stk--cta-1")}
-  {stk("cdstar", "stk--cta-2")}
+<section class="sec cta cta--dark">
   <div class="wrap">
     <h2 class="h2" data-split>Got a role <em>in mind?</em></h2>
-    <p class="cta__sub">I am actively looking for marketing and data analytics roles in London and Mumbai.</p>
-    <a class="btn btn--light" href="contact.html" target="_blank" rel="noopener" data-label="Contact">Contact me</a>
+    <a class="btn btn--light" href="contact.html" data-label="Contact">Contact me</a>
   </div>
 </section>'''
     return write_page("index.html", "Varesh Nirbhavne | Marketing and data analytics", "Home",
                       "Portfolio of Varesh Nirbhavne, a marketer and data analyst in London. Campaign work, SQL, Python and Tableau projects, and two small tools you can try.",
-                      main, "index.html", loader=loader, theme="coral", newtab=True)
+                      main, "index.html", loader=loader, theme="coral")
 
 
 def projects_page():
