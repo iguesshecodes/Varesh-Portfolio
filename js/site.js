@@ -303,6 +303,61 @@
       });
     }
 
+    /* interactive dot grid with cursor glow */
+    (function () {
+      var canvas = document.getElementById("heroGrid");
+      if (!canvas) return;
+      var ctx = canvas.getContext("2d");
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var gap = 44;
+      var mx = -9999, my = -9999;
+      var glowRadius = 180;
+
+      function resize() {
+        var rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        canvas.style.width = rect.width + "px";
+        canvas.style.height = rect.height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      function draw() {
+        var w = canvas.width / dpr, h = canvas.height / dpr;
+        ctx.clearRect(0, 0, w, h);
+        var cols = Math.ceil(w / gap) + 1;
+        var rows = Math.ceil(h / gap) + 1;
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            var x = c * gap;
+            var y = r * gap;
+            var dx = x - mx, dy = y - my;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            var t = Math.max(0, 1 - dist / glowRadius);
+            var alpha = 0.06 + t * 0.35;
+            var size = 1 + t * 2.5;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255,255,255," + alpha.toFixed(3) + ")";
+            ctx.fill();
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+
+      hero.addEventListener("pointermove", function (e) {
+        var rect = canvas.parentElement.getBoundingClientRect();
+        mx = e.clientX - rect.left;
+        my = e.clientY - rect.top;
+      });
+      hero.addEventListener("pointerleave", function () {
+        mx = -9999; my = -9999;
+      });
+    })();
+
     if (reduce) return;
     gsap.set(chars, { yPercent: 115 });
     heroIn = function () {

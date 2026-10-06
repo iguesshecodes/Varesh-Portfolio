@@ -354,7 +354,15 @@ def home():
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
     main = f'''<section class="hero" id="top">
+  <div class="hero__grid" aria-hidden="true"><canvas id="heroGrid"></canvas></div>
   <div class="hero__orbs" aria-hidden="true"><div class="hero__orb hero__orb--a"></div><div class="hero__orb hero__orb--b"></div><div class="hero__orb hero__orb--c"></div></div>
+  <div class="hero__floats" aria-hidden="true">
+    <div class="hero__float hero__float--a">ROI +142%</div>
+    <div class="hero__float hero__float--b">SQL &middot; Python &middot; Tableau</div>
+    <div class="hero__float hero__float--c">CTR 3.8%</div>
+    <div class="hero__float hero__float--d">ROAS 4.2x</div>
+    <div class="hero__float hero__float--e">Conversion &uarr; 67%</div>
+  </div>
   {sticker}
   <div class="hero__micro micro" data-intro-fade>
     <span>Marketing and data analytics</span>
