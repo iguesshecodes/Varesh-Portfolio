@@ -283,9 +283,24 @@
       });
     }
     var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    /* cursor-reactive orbs */
+    var orbs = $$(".hero__orb", hero);
+    var orbFactors = [0.04, -0.06, 0.03];
     if (fine && !reduce) {
-      hero.addEventListener("pointermove", function (e) { px = e.clientX; py = e.clientY; if (!raf) raf = requestAnimationFrame(lens); });
-      hero.addEventListener("pointerleave", function () { px = -9999; py = -9999; if (!raf) raf = requestAnimationFrame(lens); });
+      hero.addEventListener("pointermove", function (e) {
+        px = e.clientX; py = e.clientY; if (!raf) raf = requestAnimationFrame(lens);
+        var rect = hero.getBoundingClientRect();
+        var mx = (e.clientX - rect.left) / rect.width - 0.5;
+        var my = (e.clientY - rect.top) / rect.height - 0.5;
+        orbs.forEach(function (orb, i) {
+          var f = orbFactors[i] || 0.04;
+          orb.style.transform = "translate(" + (mx * rect.width * f).toFixed(1) + "px," + (my * rect.height * f).toFixed(1) + "px)";
+        });
+      });
+      hero.addEventListener("pointerleave", function () {
+        px = -9999; py = -9999; if (!raf) raf = requestAnimationFrame(lens);
+        orbs.forEach(function (orb) { orb.style.transform = "translate(0,0)"; });
+      });
     }
 
     if (reduce) return;

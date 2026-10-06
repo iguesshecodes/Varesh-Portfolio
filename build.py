@@ -350,7 +350,8 @@ def home():
   <div class="loader__words"><span>Marketing</span><span>Data</span><span>Decisions</span></div>
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
-    main = f'''<section class="hero hero--dark" id="top">
+    main = f'''<section class="hero" id="top">
+  <div class="hero__orbs" aria-hidden="true"><div class="hero__orb hero__orb--a"></div><div class="hero__orb hero__orb--b"></div><div class="hero__orb hero__orb--c"></div></div>
   {sticker}
   <div class="hero__micro micro" data-intro-fade>
     <span>Marketing and data analytics</span>
