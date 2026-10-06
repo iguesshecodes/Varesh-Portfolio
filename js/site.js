@@ -544,10 +544,10 @@
     var cur = $(".cursor");
     if (!cur) return;
     var dot = $(".cursor__dot", cur), ring = $(".cursor__ring", cur);
-    var xD = gsap.quickTo(dot, "x", { duration: 0.15, ease: "power2" });
-    var yD = gsap.quickTo(dot, "y", { duration: 0.15, ease: "power2" });
-    var xR = gsap.quickTo(ring, "x", { duration: 0.45, ease: "power3" });
-    var yR = gsap.quickTo(ring, "y", { duration: 0.45, ease: "power3" });
+    var xD = gsap.quickTo(dot, "x", { duration: 0.05, ease: "none" });
+    var yD = gsap.quickTo(dot, "y", { duration: 0.05, ease: "none" });
+    var xR = gsap.quickTo(ring, "x", { duration: 0.2, ease: "power2" });
+    var yR = gsap.quickTo(ring, "y", { duration: 0.2, ease: "power2" });
     window.addEventListener("pointermove", function (e) {
       xD(e.clientX); yD(e.clientY); xR(e.clientX); yR(e.clientY);
     });
@@ -591,27 +591,6 @@
         preview.classList.remove("is-on");
         active = false;
       });
-    });
-  })();
-
-  /* ---------- scroll-velocity skew ---------- */
-  (function () {
-    if (reduce) return;
-    var skewEls = $$(".sec, .prow, .scard");
-    if (!skewEls.length) return;
-    var proxy = { skew: 0 };
-    ScrollTrigger.create({
-      onUpdate: function (self) {
-        var v = self.getVelocity();
-        var clamp = gsap.utils.clamp(-4, 4, v / -600);
-        if (Math.abs(clamp - proxy.skew) > 0.1) {
-          proxy.skew = clamp;
-          gsap.to(skewEls, { skewY: proxy.skew, duration: 0.6, ease: "power3", overwrite: true });
-        }
-      }
-    });
-    ScrollTrigger.addEventListener("scrollEnd", function () {
-      gsap.to(skewEls, { skewY: 0, duration: 1.2, ease: "elastic.out(1, 0.3)", overwrite: true });
     });
   })();
 
