@@ -539,6 +539,107 @@
     if (e.persisted && curtain) { gsap.set(strips, { yPercent: -100 }); curtain.style.display = "none"; }
   });
 
+  /* ---------- custom cursor ---------- */
+  gsap.matchMedia().add("(min-width: 900px) and (hover: hover)", function () {
+    var cur = $(".cursor");
+    if (!cur) return;
+    var dot = $(".cursor__dot", cur), ring = $(".cursor__ring", cur);
+    var xD = gsap.quickTo(dot, "x", { duration: 0.15, ease: "power2" });
+    var yD = gsap.quickTo(dot, "y", { duration: 0.15, ease: "power2" });
+    var xR = gsap.quickTo(ring, "x", { duration: 0.45, ease: "power3" });
+    var yR = gsap.quickTo(ring, "y", { duration: 0.45, ease: "power3" });
+    window.addEventListener("pointermove", function (e) {
+      xD(e.clientX); yD(e.clientY); xR(e.clientX); yR(e.clientY);
+    });
+    var hovers = "a, button, .btn, .prow, [data-magnetic], input, textarea, select, .nav__link, .topbar__logo";
+    document.addEventListener("pointerover", function (e) {
+      if (e.target.closest && e.target.closest(hovers)) cur.classList.add("is-hover");
+    });
+    document.addEventListener("pointerout", function (e) {
+      if (e.target.closest && e.target.closest(hovers)) cur.classList.remove("is-hover");
+    });
+    document.addEventListener("pointerdown", function () { cur.classList.add("is-click"); });
+    document.addEventListener("pointerup", function () { cur.classList.remove("is-click"); });
+    gsap.set(cur, { autoAlpha: 1 });
+    document.documentElement.style.cursor = "none";
+    $$("a, button, .btn").forEach(function (el) { el.style.cursor = "none"; });
+  });
+
+  /* ---------- project row cursor-following preview ---------- */
+  (function () {
+    var preview = $("#prowPreview");
+    if (!preview) return;
+    var img = $("img", preview);
+    var rows = $$(".prow[data-thumb]");
+    if (!rows.length) return;
+    var xP = gsap.quickTo(preview, "left", { duration: 0.4, ease: "power3" });
+    var yP = gsap.quickTo(preview, "top", { duration: 0.4, ease: "power3" });
+    var active = false;
+    rows.forEach(function (row) {
+      row.addEventListener("pointerenter", function () {
+        var src = row.getAttribute("data-thumb");
+        if (src && img.src !== src) img.src = src;
+        preview.classList.add("is-on");
+        active = true;
+      });
+      row.addEventListener("pointermove", function (e) {
+        if (!active) return;
+        xP(e.clientX + 24);
+        yP(e.clientY - 120);
+      });
+      row.addEventListener("pointerleave", function () {
+        preview.classList.remove("is-on");
+        active = false;
+      });
+    });
+  })();
+
+  /* ---------- scroll-velocity skew ---------- */
+  (function () {
+    if (reduce) return;
+    var skewEls = $$(".sec, .prow, .scard");
+    if (!skewEls.length) return;
+    var proxy = { skew: 0 };
+    ScrollTrigger.create({
+      onUpdate: function (self) {
+        var v = self.getVelocity();
+        var clamp = gsap.utils.clamp(-4, 4, v / -600);
+        if (Math.abs(clamp - proxy.skew) > 0.1) {
+          proxy.skew = clamp;
+          gsap.to(skewEls, { skewY: proxy.skew, duration: 0.6, ease: "power3", overwrite: true });
+        }
+      }
+    });
+    ScrollTrigger.addEventListener("scrollEnd", function () {
+      gsap.to(skewEls, { skewY: 0, duration: 1.2, ease: "elastic.out(1, 0.3)", overwrite: true });
+    });
+  })();
+
+  /* ---------- text scramble on nav link hover ---------- */
+  (function () {
+    if (reduce) return;
+    var chars = "!<>-_\\/[]{}=+*^?#_ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var links = $$(".nav__link, .topbar__logo span");
+    links.forEach(function (el) {
+      var original = el.textContent;
+      var running = false;
+      el.addEventListener("mouseenter", function () {
+        if (running) return;
+        running = true;
+        var length = original.length;
+        var iteration = 0;
+        var interval = setInterval(function () {
+          el.textContent = original.split("").map(function (c, i) {
+            if (i < iteration) return original[i];
+            return chars[Math.floor(Math.random() * chars.length)];
+          }).join("");
+          if (iteration >= length) { clearInterval(interval); running = false; }
+          iteration += 1 / 2;
+        }, 35);
+      });
+    });
+  })();
+
   window.addEventListener("load", function () { setTimeout(function () { ScrollTrigger.refresh(); }, 300); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
 })();

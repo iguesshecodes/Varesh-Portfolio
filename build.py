@@ -312,6 +312,8 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
     sc = "".join('<script src="%s"></script>' % s for s in
                  ["vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/lenis.min.js", "js/site.js"] + list(scripts))
     body = f'''<a class="skip" href="#main">Skip to content</a>
+<div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div></div>
+<div class="grain" aria-hidden="true"></div>
 <div class="curtain" id="curtain" data-label="{E(label)}"><i></i><i></i><i></i><i></i><i></i><span class="curtain__label" aria-hidden="true"></span></div>
 {loader}
 <div class="progress" aria-hidden="true"><span></span></div>
@@ -435,7 +437,7 @@ def home():
 def projects_page():
     rows = ""
     for n, p in enumerate(PROJECTS, 1):
-        rows += f'''<a class="prow" href="project-{p["slug"]}.html" data-label="{E(p["title"])}">
+        rows += f'''<a class="prow" href="project-{p["slug"]}.html" data-label="{E(p["title"])}" data-thumb="{p["img"]}">
       <span class="prow__no">{n:02d}</span>
       <span class="prow__title">{E(p["title"])}</span>
       <span class="prow__meta"><span>{E(p["tools"])}</span><span class="tag tag--soft">{E(p["status"])}</span></span>
@@ -446,6 +448,7 @@ def projects_page():
     main = pagehead(None, "Projects", "Six projects across marketing analytics, forecasting and customer modelling. Open any one for the full story.") + f'''
 <section class="sec">
   <div class="wrap">
+    <div class="prow__preview" id="prowPreview" aria-hidden="true"><img src="" alt=""></div>
     <div class="plist">{rows}</div>
     <p class="sec-note">The Revolut, F1, Netflix, Lloyds and Quantium pages show visuals from the real work. Only the Starbucks page, still in progress, uses illustrative artwork, and it is labelled as such.</p>
   </div>

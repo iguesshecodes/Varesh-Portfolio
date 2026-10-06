@@ -538,3 +538,29 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 .cta--dark .btn--light { box-shadow: 0 0 40px rgba(26,59,159,.2); }
 
 @media (prefers-reduced-motion:reduce) { .sticker { animation: none; } }
+
+/* ============ Custom cursor ============ */
+.cursor { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; mix-blend-mode: difference; }
+.cursor__dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; transform: translate(-50%, -50%); transition: transform 0.15s var(--ease), opacity 0.2s; }
+.cursor__ring { position: absolute; top: -20px; left: -20px; width: 48px; height: 48px; border: 1.5px solid rgba(255,255,255,0.5); border-radius: 50%; transform: translate(-50%, -50%) translate(20px, 20px); transition: width 0.4s var(--ease), height 0.4s var(--ease), top 0.4s var(--ease), left 0.4s var(--ease), border-color 0.3s, background-color 0.3s; }
+.cursor.is-hover .cursor__ring { width: 64px; height: 64px; top: -28px; left: -28px; transform: translate(-50%, -50%) translate(28px, 28px); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.8); }
+.cursor.is-hover .cursor__dot { transform: translate(-50%, -50%) scale(0.5); }
+.cursor.is-click .cursor__dot { transform: translate(-50%, -50%) scale(2.5); }
+.cursor.is-click .cursor__ring { width: 36px; height: 36px; top: -14px; left: -14px; transform: translate(-50%, -50%) translate(14px, 14px); }
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+/* ============ Film grain overlay ============ */
+.grain { position: fixed; inset: 0; z-index: 800; pointer-events: none; opacity: 0.035; }
+.grain::after { content: ""; position: absolute; inset: -200%; width: 400%; height: 400%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 256px 256px; animation: grain 0.4s steps(4) infinite; }
+@keyframes grain { 0% { transform: translate(0,0); } 25% { transform: translate(-5%,-5%); } 50% { transform: translate(5%,-10%); } 75% { transform: translate(-10%,5%); } }
+@media (prefers-reduced-motion: reduce) { .grain { display: none; } }
+
+/* ============ Project row cursor-following preview ============ */
+.prow__preview { position: fixed; z-index: 100; width: 380px; height: 240px; border-radius: 14px; overflow: hidden; pointer-events: none; opacity: 0; transform: scale(0.8); transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); box-shadow: 0 30px 80px -20px rgba(0,0,0,0.5); }
+.prow__preview.is-on { opacity: 1; transform: scale(1); }
+.prow__preview img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 899.98px) { .prow__preview { display: none; } }
+
+/* ============ Text scramble on hover ============ */
+.scramble-char { display: inline-block; transition: none; }
+.scramble-char.is-scrambling { color: var(--sky); }
