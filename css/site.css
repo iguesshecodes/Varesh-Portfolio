@@ -134,11 +134,10 @@ ul, ol { list-style: none; }
 .light-line:hover { color: #fff; }
 
 /* ============ Hero ============ */
-.hero { position: relative; min-height: 100svh; padding: calc(var(--bar) + 2px) var(--pad) clamp(18px, 2.2vw, 34px); display: flex; flex-direction: column; overflow: hidden; background: linear-gradient(170deg, var(--blue) 0%, var(--blue) 50%, #2d4fb5 70%, #5a7ad4 88%, #95b0ec 100%); }
-.hero > * { position: relative; z-index: 2; }
+.hero { position: relative; min-height: 100svh; padding: var(--bar) var(--pad) clamp(18px, 2.2vw, 34px); display: flex; flex-direction: column; overflow: hidden; background: linear-gradient(170deg, var(--blue) 0%, var(--blue) 50%, #2d4fb5 70%, #5a7ad4 88%, #95b0ec 100%); }
+.hero > *:not(.hero__orbs):not(.sticker) { position: relative; z-index: 2; }
 /* cursor-reactive orbs */
 .hero__orbs { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
-.hero > *:not(.hero__orbs) { position: relative; z-index: 2; }
 .hero__orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4; will-change: transform; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 .hero__orb--a { width: 45vw; height: 45vw; background: radial-gradient(circle, rgba(120,160,255,0.7) 0%, transparent 65%); top: 5%; left: 10%; }
 .hero__orb--b { width: 35vw; height: 35vw; background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 65%); top: 45%; right: 5%; }
@@ -497,11 +496,11 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 .hero--dark .hero__micro, .hero--dark .hero__title, .hero--dark .hero__bottom { position: relative; z-index: 2; }
 
 /* rotating sticker */
-.sticker { position: absolute; right: var(--pad); bottom: clamp(22px,5vh,80px); width: clamp(100px,12vw,170px); height: clamp(100px,12vw,170px); color: var(--sky); animation: spin 22s linear infinite; z-index: 4; opacity: .7; }
+.sticker { position: absolute; right: var(--pad); bottom: clamp(60px,8vh,120px); width: clamp(90px,10vw,140px); height: clamp(90px,10vw,140px); color: var(--sky); animation: spin 22s linear infinite; z-index: 4; opacity: .65; }
 .sticker svg { width: 100%; height: 100%; }
 .sticker text { font-family: "Geist Mono", ui-monospace, monospace; text-transform: uppercase; }
 @keyframes spin { to { rotate: 360deg; } }
-@media (max-width:899.98px) { .sticker { width: 90px; height: 90px; bottom: auto; top: calc(var(--bar) + 16px); opacity: .5; } }
+@media (max-width:899.98px) { .sticker { width: 80px; height: 80px; right: var(--pad); bottom: clamp(60px,8vh,100px); opacity: .45; } }
 
 /* blue marquee accent */
 .marquee--accent { background: var(--blue); }
