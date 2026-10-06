@@ -528,7 +528,7 @@ a.crow:hover .crow__go { transform: translate(6px, -6px); }
 
 /* hcard with editorial numbers */
 .hcard { grid-template-columns: clamp(60px,8vw,100px) 1fr; gap: 0 clamp(20px,2.5vw,40px); align-items: start; }
-.hcard__no { font-family: var(--display); font-weight: 800; font-size: clamp(48px,6vw,88px); letter-spacing: -.06em; line-height: .8; color: rgba(6,7,12,.07); font-variant-numeric: tabular-nums; user-select: none; padding-top: .15em; }
+.hcard__no { font-family: var(--display); font-weight: 800; font-size: clamp(48px,6vw,88px); letter-spacing: -.06em; line-height: .8; color: var(--blue); font-variant-numeric: tabular-nums; user-select: none; padding-top: .15em; opacity: 0.2; }
 @media (max-width:799.98px) { .hcard { grid-template-columns: 1fr; } .hcard__no { font-size: 40px; margin-bottom: 4px; } }
 
 /* dark CTA */
