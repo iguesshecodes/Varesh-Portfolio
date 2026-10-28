@@ -24,7 +24,7 @@ CITY = "London | Mumbai"
 NAV = [
     ("projects.html", "Projects"),
     ("about.html", "About"),
-    ("experience.html", "Work experience"),
+    ("experience.html", "Experience"),
     ("certifications.html", "Certifications"),
     ("tools.html", "Tools"),
 ]
@@ -173,12 +173,6 @@ PROJECTS = [
 ]
 
 JOBS = [
-    dict(when="Jun to Jul 2026", place="Birmingham", role="Strategic Consultant, Challenge Winner", org="Turner & Townsend",
-         ctx="Part of the winning team in the University of Birmingham Masters Consultancy Challenge, run with Turner & Townsend.",
-         pts=["Built the <b>financial model for a fully costed research facility proposal</b> within a £50m budget constraint, checking every input and assumption so the logic survived live challenge.",
-              "Presented findings and recommendations to <b>senior partners</b> and fielded Q&amp;A, translating dense analysis for a mixed audience.",
-              "Beat competing university teams to <b>first place</b> on the strength of the numbers, not the slides."],
-         chips=["Financial modelling", "Excel", "Scenario analysis", "Stakeholder communication"]),
     dict(when="Sep 2024 to Sep 2025", place="Mumbai", role="Marketing Strategist and Creative Lead", org="Pastel Moments",
          ctx="Ran marketing, content and production end to end for a wedding-films studio, leading a team of five.",
          pts=["Led a <b>team of 5</b> across social media marketing, content marketing, film editing, client handling and project delivery.",
@@ -202,6 +196,15 @@ JOBS = [
          ctx="Ran my own clothing brand. It is where marketing stopped being theory for me.",
          pts=["Positioning, content, pricing, and customers who either bought or did not."],
          chips=["Brand", "Content", "Pricing"]),
+]
+
+ACHIEVEMENTS = [
+    dict(when="Jul 2026", place="Birmingham", role="Winner, Masters Consultancy Challenge", org="University of Birmingham, with Turner & Townsend",
+         ctx="First place in the University of Birmingham Masters Consultancy Challenge, run with Turner & Townsend, as part of the winning team, Team Dynamite.",
+         pts=["Built the <b>financial model for a fully costed research facility proposal</b> within a £50m budget, checking every input and assumption so the logic held up under live challenge.",
+              "Presented the recommendation to <b>senior Turner &amp; Townsend partners</b> and fielded Q&amp;A, translating dense analysis for a mixed audience.",
+              "Took <b>first place</b> against competing university teams on the strength of the numbers, not the slides."],
+         chips=["Financial modelling", "Excel", "Scenario analysis", "Stakeholder communication"]),
 ]
 
 CERTS = [
@@ -532,9 +535,10 @@ def about_page():
 
 
 def experience_page():
-    jobs = ""
-    for j in JOBS:
-        jobs += f'''<article class="job" data-reveal>
+    def render(items):
+        html = ""
+        for j in items:
+            html += f'''<article class="job" data-reveal>
       <div><p class="job__when">{E(j["when"])}</p><p class="job__place">{E(j["place"])}</p></div>
       <div>
         <h3>{E(j["role"])}</h3>
@@ -545,11 +549,19 @@ def experience_page():
       </div>
     </article>
     '''
-    main = pagehead(None, "Work experience", "Campaigns, consulting and a store of my own. Each role taught me to let the data decide.") + f'''
-<section class="sec"><div class="wrap"><div class="jobs">{jobs}</div></div></section>
+        return html
+    ach = render(ACHIEVEMENTS)
+    jobs = render(JOBS)
+    main = pagehead(None, "Experience and achievements", "A national consultancy challenge win, campaigns, consulting and a store of my own. Each one taught me to let the data decide.") + f'''
+<section class="sec"><div class="wrap">
+  <h2 class="exp-group__h">Competitions and achievements</h2>
+  <div class="jobs">{ach}</div>
+  <h2 class="exp-group__h">Work experience</h2>
+  <div class="jobs">{jobs}</div>
+</div></section>
 {nextlink("certifications.html", "Certifications", "Education and certifications")}'''
-    return write_page("experience.html", "Work experience | Varesh Nirbhavne", "Experience",
-                      "Work experience of Varesh Nirbhavne: consulting, marketing strategy, freelance analytics and a Shopify store.", main, "experience.html", theme="blue")
+    return write_page("experience.html", "Experience | Varesh Nirbhavne", "Experience",
+                      "Experience and achievements of Varesh Nirbhavne: a national consultancy challenge win, marketing strategy, freelance analytics and a Shopify store.", main, "experience.html", theme="blue")
 
 
 def certs_page():

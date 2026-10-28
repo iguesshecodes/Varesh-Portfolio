@@ -361,6 +361,8 @@ em { font-family: var(--italic); font-style: italic; font-weight: 500; letter-sp
 .job__pts li::before { content: ""; position: absolute; left: 0; top: 0.78em; width: 12px; height: 2px; background: var(--navy); }
 .job__pts b { color: var(--ink); }
 @media (max-width: 899.98px) { .job { grid-template-columns: 1fr; } }
+.exp-group__h { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; font-size: clamp(16px, 1.5vw, 22px); color: var(--navy); margin: clamp(44px, 5vw, 76px) 0 14px; }
+.exp-group__h:first-child { margin-top: 0; }
 
 /* ============ Education and certifications ============ */
 .edu { border-top: 1px solid var(--line-w); }
