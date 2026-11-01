@@ -31,6 +31,52 @@ NAV = [
 
 PROJECTS = [
     dict(
+        slug="hm", theme="coral", title="H&M Customer Retention Analysis", short="Which customers are quietly leaving",
+        tools="DuckDB SQL, Python, scikit-learn, Tableau", year="2026", status="Completed", done=True,
+        img="assets/hm.png", alt="Chart comparing revenue captured by ranking the same top 20% of customers by risk times spend versus a plain churn model", tall=False,
+        cap="Key chart rebuilt for this page from the project's own figures. The underlying customer data is not shown.",
+        lede="Which customers are quietly drifting away, how much revenue is at risk, and which of them are worth saving first.",
+        q="Which H&M customers are quietly drifting away, how much revenue is at risk, and which ones are actually worth saving first? The context is a fashion retailer under pressure from faster, cheaper rivals. The data carries no competitor information, so I never claim to know why customers leave.",
+        did=[
+            "Worked a 10% customer sample of the public H&M dataset, 137,571 customers and 3.2 million purchases, with DuckDB SQL on a laptop, and checked the sample against the full 31.8 million rows.",
+            "Built a retention funnel and sorted every customer into on track, slipping, drifting or gone quiet by comparing their silence against their own usual gap between visits.",
+            "Trained a logistic regression churn model, then read its predictions against spend rather than accuracy alone.",
+            "Shipped a Tableau Public dashboard and a script where a free local AI model writes a monthly summary, with a built-in number checker added after an early version mixed up customers and revenue.",
+        ],
+        found=[
+            "About a fifth of yearly revenue sits with customers who have gone quiet or are drifting, and roughly 12.1% is likely gone for good.",
+            "The model scored 0.77 AUC on a later period it never saw, but its riskiest customers were small spenders, so chasing accuracy alone would have protected almost none of the money.",
+            "Ranking the same top 20% of customers by risk times spend catches 49.4% of the revenue that later goes quiet, against 11.0% for a plain churn model, about 4.5 times the money from the same sized list.",
+        ],
+        metrics=[("49.4%", "of lost revenue caught by risk times spend, vs 11.0% plain"), ("0.77", "model AUC on an unseen later period"), ("31.8M", "purchases analysed, from 1.37M customers")],
+        note_h="A note on the data and honesty",
+        note="Built on the public Kaggle H&M dataset, which ends in September 2020, so this is a 2018 to 2020 picture and cannot say how H&M is doing today. Prices are scrambled, so revenue is treated as an index, never pounds. Everything found shows links, not proof, so the recommendation is a randomised test before any spend. Independent project, free and open source, not affiliated with or endorsed by H&M.",
+        tags=["Churn modelling", "SQL", "Python", "scikit-learn", "Tableau", "Customer analytics"],
+    ),
+    dict(
+        slug="ocado", theme="teal", title="UK Online Grocery Growth Intelligence", short="Turning marketing data into decisions",
+        tools="Lighthouse, Meta Ad Library, Tableau, Excel", year="2026", status="Completed", done=True,
+        img="assets/ocado.png", alt="Chart comparing average mobile Lighthouse performance scores for Ocado and Sainsbury's grocery pages", tall=False,
+        cap="Key chart rebuilt for this page from the project's own measurements. Averages across different page mixes, not matched-page comparisons.",
+        lede="How UK online grocers could grow through better website experiences, smarter paid social, and data-driven experiments.",
+        q="How can UK online grocery retailers improve digital growth through website experience, paid advertising and experimentation? Tesco's site could not be reliably tested because of an access restriction, so the comparisons were chosen to protect research integrity rather than manufacture missing numbers.",
+        did=[
+            "Collected ten mobile Lighthouse observations across Ocado and Sainsbury's grocery pages, and manually analysed ten Ocado and Tesco Meta adverts verified in the Meta Ad Library.",
+            "Compared website performance, Ocado versus Sainsbury's, and paid social creative strategy, Ocado versus Tesco, across two shopping missions: weekly groceries and dinner tonight.",
+            "Built four Tableau Public dashboard components and scored ten proposed growth experiments with ICE.",
+            "Turned the signals into a 90-day growth roadmap, kept to proposals rather than claimed results.",
+        ],
+        found=[
+            "Ocado's audited pages averaged a mobile performance score of 33.8 against Sainsbury's 49.8, with Ocado's category page the slowest at an LCP of 31.5 seconds.",
+            "The two brands lean different ways in paid social: Ocado's sample pushed value, discounts and delivery, while Tesco's leaned on premium quality, recipe inspiration and Clubcard loyalty.",
+            "The strongest opportunity was improving Ocado's category-page experience, the highest-ranked experiment at an ICE score of 7.33 out of 10.",
+        ],
+        metrics=[("33.8 vs 49.8", "avg mobile performance, Ocado vs Sainsbury's"), ("10", "growth experiments scored with ICE"), ("4", "Tableau dashboard components")],
+        note_h="A note on the data and honesty",
+        note="An independent analysis using publicly available information. The Lighthouse set is ten manual observations across different page mixes, estimated ad reach is not clicks, conversions or revenue, and the ten experiments are proposals, none implemented. Not affiliated with or endorsed by Ocado, Sainsbury's, Tesco or Meta.",
+        tags=["Marketing analytics", "Web performance", "Paid social", "Tableau", "Experimentation"],
+    ),
+    dict(
         slug="revolut", theme="blue", title="Revolut London Growth Study", short="How a fintech could win more of London",
         tools="SQL, Python, Tableau", year="2026", status="Completed", done=True,
         img="assets/revolut.webp", alt="Findings board for the Revolut London growth study", tall=False,
@@ -306,16 +352,14 @@ def page(fname, title, label, desc, main, active, scripts=(), loader="", theme="
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:image" content="assets/og.jpg">
 <link rel="icon" href="{ICON}">
-<link rel="stylesheet" href="vendor/lenis.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@1,300;1,400;1,500;1,600&display=swap">
 <link rel="stylesheet" href="css/site.css">
 <noscript><style>.curtain,.loader{{display:none!important}}</style></noscript>'''
     sc = "".join('<script src="%s"></script>' % s for s in
-                 ["vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/lenis.min.js", "js/site.js"] + list(scripts))
+                 ["vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "js/site.js"] + list(scripts))
     body = f'''<a class="skip" href="#main">Skip to content</a>
-<div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="curtain" id="curtain" data-label="{E(label)}"><i></i><i></i><i></i><i></i><i></i><span class="curtain__label" aria-hidden="true"></span></div>
 {loader}
@@ -359,7 +403,6 @@ def home():
   <span class="loader__count"><b>0</b><i>%</i></span>
 </div>'''
     main = f'''<section class="hero" id="top">
-  <div class="hero__grid" aria-hidden="true"><canvas id="heroGrid"></canvas></div>
   <div class="hero__orbs" aria-hidden="true"><div class="hero__orb hero__orb--a"></div><div class="hero__orb hero__orb--b"></div><div class="hero__orb hero__orb--c"></div></div>
   <div class="hero__floats" aria-hidden="true">
     <div class="hero__float hero__float--a">ROI +142%</div>
@@ -448,12 +491,12 @@ def projects_page():
       <span class="prow__thumb"><img src="{p["img"]}" alt="" loading="lazy"></span>
     </a>
     '''
-    main = pagehead(None, "Projects", "Six projects across marketing analytics, forecasting and customer modelling. Open any one for the full story.") + f'''
+    main = pagehead(None, "Projects", "Eight projects across marketing analytics, forecasting and customer modelling. Open any one for the full story.") + f'''
 <section class="sec">
   <div class="wrap">
     <div class="prow__preview" id="prowPreview" aria-hidden="true"><img src="" alt=""></div>
     <div class="plist">{rows}</div>
-    <p class="sec-note">The Revolut, F1, Netflix, Lloyds and Quantium pages show visuals from the real work. Only the Starbucks page, still in progress, uses illustrative artwork, and it is labelled as such.</p>
+    <p class="sec-note">Most pages show visuals from the real work. The H&amp;M and Ocado pages show a key chart rebuilt from each project's own figures, and the Starbucks page, still in progress, uses illustrative artwork. Each is labelled on its page.</p>
   </div>
 </section>
 {nextlink("about.html", "About", "About me")}'''

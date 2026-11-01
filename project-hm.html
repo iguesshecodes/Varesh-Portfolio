@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>H&amp;M Customer Retention Analysis | Varesh Nirbhavne</title>
+<meta name="description" content="Which customers are quietly drifting away, how much revenue is at risk, and which of them are worth saving first.">
+<meta name="theme-color" content="#1a3b9f">
+<meta property="og:title" content="H&amp;M Customer Retention Analysis | Varesh Nirbhavne">
+<meta property="og:description" content="Which customers are quietly drifting away, how much revenue is at risk, and which of them are worth saving first.">
+<meta property="og:image" content="assets/og.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a3b9f'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@1,300;1,400;1,500;1,600&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<noscript><style>.curtain,.loader{display:none!important}</style></noscript>
+</head>
+<body class="t-coral">
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="curtain" id="curtain" data-label="H&amp;M"><i></i><i></i><i></i><i></i><i></i><span class="curtain__label" aria-hidden="true"></span></div>
+
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="bar" id="bar">
+  <a class="bar__logo" href="index.html" data-label="Home" aria-label="Varesh Nirbhavne, home"><span>Varesh Nirbhavne</span><span aria-hidden="true">Marketing &amp; data</span></a>
+  <nav class="bar__links" aria-label="Main"><a href="projects.html" aria-current="page">Projects</a><a href="about.html">About</a><a href="experience.html">Experience</a><a href="certifications.html">Certifications</a><a href="tools.html">Tools</a></nav>
+  <a class="bar__cta" href="contact.html">Contact</a>
+  <button class="bar__menu" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="bar__menu-label">Menu</span><span class="bar__burger" aria-hidden="true"><i></i><i></i></span></button>
+</header>
+<div class="menu" id="menu" aria-label="Menu">
+  <nav class="menu__links" aria-label="Mobile">
+    <a href="index.html" data-label="Home"><span>Home</span></a>
+    <a href="projects.html"><span>Projects</span></a><a href="about.html"><span>About</span></a><a href="experience.html"><span>Experience</span></a><a href="certifications.html"><span>Certifications</span></a><a href="tools.html"><span>Tools</span></a>
+    <a href="contact.html"><span>Contact</span></a>
+  </nav>
+  <p class="menu__foot">vareshworks@gmail.com</p>
+</div>
+<main id="main">
+<section class="pagehead blue">
+  <div class="gridlines" aria-hidden="true"></div>
+  <div data-intro-fade><a class="pagehead__crumb" href="projects.html" data-label="All projects">&larr; All projects</a></div>
+  <h1 class="pagehead__title" data-split data-intro>H&amp;M Customer Retention <em>Analysis</em></h1>
+  <p class="pagehead__sub" data-intro-fade>Which customers are quietly drifting away, how much revenue is at risk, and which of them are worth saving first.</p>
+  <div class="pagehead__meta" data-intro-fade><span class="tag tag--done">Completed</span><span class="tag">2026</span><span class="tag">DuckDB SQL, Python, scikit-learn, Tableau</span></div>
+</section>
+<section class="sec">
+  <div class="wrap">
+    <figure class="shot" data-img-in><img src="assets/hm.png" alt="Chart comparing revenue captured by ranking the same top 20% of customers by risk times spend versus a plain churn model" width="3840" height="2160"><figcaption>Key chart rebuilt for this page from the project&#x27;s own figures. The underlying customer data is not shown.</figcaption></figure>
+    <ul class="pmetrics" data-stagger><li><b>49.4%</b><span>of lost revenue caught by risk times spend, vs 11.0% plain</span></li><li><b>0.77</b><span>model AUC on an unseen later period</span></li><li><b>31.8M</b><span>purchases analysed, from 1.37M customers</span></li></ul>
+    <div class="pcols" data-stagger>
+      <div><h3>The question</h3><p>Which H&amp;M customers are quietly drifting away, how much revenue is at risk, and which ones are actually worth saving first? The context is a fashion retailer under pressure from faster, cheaper rivals. The data carries no competitor information, so I never claim to know why customers leave.</p></div>
+      <div><h3>What I did</h3><ul><li>Worked a 10% customer sample of the public H&amp;M dataset, 137,571 customers and 3.2 million purchases, with DuckDB SQL on a laptop, and checked the sample against the full 31.8 million rows.</li><li>Built a retention funnel and sorted every customer into on track, slipping, drifting or gone quiet by comparing their silence against their own usual gap between visits.</li><li>Trained a logistic regression churn model, then read its predictions against spend rather than accuracy alone.</li><li>Shipped a Tableau Public dashboard and a script where a free local AI model writes a monthly summary, with a built-in number checker added after an early version mixed up customers and revenue.</li></ul></div>
+      <div><h3>What I found</h3><ul><li>About a fifth of yearly revenue sits with customers who have gone quiet or are drifting, and roughly 12.1% is likely gone for good.</li><li>The model scored 0.77 AUC on a later period it never saw, but its riskiest customers were small spenders, so chasing accuracy alone would have protected almost none of the money.</li><li>Ranking the same top 20% of customers by risk times spend catches 49.4% of the revenue that later goes quiet, against 11.0% for a plain churn model, about 4.5 times the money from the same sized list.</li></ul></div>
+    </div>
+    <div class="pnote" data-reveal><h3>A note on the data and honesty</h3><p>Built on the public Kaggle H&amp;M dataset, which ends in September 2020, so this is a 2018 to 2020 picture and cannot say how H&amp;M is doing today. Prices are scrambled, so revenue is treated as an index, never pounds. Everything found shows links, not proof, so the recommendation is a randomised test before any spend. Independent project, free and open source, not affiliated with or endorsed by H&amp;M.</p></div>
+    <ul class="chips pchips"><li>Churn modelling</li><li>SQL</li><li>Python</li><li>scikit-learn</li><li>Tableau</li><li>Customer analytics</li></ul>
+    
+  </div>
+</section>
+<a class="next" href="project-ocado.html" data-label="UK Online Grocery Growth Intelligence" ><small>Next</small><strong>UK Online Grocery Growth Intelligence</strong></a>
+</main>
+<footer class="footer">
+  <div class="footer__top">
+    <p class="footer__big">Let's make something work.</p>
+    <nav class="footer__links" aria-label="Footer"><a href="index.html">Home</a><a href="projects.html">Projects</a><a href="about.html">About</a><a href="experience.html">Experience</a><a href="certifications.html">Certifications</a><a href="tools.html">Tools</a><a href="contact.html">Contact</a></nav>
+  </div>
+  <p class="footer__name" aria-hidden="true">Varesh Nirbhavne</p>
+  <div class="footer__base"><span>© 2026 Varesh Nirbhavne, London | Mumbai</span><span>Independent portfolio. Company names belong to their owners.</span></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="vendor/gsap.min.js"></script><script src="vendor/ScrollTrigger.min.js"></script><script src="js/site.js"></script>
+</body>
+</html>

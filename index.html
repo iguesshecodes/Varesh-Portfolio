@@ -10,7 +10,6 @@
 <meta property="og:description" content="Portfolio of Varesh Nirbhavne, a marketer and data analyst in London. Campaign work, SQL, Python and Tableau projects, and two small tools you can try.">
 <meta property="og:image" content="assets/og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a3b9f'/%3E%3Cpath d='M14 20h9l9 24 9-24h9L36 52h-8z' fill='%23fff'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="vendor/lenis.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@1,300;1,400;1,500;1,600&display=swap">
@@ -19,7 +18,6 @@
 </head>
 <body class="t-coral">
 <a class="skip" href="#main">Skip to content</a>
-<div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="curtain" id="curtain" data-label="Home"><i></i><i></i><i></i><i></i><i></i><span class="curtain__label" aria-hidden="true"></span></div>
 <div class="loader" id="loader" aria-hidden="true">
@@ -45,7 +43,6 @@
 </div>
 <main id="main">
 <section class="hero" id="top">
-  <div class="hero__grid" aria-hidden="true"><canvas id="heroGrid"></canvas></div>
   <div class="hero__orbs" aria-hidden="true"><div class="hero__orb hero__orb--a"></div><div class="hero__orb hero__orb--b"></div><div class="hero__orb hero__orb--c"></div></div>
   <div class="hero__floats" aria-hidden="true">
     <div class="hero__float hero__float--a">ROI +142%</div>
@@ -109,44 +106,58 @@
     <a class="btn btn--line light-line" href="projects.html" data-label="Projects">All projects</a>
   </div>
   <p class="wrap sec-note stack__note">The Revolut figures come from an independent portfolio study of a dataset, not from company data.</p>
-  <div class="stack__list" id="stackList"><a class="scard scard--0" style="--i:0" href="project-revolut.html" data-label="Revolut London Growth Study">
+  <div class="stack__list" id="stackList"><a class="scard scard--0" style="--i:0" href="project-hm.html" data-label="H&amp;M Customer Retention Analysis">
       <div class="scard__copy">
-        <span class="scard__no">01<small>/ 06</small></span>
+        <span class="scard__no">01<small>/ 08</small></span>
+        <div><h3 class="scard__title">H&amp;M Customer Retention Analysis</h3><p class="scard__short">Which customers are quietly leaving</p></div>
+        <div class="scard__foot"><span class="scard__tools">DuckDB SQL, Python, scikit-learn, Tableau</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
+      </div>
+      <div class="scard__img"><img src="assets/hm.png" alt="Chart comparing revenue captured by ranking the same top 20% of customers by risk times spend versus a plain churn model" width="3840" height="2160" loading="lazy"></div>
+    </a><a class="scard scard--1" style="--i:1" href="project-ocado.html" data-label="UK Online Grocery Growth Intelligence">
+      <div class="scard__copy">
+        <span class="scard__no">02<small>/ 08</small></span>
+        <div><h3 class="scard__title">UK Online Grocery Growth Intelligence</h3><p class="scard__short">Turning marketing data into decisions</p></div>
+        <div class="scard__foot"><span class="scard__tools">Lighthouse, Meta Ad Library, Tableau, Excel</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
+      </div>
+      <div class="scard__img"><img src="assets/ocado.png" alt="Chart comparing average mobile Lighthouse performance scores for Ocado and Sainsbury&#x27;s grocery pages" width="3840" height="2160" loading="lazy"></div>
+    </a><a class="scard scard--2" style="--i:2" href="project-revolut.html" data-label="Revolut London Growth Study">
+      <div class="scard__copy">
+        <span class="scard__no">03<small>/ 08</small></span>
         <div><h3 class="scard__title">Revolut London Growth Study</h3><p class="scard__short">How a fintech could win more of London</p></div>
         <div class="scard__foot"><span class="scard__tools">SQL, Python, Tableau</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
       </div>
       <div class="scard__img"><img src="assets/revolut.webp" alt="Findings board for the Revolut London growth study" width="3840" height="2160" loading="lazy"></div>
-    </a><a class="scard scard--1" style="--i:1" href="project-f1.html" data-label="F1 2026 Championship Forecast">
+    </a><a class="scard scard--0" style="--i:3" href="project-f1.html" data-label="F1 2026 Championship Forecast">
       <div class="scard__copy">
-        <span class="scard__no">02<small>/ 06</small></span>
+        <span class="scard__no">04<small>/ 08</small></span>
         <div><h3 class="scard__title">F1 2026 Championship Forecast</h3><p class="scard__short">Two models, one title race</p></div>
         <div class="scard__foot"><span class="scard__tools">Python, SQL, Tableau</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
       </div>
       <div class="scard__img"><img src="assets/f1.webp" alt="Dashboard comparing two F1 championship forecasts" width="3840" height="2160" loading="lazy"></div>
-    </a><a class="scard scard--2" style="--i:2" href="project-netflix.html" data-label="Netflix Content Library Analysis">
+    </a><a class="scard scard--1" style="--i:4" href="project-netflix.html" data-label="Netflix Content Library Analysis">
       <div class="scard__copy">
-        <span class="scard__no">03<small>/ 06</small></span>
+        <span class="scard__no">05<small>/ 08</small></span>
         <div><h3 class="scard__title">Netflix Content Library Analysis</h3><p class="scard__short">What 8,807 titles say about a catalogue</p></div>
         <div class="scard__foot"><span class="scard__tools">Python, Pandas, Seaborn</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
       </div>
       <div class="scard__img"><img src="assets/netflix.webp" alt="Netflix content library dashboard" width="3840" height="2160" loading="lazy"></div>
-    </a><a class="scard scard--0" style="--i:3" href="project-lloyds.html" data-label="Customer churn model">
+    </a><a class="scard scard--2" style="--i:5" href="project-lloyds.html" data-label="Customer churn model">
       <div class="scard__copy">
-        <span class="scard__no">04<small>/ 06</small></span>
+        <span class="scard__no">06<small>/ 08</small></span>
         <div><h3 class="scard__title">Customer churn model</h3><p class="scard__short">Predicting who leaves a bank, honestly</p></div>
         <div class="scard__foot"><span class="scard__tools">BigQuery SQL, Random Forest, Tableau</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
       </div>
       <div class="scard__img"><img src="assets/lloyds.webp" alt="The two LinkedIn carousel slides from the churn project, one light and one dark" width="3840" height="2160" loading="lazy"></div>
-    </a><a class="scard scard--1" style="--i:4" href="project-quantium.html" data-label="Did the trial stores really lift sales?">
+    </a><a class="scard scard--0" style="--i:6" href="project-quantium.html" data-label="Did the trial stores really lift sales?">
       <div class="scard__copy">
-        <span class="scard__no">05<small>/ 06</small></span>
+        <span class="scard__no">07<small>/ 08</small></span>
         <div><h3 class="scard__title">Did the trial stores really lift sales?</h3><p class="scard__short">Control stores and honest uplift</p></div>
         <div class="scard__foot"><span class="scard__tools">Python, Excel, PowerPoint</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
       </div>
       <div class="scard__img"><img src="assets/quantium.webp" alt="Dashboard 1 of 2: chips category sales by lifestage, brand share and customer concentration" width="3840" height="2160" loading="lazy"></div>
-    </a><a class="scard scard--2" style="--i:5" href="project-starbucks.html" data-label="Who did the offer actually persuade?">
+    </a><a class="scard scard--1" style="--i:7" href="project-starbucks.html" data-label="Who did the offer actually persuade?">
       <div class="scard__copy">
-        <span class="scard__no">06<small>/ 06</small></span>
+        <span class="scard__no">08<small>/ 08</small></span>
         <div><h3 class="scard__title">Who did the offer actually persuade?</h3><p class="scard__short">Uplift modelling, in progress</p></div>
         <div class="scard__foot"><span class="scard__tools">SQL, Python, Excel, Power BI</span><span class="scard__go">View case study <span aria-hidden="true">&nearr;</span></span></div>
       </div>
@@ -170,6 +181,6 @@
   <div class="footer__base"><span>© 2026 Varesh Nirbhavne, London | Mumbai</span><span>Independent portfolio. Company names belong to their owners.</span></div>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="vendor/gsap.min.js"></script><script src="vendor/ScrollTrigger.min.js"></script><script src="vendor/lenis.min.js"></script><script src="js/site.js"></script>
+<script src="vendor/gsap.min.js"></script><script src="vendor/ScrollTrigger.min.js"></script><script src="js/site.js"></script>
 </body>
 </html>
