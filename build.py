@@ -33,8 +33,9 @@ PROJECTS = [
     dict(
         slug="hm", theme="coral", title="H&M Customer Retention Analysis", short="Which customers are quietly leaving",
         tools="DuckDB SQL, Python, scikit-learn, Tableau", year="2026", status="Completed", done=True,
-        img="assets/hm.png", alt="Chart comparing revenue captured by ranking the same top 20% of customers by risk times spend versus a plain churn model", tall=False,
-        cap="Key chart rebuilt for this page from the project's own figures. The underlying customer data is not shown.",
+        img="assets/hm-cover.webp", img_size=(2000, 1045), alt="Cover for the H&M customer retention analysis, showing the Tableau dashboard and the headline result", tall=False,
+        cap="Project cover.",
+        orig="assets/hm-dash.webp", orig_size=(2400, 1327), orig_alt="The H&M customer retention Tableau dashboard, with funnel, status, segments, methods and trend panels", orig_cap="The Tableau Public dashboard built for this project.",
         lede="Which customers are quietly drifting away, how much revenue is at risk, and which of them are worth saving first.",
         q="Which H&M customers are quietly drifting away, how much revenue is at risk, and which ones are actually worth saving first? The context is a fashion retailer under pressure from faster, cheaper rivals. The data carries no competitor information, so I never claim to know why customers leave.",
         did=[
@@ -56,8 +57,9 @@ PROJECTS = [
     dict(
         slug="ocado", theme="teal", title="UK Online Grocery Growth Intelligence", short="Turning marketing data into decisions",
         tools="Lighthouse, Meta Ad Library, Tableau, Excel", year="2026", status="Completed", done=True,
-        img="assets/ocado.png", alt="Chart comparing average mobile Lighthouse performance scores for Ocado and Sainsbury's grocery pages", tall=False,
-        cap="Key chart rebuilt for this page from the project's own measurements. Averages across different page mixes, not matched-page comparisons.",
+        img="assets/ocado-cover.webp", img_size=(2000, 1045), alt="Cover for the UK online grocery growth intelligence project, showing the Tableau dashboard", tall=False,
+        cap="Project cover.",
+        orig="assets/ocado-dash.webp", orig_size=(2400, 1164), orig_alt="The Ocado and Tesco paid social Tableau dashboard, with format, angle and offer mix and a top ads table", orig_cap="The Tableau Public dashboard built for this project.",
         lede="How UK online grocers could grow through better website experiences, smarter paid social, and data-driven experiments.",
         q="How can UK online grocery retailers improve digital growth through website experience, paid advertising and experimentation? Tesco's site could not be reliably tested because of an access restriction, so the comparisons were chosen to protect research integrity rather than manufacture missing numbers.",
         did=[
@@ -496,7 +498,7 @@ def projects_page():
   <div class="wrap">
     <div class="prow__preview" id="prowPreview" aria-hidden="true"><img src="" alt=""></div>
     <div class="plist">{rows}</div>
-    <p class="sec-note">Most pages show visuals from the real work. The H&amp;M and Ocado pages show a key chart rebuilt from each project's own figures, and the Starbucks page, still in progress, uses illustrative artwork. Each is labelled on its page.</p>
+    <p class="sec-note">The project pages show visuals from the real work. Only the Starbucks page, still in progress, uses illustrative artwork, and it is labelled as such.</p>
   </div>
 </section>
 {nextlink("about.html", "About", "About me")}'''
@@ -512,7 +514,7 @@ def project_page(i, p):
     if p["metrics"]:
         metrics = '<ul class="pmetrics" data-stagger>' + "".join('<li><b>%s</b><span>%s</span></li>' % (E(a), E(b)) for a, b in p["metrics"]) + "</ul>"
     cls = "shot"
-    w, h = 3840, 2160
+    w, h = p.get("img_size", (3840, 2160))
     second = ""
     if p.get("orig"):
         ow, oh = p["orig_size"]
