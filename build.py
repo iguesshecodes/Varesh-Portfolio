@@ -31,6 +31,30 @@ NAV = [
 
 PROJECTS = [
     dict(
+        slug="airline", theme="blue", title="The 2026 Airline Shock", short="Who handled it best",
+        tools="Power BI, SQL, Python", year="2026", status="Completed", done=True,
+        img="assets/airline-cover.webp", img_size=(2000, 1045), alt="Cover for the 2026 airline shock project, showing the Power BI dashboard", tall=False,
+        cap="Project cover.",
+        orig="assets/airline-work.webp", orig_size=(2075, 1375), orig_alt="The Power BI brand playbook table with the SQL and Python behind the report", orig_cap="From the project: the Power BI brand playbook, with the SQL and Python behind it.",
+        lede="Ten airlines, UK and India, hit by the same shock. Some cut seats, some added them. Who actually handled it best?",
+        q="A simulated Head of Network and Revenue at a mid-size airline has to choose when fuel costs and disruption hit: cut capacity, raise fares, or accept a lower load factor. I wrote the brief myself and say so in the repo, so no client was involved.",
+        did=[
+            "Pulled monthly traffic from UK CAA and India DGCA, January 2025 to September 2026, 211 brand-month rows, into a small star schema with a SQL layer.",
+            "Compared the shock window, March to August 2026, against the same months of 2025, so seasonality cancels and only brands with data in both windows count.",
+            "Cleaned and tagged every row in Python, and computed load factor as summed passenger-km over seat-km, never an average of monthly percentages.",
+            "Built a three-page Power BI report, Overview, Brand playbook and Findings, on a star schema with 16 DAX measures.",
+        ],
+        found=[
+            "Cutting seats protected load factor but cost passengers. Air India Group cut 9.0% of its seats and still lost 7.2% of passengers; Ryanair UK cut 7.6% and lost 5.2%.",
+            "Adding seats only worked where demand was proven. Jet2 grew seats 5.7% and filled them for the best resilience score, +10.1; easyJet UK added 7.2% and load factor fell 3.6 points.",
+            "Across the ten airlines, capacity and passenger change move together, about +0.78, while capacity and load factor move against each other, about -0.30. With ten airlines this is descriptive, not a statistical claim.",
+        ],
+        metrics=[("10", "airlines compared, UK and India"), ("+0.78", "seats to passengers correlation, n=10"), ("16", "DAX measures on a star schema")],
+        note_h="A note on the data and honesty",
+        note="Descriptive, not causal, and no forecast. UK CAA covers UK-registered carriers only, and the CAA and India DGCA define load factor slightly differently. There is no fare data, so no profit view. SpiceJet is excluded because it has no 2025 data, and the stakeholder is simulated, stated in the first line of the brief. Independent project using public data, not affiliated with any airline.",
+        tags=["Power BI", "SQL", "Python", "DAX", "Star schema", "Data storytelling"],
+    ),
+    dict(
         slug="hm", theme="coral", title="H&M Customer Retention Analysis", short="Which customers are quietly leaving",
         tools="DuckDB SQL, Python, scikit-learn, Tableau", year="2026", status="Completed", done=True,
         img="assets/hm-cover.webp", img_size=(2000, 1045), alt="Cover for the H&M customer retention analysis, showing the Tableau dashboard and the headline result", tall=False,
@@ -493,7 +517,7 @@ def projects_page():
       <span class="prow__thumb"><img src="{p["img"]}" alt="" loading="lazy"></span>
     </a>
     '''
-    main = pagehead(None, "Projects", "Eight projects across marketing analytics, forecasting and customer modelling. Open any one for the full story.") + f'''
+    main = pagehead(None, "Projects", "Nine projects across marketing analytics, forecasting and customer modelling. Open any one for the full story.") + f'''
 <section class="sec">
   <div class="wrap">
     <div class="prow__preview" id="prowPreview" aria-hidden="true"><img src="" alt=""></div>
