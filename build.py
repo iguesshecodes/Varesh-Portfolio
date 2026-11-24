@@ -172,55 +172,6 @@ ALL_PROJECTS = [
         note="Built on a public Netflix titles dataset. Independent portfolio project, not affiliated with or endorsed by Netflix.",
         tags=["Python", "Pandas", "Seaborn", "EDA", "Data cleaning"],
     ),
-    dict(
-        slug="lloyds", theme="green", title="Customer churn model", short="Predicting who leaves a bank, honestly",
-        tools="BigQuery SQL, Random Forest, Tableau", year="2026", status="Virtual experience", done=True,
-        img="assets/lloyds.webp", alt="The two LinkedIn carousel slides from the churn project, one light and one dark", tall=False,
-        cap="The two LinkedIn carousel slides from the project, shown as published. Forage virtual experience, simulated data.",
-        lede="Predicting who will leave a bank is a ranking problem more than a prediction problem. This project treats it that way, and is honest about how much the model can say.",
-        q="Which customers are most at risk of churning, and how much can a model genuinely tell us?",
-        did=[
-            "Prepared the customer data with BigQuery SQL.",
-            "Trained a Random Forest classifier to estimate churn risk.",
-            "Built Tableau views to show risk across customer groups.",
-            "Packaged the results as two LinkedIn carousel slides.",
-        ],
-        found=[
-            "ROC-AUC landed between 0.576 and 0.601 across runs.",
-            "Age alone carried 52.6% of feature importance, and age plus income carried about 74% of the signal.",
-            "That is only a little better than chance, so the model is useful for ranking risk, not for confident calls on a single customer.",
-        ],
-        metrics=[("37%", "churn rate in the 1K customer records"), ("52.6%", "of feature importance sits in age"), ("0.60", "ROC-AUC, honest and modest")],
-        note_h="Why I show it anyway",
-        note="This is a Forage virtual experience on a simulated 1K-record dataset, so it shows method, not real-world experience. I would rather show a modest result clearly than dress it up. The sensible next step is better features and a cost-based view of which customers are worth contacting. Not affiliated with or endorsed by Lloyds Banking Group.",
-        tags=["Random Forest", "BigQuery SQL", "Tableau", "Churn analysis"],
-    ),
-    dict(
-        slug="quantium", theme="amber", title="Did the trial stores really lift sales?", short="Control stores and honest uplift",
-        tools="Python, Excel, PowerPoint", year="2026", status="Virtual experience", done=True,
-        img="assets/quantium.webp", alt="Dashboard 1 of 2: chips category sales by lifestage, brand share and customer concentration", tall=False,
-        cap="Dashboard 1 of 2, from the project: who buys chips, what they buy and where sales concentrate.",
-        orig="assets/orig-quantium.webp", orig_size=(1456, 819), orig_alt="Dashboard 2 of 2: trial stores 77, 86 and 88 against their matched control stores", orig_cap="Dashboard 2 of 2, from the project: each trial store against its matched control.",
-        lede="A retailer tries something in a few stores. Did sales move because of it, or would they have moved anyway? Control stores are how you tell the difference.",
-        q="For a chips category manager: did the trial in selected stores produce a real uplift in sales?",
-        did=[
-            "Explored transaction and customer data to understand how people buy chips.",
-            "Matched each trial store to control stores using normalised Euclidean distance.",
-            "Tested uplift with a difference in differences approach.",
-            "Presented the story in a client-facing PowerPoint structured with the Pyramid Principle.",
-        ],
-        found=[
-            "All three trial stores beat their matched controls: +26.2% (store 77), +13.2% (store 86) and +12.1% (store 88) in sales.",
-            "Store 88's control follows it loosely (correlation 0.31), so its uplift is the least certain. A staged rollout with a second read is the safer next step.",
-            "In the category, older singles/couples, retirees and older families deliver 58.0% of sales, and the top 25% of customers drive 52.2% of them.",
-            "A fair comparison group has to come before any claim about uplift.",
-            "A finding only matters once it is framed as a decision the client can make.",
-        ],
-        metrics=[("+26.2%", "sales uplift, store 77 vs control"), ("58.0%", "of sales from the three older lifestages"), ("52.2%", "of sales from the top 25% of customers")],
-        note_h="About this project",
-        note="This is a Forage virtual experience on a simulated retail dataset, so it shows method, not real-world experience. Not affiliated with or endorsed by Quantium.",
-        tags=["Control store matching", "Uplift testing", "Pyramid Principle", "Retail analytics"],
-    ),
 ]
 
 PROJECTS = [p for p in ALL_PROJECTS if not p.get("hidden")]
@@ -296,9 +247,6 @@ SIMS = [
     dict(type="Job simulation", title="Data Science", by="Lloyds Banking Group via Forage, 24 May 2026", img="assets/cert-lloyds.webp", alt="Lloyds Banking Group Data Science job simulation certificate",
          text="Data gathering and exploratory analysis, then building a machine learning model and framing the result for a business audience.",
          chips=["Python", "EDA", "Machine learning"]),
-    dict(type="Job simulation", title="Data Analytics", by="Deloitte via Forage, 2026", img="", alt="",
-         text="Worked a client-style dataset end to end, building a dashboard to spot the signal and classifying the data behind a business question.",
-         chips=["Tableau", "Excel", "Data classification"]),
     dict(type="Job simulation", title="Data Science", by="British Airways via Forage, 2026", img="assets/cert-ba.webp", alt="British Airways Data Science job simulation certificate of completion, 9 May 2026",
          text="Modelled lounge eligibility at Heathrow Terminal 3 and predicted customer buying behaviour. Completed 9 May 2026.",
          chips=["Python", "Modelling", "Customer behaviour"]),
@@ -488,7 +436,7 @@ def home():
     <h2 class="h2" data-split>Selected <em>work.</em></h2>
     <a class="btn btn--line light-line" href="projects.html" data-label="Projects">All projects</a>
   </div>
-  <p class="wrap sec-note stack__note">Independent portfolio projects on public or simulated datasets, not company data. Forage virtual experiences are labelled as such.</p>
+  <p class="wrap sec-note stack__note">Independent portfolio projects on public or simulated datasets, not company data. The Revolut study is labelled as simulated.</p>
   <div class="stack__list" id="stackList">{cards}</div>
 </section>
 
@@ -522,7 +470,7 @@ def projects_page():
   <div class="wrap">
     <div class="prow__preview" id="prowPreview" aria-hidden="true"><img src="" alt=""></div>
     <div class="plist">{rows}</div>
-    <p class="sec-note">The project pages show visuals from the real work. The Lloyds and Quantium projects are Forage virtual experiences on simulated data, and are labelled that way.</p>
+    <p class="sec-note">The project pages show visuals from the real work. Revolut uses a simulated dataset and is labelled that way.</p>
   </div>
 </section>
 {nextlink("about.html", "About", "About me")}'''
