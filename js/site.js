@@ -389,7 +389,7 @@
     words.forEach(function (w, i) { gsap.set(w, { yPercent: i ? 105 : 0 }); });
     var o = { v: 0 };
     var tl = gsap.timeline();
-    tl.to(o, { v: 100, duration: 2.5, ease: "power2.inOut", onUpdate: function () { cnt.textContent = Math.round(o.v); } }, 0)
+    tl.to(o, { v: 100, duration: 2.5, ease: "power2.inOut", onUpdate: function () { if (cnt) cnt.textContent = Math.round(o.v); } }, 0)
       .to(bar, { scaleX: 1, duration: 2.5, ease: "power2.inOut" }, 0);
     words.forEach(function (w, i) {
       var t = i * 0.9;
