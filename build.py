@@ -103,8 +103,8 @@ ALL_PROJECTS = [
         tags=["Marketing analytics", "Web performance", "Paid social", "Tableau", "Experimentation"],
     ),
     dict(
-        slug="revolut", hidden=True, theme="blue", title="Revolut London Growth Study", short="How a fintech could win more of London",
-        tools="SQL, Python, Tableau", year="2026", status="Completed", done=True,
+        slug="revolut", theme="blue", title="Revolut London Growth Study", short="How a fintech could win more of London",
+        tools="SQL, Python, Tableau", year="2026", status="Simulated dataset", done=True,
         img="assets/revolut.webp", alt="Findings board for the Revolut London growth study", tall=False,
         cap="Findings board built from the figures reported in the study. The underlying customer data is not shown.",
         orig="assets/orig-revolut.webp", orig_size=(1400, 1400), orig_alt="The original LinkedIn infographic for the Revolut study", orig_cap="The original infographic from the study.",
@@ -123,7 +123,7 @@ ALL_PROJECTS = [
         ],
         metrics=[("£1.9M", "annual spend in 59 loss-making campaigns"), ("£79M", "geographic upside across London"), ("0.48", "churn model ROC-AUC, no demographic signal")],
         note_h="A note on the data",
-        note="These figures describe the dataset I analysed and are modelled estimates, not any company's real performance. This is an independent portfolio project and is not affiliated with or endorsed by Revolut.",
+        note="These figures describe a simulated dataset and are modelled estimates, not any company's real performance. They are reported as published in the original study and have not been re-run in code for this site. This is an independent portfolio project and is not affiliated with or endorsed by Revolut.",
         tags=["Marketing analytics", "ROI analysis", "Geo analysis", "Churn", "Data storytelling"],
     ),
     dict(
@@ -221,27 +221,6 @@ ALL_PROJECTS = [
         note="This is a Forage virtual experience on a simulated retail dataset, so it shows method, not real-world experience. Not affiliated with or endorsed by Quantium.",
         tags=["Control store matching", "Uplift testing", "Pyramid Principle", "Retail analytics"],
     ),
-    dict(
-        slug="starbucks", hidden=True, theme="teal", title="Who did the offer actually persuade?", short="Uplift modelling, in progress",
-        tools="SQL, Python, Excel, Power BI", year="2026", status="In progress", done=False,
-        img="assets/starbucks.webp", alt="Illustrative visual: four uplift quadrants with customer dots", tall=False,
-        cap="Illustrative visual, drawn for this page. Not a screenshot of the real dashboard.",
-        lede="Sending an offer to someone who would have bought anyway is a waste. Uplift modelling tries to find the people an offer genuinely changes.",
-        q="Which customers does an offer actually persuade, and which would have bought anyway?",
-        did=[
-            "Starting from the Udacity Starbucks capstone dataset.",
-            "Sorting customers into persuadables, sure things, lost causes and sleeping dogs.",
-            "Comparing a two-model approach: one model for customers who got the offer, one for those who did not.",
-            "Adding an Excel cost calculator that turns uplift into money, then a Power BI or Tableau dashboard.",
-        ],
-        found=[
-            "Still in progress, so there are no headline numbers yet. I will add results here once the model has been properly validated.",
-        ],
-        metrics=[],
-        note_h="Where it stands",
-        note="Uses the public Udacity Starbucks capstone dataset. Independent project, not affiliated with or endorsed by Starbucks.",
-        tags=["Uplift modelling", "SQL", "Python", "Excel", "Power BI"],
-    ),
 ]
 
 PROJECTS = [p for p in ALL_PROJECTS if not p.get("hidden")]
@@ -305,6 +284,24 @@ CERTS = [
     dict(type="Programme", title="QS Future 17", by="QS", img="", alt="",
          text="Selected for QS Future 17.",
          chips=["Leadership", "Networking"]),
+]
+
+SIMS = [
+    dict(type="Job simulation", title="Strategy Consulting", by="BCG via Forage, 1 Jun 2026", img="assets/cert-bcg.webp", alt="BCG Strategy Consulting job simulation certificate",
+         text="Market research, consumer survey design, financial modelling and data analysis, then summarising the findings for a client audience.",
+         chips=["Market research", "Survey design", "Financial modelling", "Data analysis"]),
+    dict(type="Job simulation", title="Data Analytics", by="Quantium via Forage, 23 May 2026", img="assets/cert-quantium.webp", alt="Quantium Data Analytics job simulation certificate",
+         text="Data preparation and customer analytics, experimentation and uplift testing, then turning the analysis into a commercial recommendation.",
+         chips=["Customer analytics", "Uplift testing", "Experimentation"]),
+    dict(type="Job simulation", title="Data Science", by="Lloyds Banking Group via Forage, 24 May 2026", img="assets/cert-lloyds.webp", alt="Lloyds Banking Group Data Science job simulation certificate",
+         text="Data gathering and exploratory analysis, then building a machine learning model and framing the result for a business audience.",
+         chips=["Python", "EDA", "Machine learning"]),
+    dict(type="Job simulation", title="Data Analytics", by="Deloitte via Forage, 2026", img="", alt="",
+         text="Worked a client-style dataset end to end, building a dashboard to spot the signal and classifying the data behind a business question.",
+         chips=["Tableau", "Excel", "Data classification"]),
+    dict(type="Job simulation", title="Data Science", by="British Airways via Forage, 2026", img="assets/cert-ba.webp", alt="British Airways Data Science job simulation certificate of completion, 9 May 2026",
+         text="Modelled lounge eligibility at Heathrow Terminal 3 and predicted customer buying behaviour. Completed 9 May 2026.",
+         chips=["Python", "Modelling", "Customer behaviour"]),
 ]
 
 MARQUEE = ["SQL", "Python", "Tableau", "Power BI", "Excel", "Campaign ROI", "Churn analysis", "A/B testing", "Paid social", "HubSpot email"]
@@ -440,7 +437,7 @@ def home():
   {sticker}
   <div class="hero__micro micro" data-intro-fade>
     <span>Marketing and data analytics</span>
-    <span class="hero__status"><i class="pulse"></i>Available immediately</span>
+    <span class="hero__status"><i class="pulse"></i>Available immediately &middot; NL, UAE, India, UK</span>
     <span>{CITY} &middot; Portfolio 2026</span>
   </div>
   <h1 class="hero__title" aria-label="Marketing and Data">
@@ -585,7 +582,7 @@ def about_page():
         <div><dt>Based in</dt><dd>{CITY}</dd></div>
         <div><dt>Studied</dt><dd>MSc Marketing, University of Birmingham</dd></div>
         <div><dt>Dissertation</dt><dd>Buy Now Pay Later and impulse buying, 163 respondents, SPSS (p &lt; 0.001)</dd></div>
-        <div><dt>Open to</dt><dd>Marketing and data analyst roles in Mumbai and across India, in person, hybrid or remote. Available immediately.</dd></div>
+        <div><dt>Open to</dt><dd>Marketing and data analyst roles in the Netherlands, UAE, India and the UK, in person, hybrid or remote. Available immediately.</dd></div>
       </dl>
     </div>
   </div>
@@ -637,10 +634,11 @@ def experience_page():
 
 
 def certs_page():
-    certs = "".join(
-        f'''<article class="cert">{('<div class="cert__img"><img src="%s" alt="%s" loading="lazy"></div>' % (c["img"], E(c["alt"]))) if c["img"] else ""}<span class="cert__type">{E(c["type"])}</span><h3>{E(c["title"])}</h3><p class="cert__by">{E(c["by"])}</p><p>{E(c["text"])}</p><ul class="chips">{li(c["chips"])}</ul></article>'''
-        for c in CERTS)
-    main = pagehead(None, "Certifications", "Where I studied, and the certificates and wins behind the analytics.") + f'''
+    def card(c):
+        return f'''<article class="cert">{('<div class="cert__img"><img src="%s" alt="%s" loading="lazy"></div>' % (c["img"], E(c["alt"]))) if c["img"] else ""}<span class="cert__type">{E(c["type"])}</span><h3>{E(c["title"])}</h3><p class="cert__by">{E(c["by"])}</p><p>{E(c["text"])}</p><ul class="chips">{li(c["chips"])}</ul></article>'''
+    certs = "".join(card(c) for c in CERTS)
+    sims = "".join(card(c) for c in SIMS)
+    main = pagehead(None, "Certifications", "Where I studied, the certificates behind the analytics, and the job simulations I have worked through.") + f'''
 <section class="sec dark">
   <div class="wrap">
     <h2 class="h2" data-split>Education<em>.</em></h2>
@@ -656,9 +654,16 @@ def certs_page():
     <div class="certs" data-stagger>{certs}</div>
   </div>
 </section>
+<section class="sec dark">
+  <div class="wrap">
+    <h2 class="h2" data-split>Job simulations<em>.</em></h2>
+    <p class="sec-note" style="margin-top:clamp(16px,2vw,28px)">Forage virtual experiences. These are practice on simulated company tasks, not employment, and none of the companies are affiliated with this site.</p>
+    <div class="certs" data-stagger style="margin-top:clamp(28px,3vw,48px)">{sims}</div>
+  </div>
+</section>
 {nextlink("tools.html", "Tools", "Try the tools")}'''
     return write_page("certifications.html", "Certifications | Varesh Nirbhavne", "Certifications",
-                      "Education and certifications of Varesh Nirbhavne: MSc Marketing, Google Data Analytics, Google Ads Search, HubSpot, and a Masters Consultancy Challenge win.", main, "certifications.html", theme="green")
+                      "Education and certifications of Varesh Nirbhavne: MSc Marketing, Google Data Analytics, Google Ads Search, HubSpot, a Masters Consultancy Challenge win and Forage job simulations.", main, "certifications.html", theme="green")
 
 
 def tools_page():
@@ -720,7 +725,7 @@ def tools_page():
 
 
 def contact_page():
-    main = pagehead(None, "Contact", "Available immediately for marketing and data analyst roles. Email is the fastest way to reach me.") + f'''
+    main = pagehead(None, "Contact", "Available immediately for marketing and data analyst roles in the Netherlands, UAE, India and the UK. Email is the fastest way to reach me.") + f'''
 <section class="sec">
   <div class="wrap">
     <div class="clist" data-stagger>
@@ -731,7 +736,7 @@ def contact_page():
       <a class="crow" href="{GITHUB}" target="_blank" rel="noopener"><span class="crow__k">GitHub</span><span class="crow__v">{GITHUB_TXT}</span><span class="crow__go" aria-hidden="true">&nearr;</span></a>
     </div>
     <div class="btnrow"><a class="btn btn--navy" href="mailto:{EMAIL}">Open in my mail app</a></div>
-    <p class="sec-note">Based in {CITY}. If the button does nothing on your device, copy the address above instead.</p>
+    <p class="sec-note">Based in {CITY}. Open to the Netherlands, UAE, India and the UK. If the button does nothing on your device, copy the address above instead.</p>
   </div>
 </section>'''
     return write_page("contact.html", "Contact | Varesh Nirbhavne", "Contact",
