@@ -258,10 +258,11 @@
       lines.forEach(function (ln) { ln.style.fontSize = "20px"; });
       var availW = title.clientWidth, cs = getComputedStyle(title);
       var availH = title.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      if (!availW || availH <= 0) return;
       var sizes = lines.map(function (ln) {
         ln.style.fontSize = "100px"; ln.style.width = "max-content"; ln.style.alignSelf = "flex-start";
-        var w = ln.getBoundingClientRect().width; ln.style.width = ""; ln.style.alignSelf = "";
-        return 100 * availW / w * 0.995;
+        var w = Math.max(ln.scrollWidth, ln.getBoundingClientRect().width); ln.style.width = ""; ln.style.alignSelf = "";
+        return w > 0 ? 100 * availW / w * 0.995 : 1e4;
       });
       var size = Math.min.apply(null, sizes);
       size = Math.min(size, availH / (lines.length * 1.03));
@@ -269,7 +270,11 @@
     }
     fit();
     window.addEventListener("resize", fit);
+    window.addEventListener("load", fit);
+    window.addEventListener("orientationchange", function () { setTimeout(fit, 250); });
+    if (window.ResizeObserver && title) { var lastW = title.clientWidth; new ResizeObserver(function () { if (title.clientWidth !== lastW) { lastW = title.clientWidth; fit(); } }).observe(title); }
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    setTimeout(fit, 400); setTimeout(fit, 1500);
 
     if (reduce) return;
     gsap.set(chars, { yPercent: 115 });
