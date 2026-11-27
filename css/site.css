@@ -589,3 +589,24 @@ a, button, .tab, input[type="range"] { touch-action: manipulation; -webkit-tap-h
   .footer__base { flex-direction: column; gap: 6px; }
 }
 .hero__ln, .hero__ln * { transition: none !important; }
+
+
+/* ============ Long-form case study sections ============ */
+.inlink { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; font-weight: 600; }
+.psecs { display: grid; gap: clamp(36px, 4.5vw, 64px); margin-top: clamp(56px, 7vw, 112px); }
+.psec { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 16px clamp(24px, 4vw, 72px); padding-top: 18px; border-top: 1px solid var(--ink); }
+.psec h3 { font-family: var(--display); font-weight: 800; font-size: clamp(22px, 2.2vw, 36px); letter-spacing: -0.045em; text-transform: uppercase; line-height: 0.98; }
+.psec__b p { color: var(--ink-2); max-width: 70ch; }
+.psec__b p + p, .psec__b ul + p, .psec__b .ptable-wrap + p, .psec__b p + ul { margin-top: 14px; }
+.psec__b ul { list-style: none; padding: 0; display: grid; gap: 12px; }
+.psec__b li { position: relative; padding-left: 20px; color: var(--ink-2); max-width: 70ch; }
+.psec__b li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 10px; height: 2px; background: var(--navy); }
+.psec__b b { color: var(--ink); }
+.ptable-wrap { overflow-x: auto; margin: 16px 0; -webkit-overflow-scrolling: touch; }
+.ptable { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 320px; }
+.ptable th, .ptable td { text-align: left; padding: 12px 14px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ptable th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
+.ptable td:nth-child(2) { white-space: nowrap; }
+.ptable tbody tr:last-child td { border-bottom: 0; }
+.ptable__total td { font-weight: 700; color: var(--ink); border-top: 2px solid var(--ink); border-bottom: 0 !important; }
+@media (max-width: 799.98px) { .psec { grid-template-columns: 1fr; } }

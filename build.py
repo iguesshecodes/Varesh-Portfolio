@@ -172,6 +172,73 @@ ALL_PROJECTS = [
         note="Built on a public Netflix titles dataset. Independent portfolio project, not affiliated with or endorsed by Netflix.",
         tags=["Python", "Pandas", "Seaborn", "EDA", "Data cleaning"],
     ),
+    dict(
+        slug="dissertation", theme="violet", title="Does Buy Now Pay Later make people buy on impulse?", short="A survey of 163 UK shoppers",
+        tools="Qualtrics, SPSS, PROCESS", year="2026", status="Completed", done=True,
+        img="assets/dissertation-cover.webp", alt="Cover for the Buy Now Pay Later dissertation, showing the regression results", tall=False,
+        cap="Project cover. Every figure is from the dissertation's SPSS output.",
+        lede="A survey of 163 UK shoppers aged 18 to 30, testing whether BNPL use predicts impulse buying and whether financial self-control holds it back. It predicted. Self-control did not hold it back.",
+        q="Buy Now Pay Later splits a purchase into instalments at checkout, with no interest and almost no friction. The pitch is affordability. The worry is that removing the moment of payment also removes the moment of hesitation. I tested two things rather than assuming them: does BNPL use predict impulse buying once you control for who the person is and how much they earn, and does financial self-control protect people from that effect, as the self-regulation literature suggests it should?",
+        did=[
+            "Built a 20 question, 8 to 10 minute anonymous survey in Qualtrics and collected 163 valid responses from UK residents aged 18 to 30, against a protocol floor of 150.",
+            "Recruited through Instagram, WhatsApp, LinkedIn and personal networks, so the sample is convenience and snowball, which is non probability.",
+            "Adapted three published scales: Roberts and Jones (2001) for BNPL related spending, the Rook and Fisher (1995) Buying Impulsiveness Scale, and the Tangney, Baumeister and Boone (2004) Brief Self Control Scale.",
+            "Ran everything in SPSS: clean, reliability, composites, descriptives, correlation, then a two block hierarchical regression. Tested moderation with the Hayes PROCESS macro, Model 1, with 5,000 bootstrap resamples.",
+        ],
+        found=[
+            "BNPL use predicts impulse buying: r = 0.446, p < 0.001. The controls alone explained little (R squared 0.088, p = 0.215). Adding the predictors lifted R squared to 0.246, a significant change of 0.157 (F change 15.543, p < 0.001).",
+            "BNPL usage carried the effect: beta 0.472, p < 0.001, roughly a sixth of the variance in impulse buying on its own.",
+            "Financial self control did not predict impulse buying (beta minus 0.077, p = 0.308) and did not moderate the BNPL effect (b = 0.056, p = 0.376, 95% CI minus 0.068 to 0.180).",
+            "One control mattered: shopping frequency was significant in the PROCESS model (b = 0.120, p = 0.047).",
+        ],
+        metrics=[("163", "UK shoppers aged 18 to 30"), ("r = 0.446", "BNPL use vs impulse buying, p < 0.001"), ("0.246", "R squared with BNPL added, up from 0.088")],
+        sections=[
+            ("Why it mattered", "<p>The FCA brought BNPL into formal regulation in July 2026. The policy debate at the time was largely about affordability checks and credit reporting. Both assume the problem is people who cannot repay.</p><p>If the mechanism is actually impulse at the point of sale, the fix sits in checkout design rather than borrower screening. That is a different intervention, aimed at a different moment. The self-control question mattered most to me, because it is the assumption behind every responsible lending feature that screens for the wrong kind of customer.</p>"),
+            ("Who answered", "<p>63.2% were aged 18 to 23. 50.3% were female, 25.2% male and 17.8% non binary. 49.0% were students, and 64.4% had under £1,000 a month in disposable income. That skew matters, and I treat it as a limit, not a footnote.</p>"),
+            ("How I analysed it", "<p>The regression was hierarchical, in two blocks. Block 1 held eleven control variables: age, income, shopping frequency, three gender dummies and five employment dummies. Block 2 added BNPL usage and financial self control. Running the controls first means I can see what the predictors add on their own, rather than claiming credit for variance the demographics already explained.</p><p>The moderation test used the same eleven controls as covariates. All variance inflation factors came in under 2.5, so multicollinearity was not distorting the coefficients.</p>"),
+            ("The measurement decisions", "<p>Three items came out of the scales before I ran anything, and each removal has a reason. These are the part I would defend hardest.</p><ul><li><b>BNPL item 4</b> measured awareness of personal finances, not BNPL usage, so it went. The remaining three items held together well: Cronbach's alpha 0.838, item total correlations from 0.669 to 0.749.</li><li><b>Impulse buying item 5</b> referenced BNPL directly. Leaving it in would have put the predictor inside the outcome, which is criterion contamination, and it would have inflated the headline result in my favour. Removing it cost reliability: the four item scale came out at alpha 0.593, below the conventional 0.70. I kept the removal and reported the weak alpha.</li><li><b>Financial self control item 4</b> was a reverse scored item that behaved as if respondents had not read it that way. Reverse scored, the scale fell to alpha 0.217. Left unreversed it reached 0.648 but could not be interpreted. The four item version I used came out at alpha 0.596.</li></ul><p>I would rather publish a clean predictor and an honestly weak outcome scale than a tidy set of alphas built on a contaminated measure.</p>"),
+            ("What I take from it", "<p>The null result is the useful one. If self control does not buffer the relationship, screening customers for financial discipline is unlikely to be the lever. The effect looks situational rather than dispositional, sitting in the checkout rather than in the person. That points at structural changes:</p><ul><li>Show the cumulative repayment total at checkout, not just the instalment size.</li><li>Build in a cooling off window on larger BNPL baskets.</li><li>Give customers a running summary of committed future repayments.</li></ul><p>None of those require deciding in advance which customers are the risky ones.</p>"),
+            ("Limits, stated plainly", "<ul><li>Cross sectional data shows association, not cause. The reverse direction is just as plausible: people who buy on impulse may simply choose BNPL more often. I cannot separate the two.</li><li>The sample is non probability, young, heavily student and low income. It does not represent UK BNPL users as a group.</li><li>Two of the three scales fell below the 0.70 reliability threshold after I removed the contaminated items. That widens the error around the impulse buying measure.</li><li>The scales were adapted rather than used verbatim, which trades comparability for fit.</li></ul>"),
+        ],
+        note_h="Scope",
+        note="11,920 words, submitted September 2026 for the University of Birmingham MSc Marketing. Mark: 65. Qualtrics for collection, SPSS for reliability, descriptives, correlation and regression, and the Hayes PROCESS macro for the moderation test.",
+        tags=["MSc dissertation", "University of Birmingham", "Quantitative research", "SPSS", "Regression", "Consumer finance"],
+    ),
+    dict(
+        slug="mcc", theme="green", title="Costing and scheduling a £47.4M research institute", short="The business case that won the challenge",
+        tools="Cost planning, Programme planning", year="2026", status="Completed", done=True,
+        img="assets/mcc-cover.webp", alt="Cover for the Masters Consultancy Challenge business case, showing the capital cost breakdown", tall=False,
+        cap="Project cover. Figures are from the team's business case.",
+        lede="Turner & Townsend set 16 teams the same brief. Our team of eight proposed a clean energy and advanced manufacturing institute at £47.4M against a £50M budget, with a five phase delivery plan. We placed first.",
+        q="Turner & Townsend, the global construction and infrastructure consultancy, set sixteen teams the same brief: propose something the University of Birmingham could actually build, run and justify, against an indicative budget of £50M.",
+        did=[
+            "Owned the delivery programme and phasing: five phases over 36 to 42 months, benchmarked against two comparable UK facilities.",
+            "Built the competitor and benchmark comparison.",
+            "Produced the nineteen slide pitch deck.",
+            "Worked as one of a team of eight on the wider business case. The cost analysis on this page is the team's work.",
+        ],
+        found=[
+            "Total project cost came in at £47.4M against the £50M budget, leaving £2.6M of headroom. We treated that as a deliberate output, so one bad tender cannot break the case.",
+            "Whole life cost over thirty years lands at £95M to £105M, roughly twice the capital cost. Running the building costs more than building it.",
+            "Revenue is a range, not a point. At the top of every range the institute approaches operational break even. At the bottom it needs roughly £0.5M to £1M a year of university subsidy.",
+            "The team placed first of sixteen.",
+        ],
+        metrics=[("£47.4M", "total cost against a £50M budget, £2.6M headroom"), ("£95M to £105M", "30 year whole life cost, about twice capital"), ("1st", "of 16 teams on the same brief")],
+        sections=[
+            ("What we proposed", "<p>An Advanced Manufacturing and Clean Energy Institute: a net zero systems integration and scale up centre.</p><p>The gap it targets is the one between a technology that works in a lab and one a manufacturer will buy, often called the valley of death. In technology readiness terms that is levels four to seven, where university funding has usually run out and commercial investment has not yet arrived.</p><p>Three missions:</p><ul><li>Battery and clean energy scale up, including thermal management verification.</li><li>Circular manufacturing and battery recycling.</li><li>Digital infrastructure and digital twins.</li></ul>"),
+            ("The cost case", "<p>Total project cost came in at £47.4M against the £50M indicative budget, leaving £2.6M of headroom. A business case that spends the entire budget leaves the client no room to absorb a single bad tender.</p><div class=\"ptable-wrap\"><table class=\"ptable\"><thead><tr><th>Capital line</th><th>Cost</th></tr></thead><tbody><tr><td>Construction</td><td>£33.6M</td></tr><tr><td>Professional fees</td><td>£4.0M</td></tr><tr><td>Equipment</td><td>£3.3M</td></tr><tr><td>Smart building systems</td><td>£1.4M</td></tr><tr><td>Risk and contingency</td><td>£3.0M</td></tr><tr><td>Inflation</td><td>£2.1M</td></tr><tr class=\"ptable__total\"><td>Total</td><td>£47.4M</td></tr></tbody></table></div><p>Construction was priced at £4,500 to £6,000 per square metre gross, with a 150 seat seminar theatre included in the brief for the facility.</p>"),
+            ("The number that changes the decision", "<p>Capital cost is the number everyone looks at. It is not the number that decides whether a building like this survives. Whole life cost over thirty years lands at £95M to £105M, roughly twice the capital cost.</p><div class=\"ptable-wrap\"><table class=\"ptable\"><thead><tr><th>Annual operating cost</th><th>Amount</th></tr></thead><tbody><tr><td>Low case</td><td>£1.2M</td></tr><tr><td>Baseline</td><td>£1.47M</td></tr><tr><td>High energy stress case</td><td>£2.1M</td></tr></tbody></table></div><p>The stress case is the one worth sitting with. At £2.1M a year, the thirty year cost rises by £18.9M undiscounted. A facility built around energy intensive battery and thermal testing is exposed to energy prices in a way a standard teaching building is not, so we modelled that exposure instead of assuming the baseline.</p>"),
+            ("Can it pay for itself?", "<p>Four revenue streams, each as a range rather than a point estimate.</p><div class=\"ptable-wrap\"><table class=\"ptable\"><thead><tr><th>Stream</th><th>Annual range</th></tr></thead><tbody><tr><td>Industrial access and testing fees</td><td>£0.3M to £0.5M</td></tr><tr><td>UKRI and Innovate UK funding</td><td>£0.5M to £1.5M</td></tr><tr><td>Training fees</td><td>£0.1M to £0.2M</td></tr><tr><td>IP licensing</td><td>£0.1M to £0.5M</td></tr></tbody></table></div><p>At the top of every range the institute approaches operational break even. At the bottom it needs roughly £0.5M to £1M a year of university subsidy.</p><p>The case shows both ends rather than the midpoint. A single blended figure would have hidden the fact that the whole case rests on the UKRI and Innovate UK stream, which is the one the university controls least.</p>"),
+            ("Where to put it", "<p>Three locations were assessed: the Birmingham Knowledge Quarter, carrying £9M of West Midlands Investment Zone funding, Tyseley Energy Park, and Ansty Park.</p><p>We recommended the campus site adjacent to TLB, with a contingency site beside G4. Proximity to existing university research capacity outweighed the funding attached to the alternative, and naming a fallback site meant the programme did not stall if the first option became unavailable.</p>"),
+            ("The delivery programme", "<p>Thirty six to forty two months, in five phases.</p><div class=\"ptable-wrap\"><table class=\"ptable\"><thead><tr><th>Phase</th><th>Months</th><th>What happens</th></tr></thead><tbody><tr><td>Phase 0</td><td>0 to 6</td><td>Outline business case</td></tr><tr><td>Phase 1</td><td>6 to 12</td><td>Full business case and tender</td></tr><tr><td>Phase 2</td><td>12 to 30</td><td>Design and construction</td></tr><tr><td>Phase 3</td><td>30 to 36</td><td>Commissioning</td></tr><tr><td>Phase 4</td><td>36 onwards</td><td>Phased opening, Mission 1 first</td></tr></tbody></table></div><p>Opening in phases rather than all at once means Mission 1 starts generating industrial access revenue while the other two are still being commissioned. It brings the first income forward against a cost base that begins the day the building is handed over.</p><p>The duration was benchmarked against two comparable UK facilities, the High Temperature Research Centre and the UK Battery Industrialisation Centre, rather than asserted from nothing.</p>"),
+            ("Procurement", "<p>A two stage Competitive Flexible Procedure: a pre construction services agreement first, then an NEC4 Option C target price contract.</p><p>Option C shares cost savings and overruns between client and contractor through a pain and gain mechanism. For a building with specialist testing equipment and a real chance of scope change during design, that beats a fixed price contract that gets repriced every time the specification moves.</p>"),
+            ("Risk and sustainability", "<p>A ten entry risk register, and a stakeholder power and interest matrix covering the university, industry partners, funders and the local authority.</p><p>On sustainability the facility targets BREEAM Excellent and net zero operations. That is not decoration on a clean energy institute: a building that misses it undermines the thing it exists to research.</p>"),
+            ("Limits", "<ul><li>The costs rest on benchmark rates per square metre, not tendered prices. Real tenders move.</li><li>The revenue figures are ranges built on comparable facilities, not signed agreements.</li><li>Nothing was built. This is a business case assessed as coursework, not a delivered project.</li></ul>"),
+        ],
+        note_h="About this project",
+        note="A team of eight, set by Turner & Townsend for the University of Birmingham Masters Consultancy Challenge, where 16 teams competed. This is a business case assessed as coursework, not a delivered project, and it is not affiliated with or endorsed by Turner & Townsend.",
+        tags=["Masters Consultancy Challenge", "University of Birmingham", "Turner & Townsend", "Cost planning", "Programme planning", "Business case"],
+    ),
 ]
 
 PROJECTS = [p for p in ALL_PROJECTS if not p.get("hidden")]
@@ -209,7 +276,8 @@ ACHIEVEMENTS = [
          ctx="First place in the University of Birmingham Masters Consultancy Challenge, run with Turner & Townsend, as part of the winning team, Team Dynamite.",
          pts=["Owned the <b>implementation timeline</b> for a fully costed research facility proposal, backed by a <b>£47.4M business case</b>.",
               "Worked as one of the team behind the proposal, to a fixed brief and a hard deadline, alongside Turner &amp; Townsend.",
-              "Took <b>first place</b> against competing university teams on the strength of the numbers, not the slides."],
+              "Took <b>first place</b> against competing university teams on the strength of the numbers, not the slides.",
+              '<a class="inlink" href="project-mcc.html">Read the full business case</a>'],
          chips=["Implementation planning", "Project management", "Costing", "Teamwork"]),
 ]
 
@@ -492,6 +560,9 @@ def project_page(i, p):
         ow, oh = p["orig_size"]
         second = f'<figure class="shot shot--second" data-img-in><img src="{p["orig"]}" alt="{E(p["orig_alt"])}" width="{ow}" height="{oh}" loading="lazy"><figcaption>{E(p["orig_cap"])}</figcaption></figure>'
     chips = '<ul class="chips pchips">' + li(p["tags"]) + "</ul>"
+    secs = ""
+    if p.get("sections"):
+        secs = '<div class="psecs">' + "".join('<div class="psec" data-reveal><h3>%s</h3><div class="psec__b">%s</div></div>' % (E(h), b) for h, b in p["sections"]) + "</div>"
     main = pagehead(("projects.html", "All projects"), p["title"], p["lede"], meta) + f'''
 <section class="sec">
   <div class="wrap">
@@ -502,6 +573,7 @@ def project_page(i, p):
       <div><h3>What I did</h3><ul>{li(p["did"])}</ul></div>
       <div><h3>What I found</h3><ul>{li(p["found"])}</ul></div>
     </div>
+    {secs}
     <div class="pnote" data-reveal><h3>{E(p["note_h"])}</h3><p>{E(p["note"])}</p></div>
     {chips}
     {second}
@@ -529,7 +601,7 @@ def about_page():
       <dl class="facts" data-reveal>
         <div><dt>Based in</dt><dd>{CITY}</dd></div>
         <div><dt>Studied</dt><dd>MSc Marketing, University of Birmingham</dd></div>
-        <div><dt>Dissertation</dt><dd>Buy Now Pay Later and impulse buying, 163 respondents, SPSS (p &lt; 0.001)</dd></div>
+        <div><dt>Dissertation</dt><dd><a class="inlink" href="project-dissertation.html">Buy Now Pay Later and impulse buying</a>, 163 respondents, SPSS (p &lt; 0.001)</dd></div>
         <div><dt>Open to</dt><dd>Marketing and data analyst roles in the Netherlands, UAE, India and the UK, in person, hybrid or remote. Available immediately.</dd></div>
       </dl>
     </div>
